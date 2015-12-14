@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "MicroserviceAnalytics.Serilog Class Library",
+  "authors": [ "James" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": { },
+    "dnxcore50": {
+    }
+  },
+  "dependencies": {
+    "MicroserviceAnalytics.Core": "1.0.0-*",
+    "Serilog": "2.0.0-beta-403"
+  }
+}

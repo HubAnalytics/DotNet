@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0-beta-*",
+  "description": "MicroserviceAnalytics.Core Class Library",
+  "authors": [ "James Randall" ],
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "dnxcore50": {
+      "dependencies": {
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Collections.Concurrent": "4.0.11-beta-23516",
+        "System.Collections.Specialized": "4.0.1-beta-23516",
+        "System.Diagnostics.StackTrace": "4.0.1-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Net.Http": "4.0.1-beta-23516",
+        "System.Reflection": "4.1.0-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Runtime.Serialization.Json": "4.0.1-beta-23516",
+        "System.Threading": "4.0.11-beta-23516",
+        "Newtonsoft.Json": "7.0.1"
+      }
+    },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Net.Http": "4.0.0.0",
+        "Microsoft.VisualBasic": "10.0.0.0",
+        "System.configuration": "4.0.0.0"
+      },
+      "dependencies": {
+        "Newtonsoft.Json": "7.0.1"
+      }
+    }
+  }
+}

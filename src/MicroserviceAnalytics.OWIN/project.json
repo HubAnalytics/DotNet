@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "MicroserviceAnalytics.OWIN Class Library",
+  "authors": [ "James" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": { }
+  },
+  "dependencies": {
+    "MicroserviceAnalytics.Core": "1.0.0-*",
+    "Microsoft.Owin": "3.0.1",
+    "Owin": "1.0.0"
+  }
+}

@@ -1,0 +1,21 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "MicroserviceAnalytics.Ado Class Library",
+  "authors": [ "James Randall" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Xml": "4.0.0.0",
+        "System.Web": "4.0.0.0",
+        "System.Data": "4.0.0.0",
+        "System.Transactions": "4.0.0.0"
+      }
+    }
+  },
+  "dependencies": {
+    "MicroserviceAnalytics.Core": "1.0.0-*"
+  }
+}

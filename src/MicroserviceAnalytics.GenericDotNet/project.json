@@ -1,0 +1,14 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "MicroserviceAnalytics.GenericDotNet Class Library",
+  "authors": [ "James" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": { }
+  },
+  "dependencies": {
+    "MicroserviceAnalytics.Core": "1.0.0-*"
+  }
+}

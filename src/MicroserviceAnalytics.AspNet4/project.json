@@ -1,0 +1,18 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "MicroserviceAnalytics.AspNet4 Class Library",
+  "authors": [ "James" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0"
+      }
+    }
+  },
+  "dependencies": {
+    "MicroserviceAnalytics.Core": "1.0.0-*"
+  }
+}
