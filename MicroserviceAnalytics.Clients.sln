@@ -8,8 +8,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F432B85F-4EDF-4E6F-B327-40554A6A0D45}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		packageLocalNuget.ps1 = packageLocalNuget.ps1
 		packageNuget.ps1 = packageNuget.ps1
 		Prebuild.ps1 = Prebuild.ps1
+		setBuildVersion.ps1 = setBuildVersion.ps1
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MicroserviceAnalytics.Core", "src\MicroserviceAnalytics.Core\MicroserviceAnalytics.Core.xproj", "{44884012-1D2D-4D09-A5B3-2B78AA868FD7}"
