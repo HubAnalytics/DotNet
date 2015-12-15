@@ -1,9 +1,9 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "1.0.0-beta-*",
   "description": "MicroserviceAnalytics.Ado Class Library",
   "authors": [ "James Randall" ],
-  "tags": [ "" ],
-  "projectUrl": "",
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
   "licenseUrl": "",
   "frameworks": {
     "net451": {

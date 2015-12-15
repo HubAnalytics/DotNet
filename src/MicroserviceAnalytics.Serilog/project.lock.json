@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5.1": {
-      "MicroserviceAnalytics.Core/1.0.0": {
+      "MicroserviceAnalytics.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -42,7 +42,7 @@
       }
     },
     "DNXCore,Version=v5.0": {
-      "MicroserviceAnalytics.Core/1.0.0": {
+      "MicroserviceAnalytics.Core/1.0.0-beta": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -598,7 +598,7 @@
       }
     },
     ".NETFramework,Version=v4.5.1/win7-x86": {
-      "MicroserviceAnalytics.Core/1.0.0": {
+      "MicroserviceAnalytics.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -637,7 +637,7 @@
       }
     },
     ".NETFramework,Version=v4.5.1/win7-x64": {
-      "MicroserviceAnalytics.Core/1.0.0": {
+      "MicroserviceAnalytics.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -676,7 +676,7 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x86": {
-      "MicroserviceAnalytics.Core/1.0.0": {
+      "MicroserviceAnalytics.Core/1.0.0-beta": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -1660,7 +1660,7 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x64": {
-      "MicroserviceAnalytics.Core/1.0.0": {
+      "MicroserviceAnalytics.Core/1.0.0-beta": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -2645,7 +2645,7 @@
     }
   },
   "libraries": {
-    "MicroserviceAnalytics.Core/1.0.0": {
+    "MicroserviceAnalytics.Core/1.0.0-beta": {
       "type": "project",
       "path": "../MicroserviceAnalytics.Core/project.json"
     },

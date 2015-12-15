@@ -1,9 +1,9 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "1.0.0-beta-*",
   "description": "MicroserviceAnalytics.MVC5 Class Library",
-  "authors": [ "James" ],
-  "tags": [ "" ],
-  "projectUrl": "",
+  "authors": [ "James Randall" ],
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
   "licenseUrl": "",
   "frameworks": {
     "net451": {
@@ -17,6 +17,6 @@
     "Microsoft.AspNet.Mvc": "5.2.3",
     "Microsoft.AspNet.Razor": "3.2.3",
     "Microsoft.AspNet.WebPages": "3.2.3",
-    "Microsoft.Web.Infrastructure":  "1.0.0"
+    "Microsoft.Web.Infrastructure": "1.0.0"
   }
 }

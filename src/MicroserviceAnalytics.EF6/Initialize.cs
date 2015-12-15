@@ -6,16 +6,16 @@ using MicroserviceAnalytics.EF6.Proxies;
 
 namespace MicroserviceAnalytics.EF6
 {
-    public static class Initialize
+    public static class MicroserviceAnalytics
     {
         private static bool _isInitialized;
 
-        public static void StartDefaultFactory()
+        public static void Attach()
         {
-            Start(new MicroserviceAnalyticClientFactory());
+            Attach(new MicroserviceAnalyticClientFactory());
         }
 
-        public static void Start(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory)
+        public static void Attach(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory)
         {
             if (_isInitialized) return;
 

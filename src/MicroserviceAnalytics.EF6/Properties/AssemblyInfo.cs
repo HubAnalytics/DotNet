@@ -26,5 +26,5 @@ using System.Web;
 [assembly: Guid("7ee03344-f353-4f8b-af13-df1f548613b0")]
 
 #if !DNXCORE50
-[assembly: PreApplicationStartMethod(typeof(MicroserviceAnalytics.Ado.MicroserviceAnalytics), "Attach")]
+[assembly: PreApplicationStartMethod(typeof(MicroserviceAnalytics.EF6.MicroserviceAnalytics), "Attach")]
 #endif

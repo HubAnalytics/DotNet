@@ -1,9 +1,9 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "1.0.0-beta-*",
   "description": "MicroserviceAnalytics.OWIN Class Library",
-  "authors": [ "James" ],
-  "tags": [ "" ],
-  "projectUrl": "",
+  "authors": [ "James Randall" ],
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
   "licenseUrl": "",
 
   "frameworks": {
