@@ -4,7 +4,7 @@
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
   "projectUrl": "http://www.microserviceanalytics.com",
-  "licenseUrl": "",
+  "licenseUrl": "https://raw.githubusercontent.com/MicroserviceAnalytics/DataCaptureClients/master/LICENSE",
 
   "frameworks": {
     "net451": { }

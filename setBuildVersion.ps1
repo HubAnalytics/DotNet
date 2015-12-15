@@ -1,0 +1,1 @@
+$env:DNX_BUILD_VERSION=4
