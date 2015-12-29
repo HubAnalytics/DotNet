@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5.1": {
-      "MicroserviceAnalytics.Core/1.0.0-beta": {
+      "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -26,7 +26,7 @@
       }
     },
     ".NETFramework,Version=v4.5.1/win7-x86": {
-      "MicroserviceAnalytics.Core/1.0.0-beta": {
+      "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -49,7 +49,7 @@
       }
     },
     ".NETFramework,Version=v4.5.1/win7-x64": {
-      "MicroserviceAnalytics.Core/1.0.0-beta": {
+      "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -73,7 +73,7 @@
     }
   },
   "libraries": {
-    "MicroserviceAnalytics.Core/1.0.0-beta": {
+    "MicroserviceAnalytics.Core/1.0.1-beta": {
       "type": "project",
       "path": "../MicroserviceAnalytics.Core/project.json"
     },
@@ -102,7 +102,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "MicroserviceAnalytics.Core >= 1.0.0-*"
+      "MicroserviceAnalytics.Core >= 1.0.1-*"
     ],
     ".NETFramework,Version=v4.5.1": [
       "fx/System.Web >= 4.0.0"

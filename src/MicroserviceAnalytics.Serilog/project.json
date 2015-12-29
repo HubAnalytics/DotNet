@@ -1,17 +1,25 @@
 ﻿{
-  "version": "1.0.0-beta-*",
+  "version": "1.0.1-beta-*",
   "description": "MicroserviceAnalytics.Serilog Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
   "projectUrl": "http://www.microserviceanalytics.com",
   "licenseUrl": "https://raw.githubusercontent.com/MicroserviceAnalytics/DataCaptureClients/master/LICENSE",
   "frameworks": {
-    "net451": { },
+    "net451": {
+      "dependencies": {
+        "Serilog": "1.5.14",
+        "MicroserviceAnalytics.Core": "1.0.1-*"
+      },
+      "frameworkAssemblies": {
+        "System.Runtime": ""
+      }
+    },
     "dnxcore50": {
+      "dependencies": {
+        "Serilog": "2.0.0-beta-423",
+        "MicroserviceAnalytics.Core": "1.0.1-*"
+      }
     }
-  },
-  "dependencies": {
-    "MicroserviceAnalytics.Core": "1.0.0-*",
-    "Serilog": "2.0.0-beta-403"
   }
 }

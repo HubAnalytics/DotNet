@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-beta-*",
+  "version": "1.0.1-beta-*",
   "description": "MicroserviceAnalytics.EF6 Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
@@ -14,8 +14,8 @@
         "System.Transactions": "4.0.0.0"
       },
       "dependencies": {
-        "MicroserviceAnalytics.Ado": "1.0.0-*",
-        "MicroserviceAnalytics.Core": "1.0.0-*"
+        "MicroserviceAnalytics.Ado": "1.0.1-*",
+        "MicroserviceAnalytics.Core": "1.0.1-*"
       }
     }
   },

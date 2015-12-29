@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-beta-*",
+  "version": "1.0.1-beta-*",
   "description": "MicroserviceAnalytics.OWIN Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
@@ -10,7 +10,7 @@
     "net451": { }
   },
   "dependencies": {
-    "MicroserviceAnalytics.Core": "1.0.0-*",
+    "MicroserviceAnalytics.Core": "1.0.1-*",
     "Microsoft.Owin": "3.0.1",
     "Owin": "1.0.0"
   }

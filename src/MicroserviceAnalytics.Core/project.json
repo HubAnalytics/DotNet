@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta-*",
+  "version": "1.0.1-beta-*",
   "description": "MicroserviceAnalytics.Core Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
