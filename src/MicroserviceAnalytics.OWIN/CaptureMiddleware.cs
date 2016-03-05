@@ -11,7 +11,7 @@ namespace MicroserviceAnalytics.Owin
     public class CaptureMiddleware : OwinMiddleware
     {
         private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
-        private readonly ICorrelationIdProvider _correlationIdProvider;
+        private readonly IContextualIdProvider _contextualIdProvider;
         private readonly IClientConfiguration _clientConfiguration;
 
         public CaptureMiddleware(OwinMiddleware next, MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null) : base(next)
@@ -21,7 +21,7 @@ namespace MicroserviceAnalytics.Owin
                 microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
             }
             _microserviceAnalyticClient = microserviceAnalyticClientFactory.GetClient();
-            _correlationIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
+            _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
             _clientConfiguration = microserviceAnalyticClientFactory.GetClientConfiguration();
         }
 
@@ -30,10 +30,12 @@ namespace MicroserviceAnalytics.Owin
             DateTimeOffset requestDateTime = DateTimeOffset.UtcNow;
             Stopwatch sw = Stopwatch.StartNew();
             string correlationId = EnsureCorrelation(context);
+            string sessionId = EnsureSessionId(context);
+            string userId = EnsureUserId(context);
             context.Response.OnSendingHeaders(state =>
             {
                 OwinResponse localResponse = (OwinResponse)state;
-                EnsureCorrelationOnResponse(localResponse, correlationId);
+                EnsureContextualIdsOnResponse(localResponse, correlationId, sessionId, userId);
             }, context.Response);
             try
             {
@@ -63,6 +65,8 @@ namespace MicroserviceAnalytics.Owin
                 uri,
                 didStripQueryParams,
                 correlationId,
+                sessionId,
+                userId,
                 requestDateTime,
                 sw.ElapsedMilliseconds,
                 CaptureHeaders(_clientConfiguration.HttpRequestHeaderWhitelist, context.Request.Headers),
@@ -70,11 +74,19 @@ namespace MicroserviceAnalytics.Owin
                 );
         }
 
-        private void EnsureCorrelationOnResponse(OwinResponse response, string correlationId)
+        private void EnsureContextualIdsOnResponse(OwinResponse response, string correlationId, string sessionId, string userId)
         {
             if (!response.Headers.ContainsKey(_clientConfiguration.CorrelationIdKey))
             {
                 response.Headers.Add(_clientConfiguration.CorrelationIdKey, new[] { correlationId });
+            }
+            if (!response.Headers.ContainsKey(_clientConfiguration.SessionIdKey) && !string.IsNullOrWhiteSpace(sessionId))
+            {
+                response.Headers.Add(_clientConfiguration.SessionIdKey, new[] { sessionId });
+            }
+            if (!response.Headers.ContainsKey(_clientConfiguration.UserIdKey) && !string.IsNullOrWhiteSpace(userId))
+            {
+                response.Headers.Add(_clientConfiguration.UserIdKey, new[] { userId });
             }
         }
 
@@ -91,8 +103,22 @@ namespace MicroserviceAnalytics.Owin
                 correlationId = Guid.NewGuid().ToString();
                 context.Request.Headers.Add(_clientConfiguration.CorrelationIdKey, new[] {correlationId});
             }
-            _correlationIdProvider.CorrelationId = correlationId;
+            _contextualIdProvider.CorrelationId = correlationId;
             return correlationId;
+        }
+
+        private string EnsureSessionId(IOwinContext context)
+        {
+            string sessionId = context.Request.Headers[_clientConfiguration.SessionIdKey];
+            _contextualIdProvider.SessionId = sessionId;
+            return sessionId;
+        }
+
+        private string EnsureUserId(IOwinContext context)
+        {
+            string userId = context.Request.Headers[_clientConfiguration.UserIdKey];
+            _contextualIdProvider.SessionId = userId;
+            return userId;
         }
 
         private Dictionary<string, string[]> CaptureHeaders(IReadOnlyCollection<string> captureHeaders, IHeaderDictionary headers)

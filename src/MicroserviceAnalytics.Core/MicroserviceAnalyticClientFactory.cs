@@ -57,12 +57,12 @@ namespace MicroserviceAnalytics.Core
             return _clientConfiguration;
         }
 
-        public virtual ICorrelationIdProvider GetCorrelationIdProvider()
+        public virtual IContextualIdProvider GetCorrelationIdProvider()
         {
 #if DNXCORE50
-            return new CallContextCorrelationIdProvider();
+            return new CallContextContextualIdProvider();
 #else
-            return new CallContextCorrelationIdProvider(GetClientConfiguration().CorrelationIdKey);
+            return new CallContextContextualIdProvider(GetClientConfiguration().CorrelationIdKey);
 #endif
         }
 

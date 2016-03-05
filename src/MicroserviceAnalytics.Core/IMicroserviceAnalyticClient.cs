@@ -19,13 +19,15 @@ namespace MicroserviceAnalytics.Core
             bool succeeded,
             int? sqlErrorCode);
 
-        void Error(Exception ex, Dictionary<string, string> additionalData = null, string correlationId = null);
+        void Error(Exception ex, Dictionary<string, string> additionalData = null, string correlationId = null, string sessionId = null, string userId = null);
 
         void HttpRequest(string verb,
             int statusCode,
             string uri,
             bool didStripQueryParams,
             string correlationId,
+            string sessionId,
+            string userId,
             DateTimeOffset requestDateTime,
             long durationInMilliseconds,
             Dictionary<string, string[]> requestHeaders,

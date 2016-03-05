@@ -23,7 +23,7 @@ namespace MicroserviceAnalytics.MVC5
     /// </summary>
     public class HttpCorrelatorAttribute : ActionFilterAttribute
     {
-        private readonly ICorrelationIdProvider _correlationIdProvider;
+        private readonly IContextualIdProvider _contextualIdProvider;
         private readonly string _correlationIdName;
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace MicroserviceAnalytics.MVC5
             {
                 microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
             }
-            _correlationIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
+            _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
             _correlationIdName = microserviceAnalyticClientFactory.GetClientConfiguration().CorrelationIdKey;
         }
 
@@ -48,7 +48,7 @@ namespace MicroserviceAnalytics.MVC5
             IEnumerable<string> headerValues = filterContext.HttpContext.Request.Headers.GetValues(_correlationIdName);
             if (headerValues != null && headerValues.Any())
             {
-                _correlationIdProvider.CorrelationId = headerValues.First();
+                _contextualIdProvider.CorrelationId = headerValues.First();
             }
         }
     }

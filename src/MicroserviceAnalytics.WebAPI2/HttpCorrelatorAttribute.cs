@@ -21,7 +21,7 @@ namespace MicroserviceAnalytics.WebAPI2
     public class HttpCorrelatorAttribute : ActionFilterAttribute
     {
         private readonly string _correlationIdName;
-        private readonly ICorrelationIdProvider _correlationIdProvider;
+        private readonly IContextualIdProvider _contextualIdProvider;
 
         /// <summary>
         /// Constructor - defaults to a correlation header name of correlation-id
@@ -33,7 +33,7 @@ namespace MicroserviceAnalytics.WebAPI2
                 microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
             }
             _correlationIdName = microserviceAnalyticClientFactory.GetClientConfiguration().CorrelationIdKey;
-            _correlationIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
+            _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace MicroserviceAnalytics.WebAPI2
             IEnumerable<string> headerValues = actionContext.Request.Headers.GetValues(_correlationIdName);
             if (headerValues != null && headerValues.Any())
             {
-                _correlationIdProvider.CorrelationId = headerValues.First();
+                _contextualIdProvider.CorrelationId = headerValues.First();
             }
         }
     }

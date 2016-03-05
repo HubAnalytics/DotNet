@@ -26,6 +26,9 @@ namespace MicroserviceAnalytics.Core
 
         bool IsRemoteUpdateEnabled { get; }
 
+        string SessionIdKey { get; }
+
+        string UserIdKey { get; }
 
 
         bool IsCaptureErrorsEnabled { get; }

@@ -4,7 +4,7 @@ namespace MicroserviceAnalytics.Core
     {
         IMicroserviceAnalyticClient GetClient();
         IClientConfiguration GetClientConfiguration();
-        ICorrelationIdProvider GetCorrelationIdProvider();
+        IContextualIdProvider GetCorrelationIdProvider();
         IEnvironmentCapture GetEnvironmentCapture();
         IStackTraceParser GetStackTraceParser();
     }

@@ -14,6 +14,10 @@ namespace MicroserviceAnalytics.Core.Model
 
         public List<string> CorrelationIds { get; set; }
 
+        public string SessionId { get; set; }
+
+        public string UserId { get; set; }
+
         public List<int> CorrelationDepths { get; set; } 
 
         public Dictionary<string, object> Data { get; set; } 

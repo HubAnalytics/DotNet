@@ -9,6 +9,8 @@ namespace MicroserviceAnalytics.Core
         public virtual TimeSpan UploadInterval => TimeSpan.FromMilliseconds(Constants.UploadIntervalMs);
         public virtual string ApiRoot => Constants.ApiRoot;
         public virtual string CorrelationIdKey => Constants.CorrelationIdKey;
+        public virtual string SessionIdKey => Constants.SessionIdKey;
+        public virtual string UserIdKey => Constants.UserIdKey;
         public bool EnableCorrelation => true;
         public bool StripHttpQueryParams => true;
         public string[] HttpRequestHeaderWhitelist => new[] {"*"};

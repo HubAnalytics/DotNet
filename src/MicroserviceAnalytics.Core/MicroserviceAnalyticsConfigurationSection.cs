@@ -126,6 +126,22 @@ namespace MicroserviceAnalytics.Core
             set { this["remoteUpdateEnabled"] = value; }
         }
 
+        [ConfigurationProperty("userIdKey", IsRequired = false, DefaultValue = Constants.UserIdKey)]
+        [StringValidator]
+        public string UserIdKey
+        {
+            get { return (string)this["userIdKey"]; }
+            set { this["userIdKey"] = value; }
+        }
+
+        [ConfigurationProperty("sessionIdKey", IsRequired = false, DefaultValue = Constants.SessionIdKey)]
+        [StringValidator]
+        public string SessionIdKey
+        {
+            get { return (string)this["sessionIdKey"]; }
+            set { this["sessionIdKey"] = value; }
+        }
+
         public string[] HttpRequestHeaderWhitelist => HttpCommaSeparatedRequestHeaderWhitelist.Split(',');
         public string[] HttpResponseHeaderWhitelist => HttpCommaSeparatedResponseHeaderWhitelist.Split(',');
         public TimeSpan UploadInterval => TimeSpan.FromMilliseconds(UploadIntervalMs);

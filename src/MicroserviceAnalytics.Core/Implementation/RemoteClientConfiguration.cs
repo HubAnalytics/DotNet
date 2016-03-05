@@ -23,6 +23,8 @@ namespace MicroserviceAnalytics.Core.Implementation
         private readonly string[] _httpRequestHeaderWhitelist;
         private readonly string[] _httpResponseHeaderWhitelist;
         private readonly Uri _endpoint;
+        private readonly string _sessionIdKey;
+        private readonly string _userIdKey;
 
         private TimeSpan _uploadInterval;
         private bool _isCaptureHttpEnabled;
@@ -44,6 +46,8 @@ namespace MicroserviceAnalytics.Core.Implementation
             _stripHttpQueryParams = initialConfiguration.StripHttpQueryParams;
             _httpRequestHeaderWhitelist = initialConfiguration.HttpRequestHeaderWhitelist;
             _httpResponseHeaderWhitelist = initialConfiguration.HttpResponseHeaderWhitelist;
+            _sessionIdKey = initialConfiguration.SessionIdKey;
+            _userIdKey = initialConfiguration.UserIdKey;
 
             _uploadInterval = initialConfiguration.UploadInterval;
             _isCaptureHttpEnabled = initialConfiguration.IsCaptureHttpEnabled;
@@ -71,6 +75,10 @@ namespace MicroserviceAnalytics.Core.Implementation
         public bool EnableCorrelation => _enableCorrelation;
 
         public string HttpStopwatchKey => _httpStopwatchKey;
+
+        public string SessionIdKey => _sessionIdKey;
+
+        public string UserIdKey => _userIdKey;
 
         public bool IsRemoteUpdateEnabled => _isRemoteUpdateEnabled;
 

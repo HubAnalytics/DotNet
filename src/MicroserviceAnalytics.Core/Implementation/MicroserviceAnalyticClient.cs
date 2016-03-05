@@ -12,7 +12,7 @@ namespace MicroserviceAnalytics.Core.Implementation
     {
         private readonly ConcurrentQueue<Event> _eventQueue = new ConcurrentQueue<Event>();
         private readonly IEnvironmentCapture _environmentCapture;
-        private readonly ICorrelationIdProvider _correlationIdProvider;
+        private readonly IContextualIdProvider _contextualIdProvider;
         private readonly IStackTraceParser _stackTraceParser;
         private readonly IClientConfiguration _clientConfiguration;
         private readonly PeriodicDispatcher _periodicDispatcher;
@@ -20,12 +20,12 @@ namespace MicroserviceAnalytics.Core.Implementation
         public MicroserviceAnalyticClient(string propertyId,
             string key,
             IEnvironmentCapture environmentCapture,
-            ICorrelationIdProvider correlationIdProvider,
+            IContextualIdProvider contextualIdProvider,
             IStackTraceParser stackTraceParser,
             IClientConfiguration clientConfiguration)
         {
             _environmentCapture = environmentCapture;
-            _correlationIdProvider = correlationIdProvider;
+            _contextualIdProvider = contextualIdProvider;
             _stackTraceParser = stackTraceParser;
             _clientConfiguration = clientConfiguration;
 
@@ -61,7 +61,9 @@ namespace MicroserviceAnalytics.Core.Implementation
 
             Event ev = new Event
             {
-                CorrelationIds = string.IsNullOrWhiteSpace(_correlationIdProvider.CorrelationId) ? new List<string>() : new List<string>() { _correlationIdProvider.CorrelationId },
+                CorrelationIds = string.IsNullOrWhiteSpace(_contextualIdProvider.CorrelationId) ? new List<string>() : new List<string>() { _contextualIdProvider.CorrelationId },
+                SessionId = _contextualIdProvider.SessionId,
+                UserId = _contextualIdProvider.UserId,
                 Data = new Dictionary<string, object>
                 {
                     {"CommandText", commandText },
@@ -88,7 +90,9 @@ namespace MicroserviceAnalytics.Core.Implementation
 
             Event ev = new Event
             {
-                CorrelationIds = string.IsNullOrWhiteSpace(_correlationIdProvider.CorrelationId) ? new List<string>() : new List<string>() { _correlationIdProvider.CorrelationId },
+                CorrelationIds = string.IsNullOrWhiteSpace(_contextualIdProvider.CorrelationId) ? new List<string>() : new List<string>() { _contextualIdProvider.CorrelationId },
+                SessionId = _contextualIdProvider.SessionId,
+                UserId = _contextualIdProvider.UserId,
                 Data = new Dictionary<string, object>
                 {
                     {"MetricType", indicatorType },
@@ -108,7 +112,9 @@ namespace MicroserviceAnalytics.Core.Implementation
 
             Event ev = new Event
             {
-                CorrelationIds = string.IsNullOrWhiteSpace(_correlationIdProvider.CorrelationId) ? new List<string>() : new List<string>() { _correlationIdProvider.CorrelationId },
+                CorrelationIds = string.IsNullOrWhiteSpace(_contextualIdProvider.CorrelationId) ? new List<string>() : new List<string>() { _contextualIdProvider.CorrelationId },
+                SessionId = _contextualIdProvider.SessionId,
+                UserId = _contextualIdProvider.UserId,
                 Data = new Dictionary<string, object>
                 {
                     {"Level", levelRank },
@@ -137,7 +143,7 @@ namespace MicroserviceAnalytics.Core.Implementation
             Log(message, levelRank, levelText, timestamp, ex, payload);
         }
 
-        public void Error(Exception ex, Dictionary<string, string> additionalData = null, string correlationId = null)
+        public void Error(Exception ex, Dictionary<string, string> additionalData = null, string correlationId = null, string sessionId = null, string userId = null)
         {
             if (!_clientConfiguration.IsCaptureErrorsEnabled)
                 return;
@@ -146,6 +152,8 @@ namespace MicroserviceAnalytics.Core.Implementation
             Event ev = new Event
             {
                 CorrelationIds = correlationIds,
+                SessionId = String.IsNullOrWhiteSpace(sessionId) ? _contextualIdProvider.SessionId : sessionId,
+                UserId = String.IsNullOrWhiteSpace(userId) ? _contextualIdProvider.UserId : userId,
                 Data = new Dictionary<string, object>
                 {
                     {"Message", ex.Message },
@@ -165,6 +173,8 @@ namespace MicroserviceAnalytics.Core.Implementation
             string uri,
             bool didStripQueryParams,
             string correlationId,
+            string sessionId,
+            string userId,
             DateTimeOffset requestDateTime,
             long durationInMilliseconds,
             Dictionary<string, string[]> requestHeaders,
@@ -177,6 +187,8 @@ namespace MicroserviceAnalytics.Core.Implementation
             Event ev = new Event
             {
                 CorrelationIds = correlationIds,
+                SessionId = sessionId,
+                UserId = userId,
                 Data = new Dictionary<string, object>
                 {
                     {"Verb", verb },
@@ -203,7 +215,7 @@ namespace MicroserviceAnalytics.Core.Implementation
             }
             else
             {
-                correlationIds = new List<string> { _correlationIdProvider.CorrelationId };
+                correlationIds = new List<string> { _contextualIdProvider.CorrelationId };
             }
             return correlationIds;
         }
