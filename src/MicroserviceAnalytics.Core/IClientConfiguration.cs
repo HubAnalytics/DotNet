@@ -22,6 +22,8 @@ namespace MicroserviceAnalytics.Core
 
         string[] HttpResponseHeaderWhitelist { get; }
 
+        string[] ExcludedVerbs { get; }
+
         string HttpStopwatchKey { get; }
 
         bool IsRemoteUpdateEnabled { get; }

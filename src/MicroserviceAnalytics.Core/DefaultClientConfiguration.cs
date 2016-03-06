@@ -15,6 +15,7 @@ namespace MicroserviceAnalytics.Core
         public bool StripHttpQueryParams => true;
         public string[] HttpRequestHeaderWhitelist => new[] {"*"};
         public string[] HttpResponseHeaderWhitelist => new[] {"*"};
+        public string[] ExcludedVerbs => new[] {"OPTIONS"};
         public string HttpStopwatchKey => Constants.HttpStopwatchKey;
         public bool IsRemoteUpdateEnabled => false;
         public bool IsCaptureSqlEnabled => true;

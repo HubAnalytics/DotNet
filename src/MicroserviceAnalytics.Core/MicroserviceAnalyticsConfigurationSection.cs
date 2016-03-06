@@ -111,6 +111,14 @@ namespace MicroserviceAnalytics.Core
             set { this["httpResponseHeaderWhitelist"] = value; }
         }
 
+        [ConfigurationProperty("excludedVerbs", IsRequired = false, DefaultValue = "OPTIONS")]
+        [StringValidator]
+        public string ExcludedVerbsCommaSeparated
+        {
+            get { return (string)this["excludedVerbs"]; }
+            set { this["excludedVerbs"] = value; }
+        }
+
         [ConfigurationProperty("httpStopwatchKey", IsRequired = false, DefaultValue = Constants.HttpStopwatchKey)]
         [StringValidator]
         public string HttpStopwatchKey
@@ -144,6 +152,7 @@ namespace MicroserviceAnalytics.Core
 
         public string[] HttpRequestHeaderWhitelist => HttpCommaSeparatedRequestHeaderWhitelist.Split(',');
         public string[] HttpResponseHeaderWhitelist => HttpCommaSeparatedResponseHeaderWhitelist.Split(',');
+        public string[] ExcludedVerbs => ExcludedVerbsCommaSeparated.Split(',');
         public TimeSpan UploadInterval => TimeSpan.FromMilliseconds(UploadIntervalMs);
     }
 }

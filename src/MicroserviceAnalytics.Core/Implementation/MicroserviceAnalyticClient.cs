@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using MicroserviceAnalytics.Core.Model;
 using Newtonsoft.Json;
 using Environment = MicroserviceAnalytics.Core.Model.Environment;
@@ -181,6 +182,8 @@ namespace MicroserviceAnalytics.Core.Implementation
             Dictionary<string, string[]> responseHeaders)
         {
             if (!_clientConfiguration.IsCaptureHttpEnabled)
+                return;
+            if (_clientConfiguration.ExcludedVerbs.Contains(verb.ToUpper()))
                 return;
 
             List<string> correlationIds = GetCorrelationIdList(correlationId);

@@ -8,7 +8,7 @@ namespace MicroserviceAnalytics.WebAPI2
 {
     /// <summary>
     /// This action filter attribute works with the HttpCorrelator (and HttpLogger) in AccidentalFish.ApplicationSupport.Owin
-    /// to pull the correlation ID out of the header and set it in the call context.
+    /// to pull the correlation IDs out of the headers and set them in the call context.
     /// 
     /// The reason this is necessary is that when hosting Web API in IIS a new call context scope is created between OWIN and
     /// the controller being invoked and therefore any call context values set in the OWIN middleware are not visible within Web API
@@ -21,6 +21,8 @@ namespace MicroserviceAnalytics.WebAPI2
     public class HttpCorrelatorAttribute : ActionFilterAttribute
     {
         private readonly string _correlationIdName;
+        private readonly string _userIdName;
+        private readonly string _sessionIdName;
         private readonly IContextualIdProvider _contextualIdProvider;
 
         /// <summary>
@@ -33,6 +35,8 @@ namespace MicroserviceAnalytics.WebAPI2
                 microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
             }
             _correlationIdName = microserviceAnalyticClientFactory.GetClientConfiguration().CorrelationIdKey;
+            _userIdName = microserviceAnalyticClientFactory.GetClientConfiguration().UserIdKey;
+            _sessionIdName = microserviceAnalyticClientFactory.GetClientConfiguration().SessionIdKey;
             _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
         }
 
@@ -45,6 +49,16 @@ namespace MicroserviceAnalytics.WebAPI2
             if (headerValues != null && headerValues.Any())
             {
                 _contextualIdProvider.CorrelationId = headerValues.First();
+            }
+            headerValues = actionContext.Request.Headers.GetValues(_userIdName);
+            if (headerValues != null && headerValues.Any())
+            {
+                _contextualIdProvider.UserId = headerValues.First();
+            }
+            headerValues = actionContext.Request.Headers.GetValues(_sessionIdName);
+            if (headerValues != null && headerValues.Any())
+            {
+                _contextualIdProvider.SessionId = headerValues.First();
             }
         }
     }

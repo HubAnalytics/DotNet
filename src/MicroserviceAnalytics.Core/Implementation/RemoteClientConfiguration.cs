@@ -25,7 +25,8 @@ namespace MicroserviceAnalytics.Core.Implementation
         private readonly Uri _endpoint;
         private readonly string _sessionIdKey;
         private readonly string _userIdKey;
-
+        private readonly string[] _excludedVerbs;
+        
         private TimeSpan _uploadInterval;
         private bool _isCaptureHttpEnabled;
         private bool _isCaptureErrorsEnabled;
@@ -48,6 +49,7 @@ namespace MicroserviceAnalytics.Core.Implementation
             _httpResponseHeaderWhitelist = initialConfiguration.HttpResponseHeaderWhitelist;
             _sessionIdKey = initialConfiguration.SessionIdKey;
             _userIdKey = initialConfiguration.UserIdKey;
+            _excludedVerbs = initialConfiguration.ExcludedVerbs;
 
             _uploadInterval = initialConfiguration.UploadInterval;
             _isCaptureHttpEnabled = initialConfiguration.IsCaptureHttpEnabled;
@@ -87,6 +89,8 @@ namespace MicroserviceAnalytics.Core.Implementation
         public string[] HttpRequestHeaderWhitelist => _httpRequestHeaderWhitelist;
 
         public string[] HttpResponseHeaderWhitelist => _httpResponseHeaderWhitelist;
+
+        public string[] ExcludedVerbs => _excludedVerbs;
 
         public TimeSpan UploadInterval => _uploadInterval;
 
