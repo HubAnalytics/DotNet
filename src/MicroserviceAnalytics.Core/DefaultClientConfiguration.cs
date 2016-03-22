@@ -23,5 +23,10 @@ namespace MicroserviceAnalytics.Core
         public bool IsCaptureCustomMetricEnabled => true;
         public bool IsCaptureErrorsEnabled => true;
         public bool IsCaptureLogsEnabled => true;
+        public bool IsUserTrackingEnabled => true;
+        public bool IsSessionTrackingEnabled => true;
+        public bool IsUserIdCreationEnabled => true;
+        public bool IsSessionIdCreationEnabled => true;
+        public string TrackingCookieName => Constants.TrackingCookieName;
     }
 }

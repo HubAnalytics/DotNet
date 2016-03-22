@@ -150,6 +150,42 @@ namespace MicroserviceAnalytics.Core
             set { this["sessionIdKey"] = value; }
         }
 
+        [ConfigurationProperty("isUserTrackingEnabled", IsRequired = false, DefaultValue = true)]
+        public bool IsUserTrackingEnabled
+        {
+            get { return (bool) this["isUserTrackingEnabled"]; }
+            set { this["isUserTrackingEnabled"] = value; }
+        }
+
+        [ConfigurationProperty("isSessionTrackingEnabled", IsRequired = false, DefaultValue = true)]
+        public bool IsSessionTrackingEnabled
+        {
+            get { return (bool)this["isSessionTrackingEnabled"]; }
+            set { this["isSessionTrackingEnabled"] = value; }
+        }
+
+        [ConfigurationProperty("isUserIdCreationEnabled", IsRequired = false, DefaultValue = true)]
+        public bool IsUserIdCreationEnabled
+        {
+            get { return (bool)this["isUserIdCreationEnabled"]; }
+            set { this["isUserIdCreationEnabled"] = value; }
+        }
+
+        [ConfigurationProperty("isSessionIdCreationEnabled", IsRequired = false, DefaultValue = true)]
+        public bool IsSessionIdCreationEnabled
+        {
+            get { return (bool)this["isSessionIdCreationEnabled"]; }
+            set { this["isSessionIdCreationEnabled"] = value; }
+        }
+
+        [ConfigurationProperty("trackingCookieName", IsRequired = false, DefaultValue = Constants.TrackingCookieName)]
+        [StringValidator]
+        public string TrackingCookieName
+        {
+            get { return (string)this["trackingCookieName"]; }
+            set { this["trackingCookieName"] = value; }
+        }
+
         public string[] HttpRequestHeaderWhitelist => HttpCommaSeparatedRequestHeaderWhitelist.Split(',');
         public string[] HttpResponseHeaderWhitelist => HttpCommaSeparatedResponseHeaderWhitelist.Split(',');
         public string[] ExcludedVerbs => ExcludedVerbsCommaSeparated.Split(',');

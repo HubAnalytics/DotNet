@@ -4,49 +4,40 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using MicroserviceAnalytics.AspNet4.Implementation;
 using MicroserviceAnalytics.Core;
 
 namespace MicroserviceAnalytics.AspNet4
 {
     public class DataCollectionHttpModule : IHttpModule
     {
+        private readonly IHeaderParser _headerParser;
         private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
-        private readonly string _httpCorrelationHeaderKey;
         private readonly IContextualIdProvider _contextualIdProvider;
-        private readonly bool _correlationIdEnabled;
-        private readonly bool _httpTracingStripQueryParams;
-        private readonly IReadOnlyCollection<string> _httpCaptureRequestHeaders;
-        private readonly IReadOnlyCollection<string> _httpCaptureResponseHeaders;
-        private readonly bool _httpTracingEnabled;
-        private readonly string _stopwatchKey;
-        private readonly string _sessionIdKey;
-        private readonly string _userIdKey;
-
-        public DataCollectionHttpModule() : this(null)
+        private readonly IUserIdProvider _userIdProvider;
+        private readonly ISessionIdProvider _sessionIdProvider;
+        
+        public DataCollectionHttpModule() : this(null, null)
         {
             
         }
 
-        public DataCollectionHttpModule(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory)
+        public DataCollectionHttpModule(IMicroserviceAnalyticClientFactory microserviceAnalyticClientFactory, IHeaderParser headerParser)
         {
             if (microserviceAnalyticClientFactory == null)
             {
                 microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
             }
+            if (headerParser == null)
+            {
+                headerParser = new HeaderParser();
+            }
             IClientConfiguration clientConfiguration = microserviceAnalyticClientFactory.GetClientConfiguration();
+            _headerParser = headerParser;
             _microserviceAnalyticClient = microserviceAnalyticClientFactory.GetClient();
-
-            _httpCorrelationHeaderKey = clientConfiguration.CorrelationIdKey;
-            _correlationIdEnabled = clientConfiguration.EnableCorrelation;
             _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
-
-            _httpTracingEnabled = clientConfiguration.IsCaptureHttpEnabled;
-            _httpCaptureRequestHeaders = clientConfiguration.HttpRequestHeaderWhitelist;
-            _httpCaptureResponseHeaders = clientConfiguration.HttpResponseHeaderWhitelist;
-            _stopwatchKey = clientConfiguration.HttpStopwatchKey;
-            _httpTracingStripQueryParams = clientConfiguration.StripHttpQueryParams;
-            _sessionIdKey = clientConfiguration.SessionIdKey;
-            _userIdKey = clientConfiguration.UserIdKey;
+            _sessionIdProvider = clientConfiguration.IsSessionIdCreationEnabled ? microserviceAnalyticClientFactory.GetRuntimeProviderDiscoveryService().SessionIdProvider : null;
+            _userIdProvider = clientConfiguration.IsSessionIdCreationEnabled ? microserviceAnalyticClientFactory.GetRuntimeProviderDiscoveryService().UserIdProvider : null;
         }
 
         public void Init(HttpApplication context)
@@ -61,10 +52,7 @@ namespace MicroserviceAnalytics.AspNet4
         {
             try
             {
-                if (_correlationIdEnabled)
-                {
-                    SetCorrelationIdOnResponse(sender);
-                }
+                SetCorrelationIdOnResponse(sender);
                 SetSessionAndUserIdOnResponse(sender);
             }
             catch (Exception ex)
@@ -78,7 +66,7 @@ namespace MicroserviceAnalytics.AspNet4
         {
             try
             {
-                if (_httpTracingEnabled)
+                if (IsCaptureHttpEnabled)
                 {
                     EndHttpTrace(sender);
                 }
@@ -93,11 +81,8 @@ namespace MicroserviceAnalytics.AspNet4
         {
             try
             {
-                if (_correlationIdEnabled)
-                {
-                    SetContextualIdsOnRequest(sender);
-                }
-                if (_httpTracingEnabled)
+                SetContextualIdsOnRequest(sender);
+                if (IsCaptureHttpEnabled)
                 {
                     BeginHttpTrace(sender);
                 }
@@ -136,7 +121,7 @@ namespace MicroserviceAnalytics.AspNet4
         {
             HttpApplication application = (HttpApplication)sender;
             Stopwatch sw = new Stopwatch();
-            application.Context.Items[_stopwatchKey] = sw;
+            application.Context.Items[StopwatchKey] = sw;
             sw.Start();
         }
 
@@ -145,7 +130,7 @@ namespace MicroserviceAnalytics.AspNet4
             HttpApplication application = (HttpApplication)sender;
             
             long elapsedMilliseconds = 0;
-            Stopwatch sw = (Stopwatch) application.Context.Items[_stopwatchKey];
+            Stopwatch sw = (Stopwatch) application.Context.Items[StopwatchKey];
             if (sw != null)
             {
                 sw.Stop();
@@ -156,7 +141,7 @@ namespace MicroserviceAnalytics.AspNet4
             
             string uri = request.Url.ToString();
             bool didStripQueryParams = false;
-            if (_httpTracingStripQueryParams && request.QueryString.Count > 0)
+            if (StripQueryParams && request.QueryString.Count > 0)
             {
                 uri = uri.Substring(0, uri.IndexOf("?", StringComparison.Ordinal));
                 didStripQueryParams = true;
@@ -165,8 +150,8 @@ namespace MicroserviceAnalytics.AspNet4
             string correlationId = GetCorrelationId(request);
             string userId = GetUserId(request);
             string sessionId = GetSessionId(request);
-            Dictionary<string, string[]> requestHeaders = CaptureHeaders(_httpCaptureRequestHeaders, request.Headers);
-            Dictionary<string, string[]> responseHeaders = CaptureHeaders(_httpCaptureResponseHeaders, HttpContext.Current.Response.Headers);
+            Dictionary<string, string[]> requestHeaders = _headerParser.CaptureHeaders(CapturedRequestHeaders, request.Headers);
+            Dictionary<string, string[]> responseHeaders = _headerParser.CaptureHeaders(CapturedResponseHeaders, HttpContext.Current.Response.Headers);
 
             _microserviceAnalyticClient.HttpRequest(verb,
                 HttpContext.Current.Response.StatusCode,
@@ -187,38 +172,51 @@ namespace MicroserviceAnalytics.AspNet4
             string correlationId;
             string userId = null;
             string sessionId = null;
+            string[] values;
 
-            string[] values = application.Request.Headers.GetValues(_httpCorrelationHeaderKey);
-            if (values != null && values.Any())
+            if (_microserviceAnalyticClient.ClientConfiguration.EnableCorrelation)
             {
-                correlationId = values[0];
-            }
-            else
-            {
-                correlationId = Guid.NewGuid().ToString();
-                application.Request.Headers.Add(_httpCorrelationHeaderKey, correlationId);
-            }
-            values = application.Request.Headers.GetValues(_sessionIdKey);
-            if (values != null && values.Any())
-            {
-                sessionId = values[0];
-            }
-            values = application.Request.Headers.GetValues(_userIdKey);
-            if (values != null && values.Any())
-            {
-                userId = values[0];
+                values = application.Request.Headers.GetValues(CorrelationIdKey);
+                if (values != null && values.Any())
+                {
+                    correlationId = values[0];
+                }
+                else
+                {
+                    correlationId = Guid.NewGuid().ToString();
+                    application.Request.Headers.Add(CorrelationIdKey, correlationId);
+                }
+                _contextualIdProvider.CorrelationId = correlationId;
             }
 
-            _contextualIdProvider.CorrelationId = correlationId;
-            _contextualIdProvider.UserId = userId;
-            _contextualIdProvider.SessionId = sessionId;
+            if (_microserviceAnalyticClient.ClientConfiguration.IsSessionTrackingEnabled)
+            {
+                values = application.Request.Headers.GetValues(SessionIdKey);
+                if (values != null && values.Any())
+                {
+                    sessionId = values[0];
+                }
+                _contextualIdProvider.SessionId = sessionId;
+            }
+
+            if (_microserviceAnalyticClient.ClientConfiguration.IsUserTrackingEnabled)
+            {
+                values = application.Request.Headers.GetValues(UserIdKey);
+                if (values != null && values.Any())
+                {
+                    userId = values[0];
+                    _contextualIdProvider.UserId = userId;
+                }
+            }            
         }
 
         private void SetCorrelationIdOnResponse(object sender)
         {
+            if (!_microserviceAnalyticClient.ClientConfiguration.EnableCorrelation) return;
+
             HttpApplication application = (HttpApplication)sender;
 
-            string[] responseValues = application.Response.Headers.GetValues(_httpCorrelationHeaderKey);
+            string[] responseValues = application.Response.Headers.GetValues(CorrelationIdKey);
             if (responseValues == null || !responseValues.Any())
             {
                 HttpRequest request = application.Request;
@@ -226,7 +224,7 @@ namespace MicroserviceAnalytics.AspNet4
 
                 if (!string.IsNullOrWhiteSpace(correlationId))
                 {
-                    application.Response.Headers.Add(_httpCorrelationHeaderKey, correlationId);
+                    application.Response.Headers.Add(CorrelationIdKey, correlationId);
                 }
             }
         }
@@ -235,24 +233,24 @@ namespace MicroserviceAnalytics.AspNet4
         {
             HttpApplication application = (HttpApplication)sender;
 
-            string[] responseValues = application.Response.Headers.GetValues(_sessionIdKey);
+            string[] responseValues = application.Response.Headers.GetValues(SessionIdKey);
             if (responseValues == null || !responseValues.Any())
             {
                 HttpRequest request = application.Request;
                 var sessionId = GetSessionId(request);
                 if (!string.IsNullOrWhiteSpace(sessionId))
                 {
-                    application.Response.Headers.Add(_sessionIdKey, sessionId);
+                    application.Response.Headers.Add(SessionIdKey, sessionId);
                 }
             }
-            responseValues = application.Response.Headers.GetValues(_userIdKey);
+            responseValues = application.Response.Headers.GetValues(UserIdKey);
             if (responseValues == null || !responseValues.Any())
             {
                 HttpRequest request = application.Request;
                 var userId = GetUserId(request);
                 if (!string.IsNullOrWhiteSpace(userId))
                 {
-                    application.Response.Headers.Add(_userIdKey, userId);
+                    application.Response.Headers.Add(UserIdKey, userId);
                 }
             }
         }
@@ -260,7 +258,7 @@ namespace MicroserviceAnalytics.AspNet4
         private string GetCorrelationId(HttpRequest request)
         {
             string correlationId;
-            string[] headerCorrelationIdValues = request.Headers.GetValues(_httpCorrelationHeaderKey);
+            string[] headerCorrelationIdValues = request.Headers.GetValues(CorrelationIdKey);
             if (headerCorrelationIdValues != null && headerCorrelationIdValues.Any())
             {
                 correlationId = headerCorrelationIdValues.First();
@@ -275,7 +273,7 @@ namespace MicroserviceAnalytics.AspNet4
         private string GetSessionId(HttpRequest request)
         {
             string sessionId = null;
-            string[] headerSessionIdValues = request.Headers.GetValues(_sessionIdKey);
+            string[] headerSessionIdValues = request.Headers.GetValues(SessionIdKey);
             if (headerSessionIdValues != null && headerSessionIdValues.Any())
             {
                 sessionId = headerSessionIdValues.First();
@@ -287,42 +285,35 @@ namespace MicroserviceAnalytics.AspNet4
         private string GetUserId(HttpRequest request)
         {
             string userId = null;
-            string[] headerUserIdValues = request.Headers.GetValues(_userIdKey);
+            string[] headerUserIdValues = request.Headers.GetValues(UserIdKey);
             if (headerUserIdValues != null && headerUserIdValues.Any())
             {
                 userId = headerUserIdValues.First();
+            }
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                if (IsUserIdCreationEnabled)
+                {
+                    _userIdProvider.UserId(_microserviceAnalyticClient.ClientConfiguration, request);
+                }
+
+                
             }
 
             return userId;
         }
 
-        private Dictionary<string, string[]> CaptureHeaders(IReadOnlyCollection<string> captureHeaders, NameValueCollection headers)
-        {
-            Dictionary<string, string[]> capturedHeaders = null;
-            if (captureHeaders != null && captureHeaders.Any())
-            {
-                capturedHeaders = new Dictionary<string, string[]>();
-                if (captureHeaders.First() == "*")
-                {
-                    foreach (string key in headers.AllKeys)
-                    {
-                        string[] values = headers.GetValues(key);
-                        capturedHeaders[key] = values;
-                    }
-                }
-                else
-                {
-                    foreach (string headerName in captureHeaders)
-                    {
-                        string[] values = headers.GetValues(headerName);
-                        if (values != null && values.Any())
-                        {
-                            capturedHeaders.Add(headerName, values);
-                        }
-                    }
-                }
-            }
-            return capturedHeaders;
-        }
+        // We do this dynamically as many of these are dynamic with more heading that way
+        private string UserIdKey => _microserviceAnalyticClient.ClientConfiguration.UserIdKey;
+        private string SessionIdKey => _microserviceAnalyticClient.ClientConfiguration.SessionIdKey;
+        private string StopwatchKey => _microserviceAnalyticClient.ClientConfiguration.HttpStopwatchKey;
+        private string CorrelationIdKey => _microserviceAnalyticClient.ClientConfiguration.CorrelationIdKey;
+        private bool IsCaptureHttpEnabled => _microserviceAnalyticClient.ClientConfiguration.IsCaptureHttpEnabled;
+        private IReadOnlyCollection<string> CapturedRequestHeaders => _microserviceAnalyticClient.ClientConfiguration.HttpRequestHeaderWhitelist;
+        private IReadOnlyCollection<string> CapturedResponseHeaders => _microserviceAnalyticClient.ClientConfiguration.HttpResponseHeaderWhitelist;
+        private bool StripQueryParams => _microserviceAnalyticClient.ClientConfiguration.StripHttpQueryParams;
+        private string TrackingCookieName => _microserviceAnalyticClient.ClientConfiguration.TrackingCookieName;
+        public bool IsSessionIdCreationEnabled => _microserviceAnalyticClient.ClientConfiguration.IsSessionIdCreationEnabled;
+        public bool IsUserIdCreationEnabled => _microserviceAnalyticClient.ClientConfiguration.IsUserIdCreationEnabled;
     }
 }

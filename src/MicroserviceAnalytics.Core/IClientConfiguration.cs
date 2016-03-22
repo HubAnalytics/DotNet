@@ -31,8 +31,7 @@ namespace MicroserviceAnalytics.Core
         string SessionIdKey { get; }
 
         string UserIdKey { get; }
-
-
+        
         bool IsCaptureErrorsEnabled { get; }
 
         bool IsCaptureSqlEnabled { get; }
@@ -41,5 +40,10 @@ namespace MicroserviceAnalytics.Core
 
         bool IsCaptureCustomMetricEnabled { get; }
         bool IsCaptureLogsEnabled { get; }
+        bool IsUserTrackingEnabled { get; }
+        bool IsSessionTrackingEnabled { get; }
+        bool IsUserIdCreationEnabled { get; }
+        bool IsSessionIdCreationEnabled { get; }
+        string TrackingCookieName { get; }
     }
 }

@@ -1,17 +1,20 @@
-﻿using MicroserviceAnalytics.Core.Implementation;
+﻿using System;
+using MicroserviceAnalytics.Core.Implementation;
 
 namespace MicroserviceAnalytics.Core
 {
     public class MicroserviceAnalyticClientFactory : IMicroserviceAnalyticClientFactory
     {
+        private readonly IRuntimeProviderDiscoveryService _runtimeProviderDiscoveryService;
         private readonly IClientConfigurationProvider _clientConfigurationProvider;
         private static readonly object ClientLockObject = new object();
         private static readonly object ClientConfigurationLockObject = new object();
         private static IMicroserviceAnalyticClient _microserviceAnalyticClient;
         private static IClientConfiguration _clientConfiguration;
 
-        public MicroserviceAnalyticClientFactory(IClientConfigurationProvider clientConfigurationProvider = null)
+        public MicroserviceAnalyticClientFactory(IClientConfigurationProvider clientConfigurationProvider = null, IRuntimeProviderDiscoveryService runtimeProviderDiscoveryService=null)
         {
+            _runtimeProviderDiscoveryService = runtimeProviderDiscoveryService ?? new DefaultRuntimeProviderDiscoveryService();
             _clientConfigurationProvider = clientConfigurationProvider ?? new PlatformDefaultConfigurationProvider();
         }
 
@@ -75,5 +78,10 @@ namespace MicroserviceAnalytics.Core
         {
             return new StackTraceParser();
         }
+
+        public virtual IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService()
+        {
+            return _runtimeProviderDiscoveryService;
+        }        
     }
 }

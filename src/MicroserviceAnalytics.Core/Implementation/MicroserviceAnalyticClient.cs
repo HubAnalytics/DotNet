@@ -33,6 +33,8 @@ namespace MicroserviceAnalytics.Core.Implementation
             _periodicDispatcher = new PeriodicDispatcher(this, propertyId, key, clientConfiguration);
         }
 
+        public IClientConfiguration ClientConfiguration => _clientConfiguration;
+
         public IReadOnlyCollection<Event> GetEvents(int batchSize)
         {
             List<Event> events = new List<Event>();

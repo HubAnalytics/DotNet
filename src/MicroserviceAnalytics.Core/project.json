@@ -19,17 +19,21 @@
         "System.Runtime": "4.0.21-beta-23516",
         "System.Runtime.Serialization.Json": "4.0.1-beta-23516",
         "System.Threading": "4.0.11-beta-23516",
-        "Newtonsoft.Json": "7.0.1"
+        "Newtonsoft.Json": "7.0.1",
+        "Microsoft.Framework.Runtime": "1.0.0-beta6",
+        "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
       }
     },
     "net451": {
       "frameworkAssemblies": {
         "System.Net.Http": "4.0.0.0",
         "Microsoft.VisualBasic": "10.0.0.0",
-        "System.configuration": "4.0.0.0"
+        "System.configuration": "4.0.0.0",
+        "System.Runtime": "4.0.10.0"
       },
       "dependencies": {
-        "Newtonsoft.Json": "7.0.1"
+        "Newtonsoft.Json": "7.0.1",
+        "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
       }
     }
   }

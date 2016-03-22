@@ -33,6 +33,10 @@ namespace MicroserviceAnalytics.Core.Implementation
         private bool _isCaptureSqlEnabled;
         private bool _isCaptureCustomMetricEnabled;
         private bool _isCaptureLogsEnabled;
+        private bool _isUserTrackingEnabled;
+        private bool _isSessionTrackingEnabled;
+        private bool _isUserIdCreationEnabled;
+        private bool _isSessionIdCreationEnabled;
 
         public RemoteClientConfiguration(IClientConfiguration initialConfiguration)
         {
@@ -50,6 +54,8 @@ namespace MicroserviceAnalytics.Core.Implementation
             _sessionIdKey = initialConfiguration.SessionIdKey;
             _userIdKey = initialConfiguration.UserIdKey;
             _excludedVerbs = initialConfiguration.ExcludedVerbs;
+            _isUserIdCreationEnabled = initialConfiguration.IsUserIdCreationEnabled;
+            _isSessionIdCreationEnabled = initialConfiguration.IsSessionIdCreationEnabled;
 
             _uploadInterval = initialConfiguration.UploadInterval;
             _isCaptureHttpEnabled = initialConfiguration.IsCaptureHttpEnabled;
@@ -57,7 +63,9 @@ namespace MicroserviceAnalytics.Core.Implementation
             _isCaptureSqlEnabled = initialConfiguration.IsCaptureSqlEnabled;
             _isCaptureCustomMetricEnabled = initialConfiguration.IsCaptureCustomMetricEnabled;
             _isCaptureLogsEnabled = initialConfiguration.IsCaptureLogsEnabled;
-
+            _isUserTrackingEnabled = initialConfiguration.IsUserTrackingEnabled;
+            _isSessionTrackingEnabled = initialConfiguration.IsSessionTrackingEnabled;
+            
             _endpoint = new Uri(_apiRoot.EndsWith("/") ? $"{_apiRoot}{SettingsRelativePath}" : $"{_apiRoot}/{SettingsRelativePath}");
 
             Task.Run(async () =>
@@ -103,6 +111,12 @@ namespace MicroserviceAnalytics.Core.Implementation
         public bool IsCaptureCustomMetricEnabled => _isCaptureCustomMetricEnabled;
 
         public bool IsCaptureLogsEnabled => _isCaptureLogsEnabled;
+        public bool IsUserTrackingEnabled => _isUserTrackingEnabled;
+        public bool IsSessionTrackingEnabled => _isSessionTrackingEnabled;
+        public bool IsUserIdCreationEnabled => _isUserIdCreationEnabled;
+        public bool IsSessionIdCreationEnabled => _isSessionIdCreationEnabled;
+        public string TrackingCookieName => Constants.TrackingCookieName;
+
 
         private async Task BackgroundUpdate()
         {
@@ -132,6 +146,8 @@ namespace MicroserviceAnalytics.Core.Implementation
                             _isCaptureSqlEnabled = settings.IsCaptureSqlEnabled;
                             _isCaptureCustomMetricEnabled = settings.IsCaptureCustomMetricsEnabled;
                             _isCaptureLogsEnabled = settings.IsCaptureLogsEnabled;
+                            _isUserTrackingEnabled = settings.IsUserTrackingEnabled;
+                            _isSessionTrackingEnabled = settings.IsSessionTrackingEnabled;
                         }
                     }
                 }

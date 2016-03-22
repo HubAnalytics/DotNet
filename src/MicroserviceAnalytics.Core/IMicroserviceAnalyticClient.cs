@@ -7,6 +7,8 @@ namespace MicroserviceAnalytics.Core
 {
     public interface IMicroserviceAnalyticClient
     {
+        IClientConfiguration ClientConfiguration { get; }
+
         IReadOnlyCollection<Event> GetEvents(int batchSize);
 
         Environment GetEnvironment();

@@ -15,5 +15,9 @@
         public bool IsCaptureCustomMetricsEnabled { get; set; }
 
         public bool IsCaptureLogsEnabled { get; set; }
+
+        public bool IsUserTrackingEnabled { get; set; }
+
+        public bool IsSessionTrackingEnabled { get; set; }
     }
 }

@@ -22,6 +22,11 @@ namespace MicroserviceAnalytics.Core
         public bool IsCaptureHttpEnabled { get; }
         public bool IsCaptureCustomMetricEnabled { get; }
         public bool IsCaptureLogsEnabled { get; }
+        public bool IsUserTrackingEnabled { get; }
+        public bool IsSessionTrackingEnabled { get; }
+        public bool IsUserIdCreationEnabled { get; }
+        public bool IsSessionIdCreationEnabled { get; }
+        public string TrackingCookieName { get; set; }
         public string SessionIdKey { get; }
         public string UserIdKey { get; }
     }

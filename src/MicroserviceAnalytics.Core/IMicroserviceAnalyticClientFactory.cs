@@ -7,5 +7,6 @@ namespace MicroserviceAnalytics.Core
         IContextualIdProvider GetCorrelationIdProvider();
         IEnvironmentCapture GetEnvironmentCapture();
         IStackTraceParser GetStackTraceParser();
+        IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService();
     }
 }
