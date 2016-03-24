@@ -76,7 +76,7 @@ namespace MicroserviceAnalytics.Core
                         //  2. a candidate type not in MicroserviceAnalytics.Core
                         //  3. fallback to guid generation
                         var discoveredType = FindExternalToLibraryType(candidateTypes) ??
-                                             (FindExternalToCoreType(candidateTypes) ?? typeof (NewGuidUserIdProvider));
+                                             (FindExternalToCoreType(candidateTypes) ?? typeof (NewGuidSessionIdProvider));
 
                         _discoveredSessionIdProvider = (ISessionIdProvider)Activator.CreateInstance(discoveredType);
                     }

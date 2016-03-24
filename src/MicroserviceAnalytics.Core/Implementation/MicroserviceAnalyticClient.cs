@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using MicroserviceAnalytics.Core.Model;
 using Newtonsoft.Json;
 using Environment = MicroserviceAnalytics.Core.Model.Environment;
@@ -17,6 +18,7 @@ namespace MicroserviceAnalytics.Core.Implementation
         private readonly IStackTraceParser _stackTraceParser;
         private readonly IClientConfiguration _clientConfiguration;
         private readonly PeriodicDispatcher _periodicDispatcher;
+        private readonly CancellationTokenSource _cancellationTokenSource;
         
         public MicroserviceAnalyticClient(string propertyId,
             string key,
@@ -29,8 +31,9 @@ namespace MicroserviceAnalytics.Core.Implementation
             _contextualIdProvider = contextualIdProvider;
             _stackTraceParser = stackTraceParser;
             _clientConfiguration = clientConfiguration;
+            _cancellationTokenSource = new CancellationTokenSource();
 
-            _periodicDispatcher = new PeriodicDispatcher(this, propertyId, key, clientConfiguration);
+            _periodicDispatcher = new PeriodicDispatcher(this, propertyId, key, clientConfiguration, _cancellationTokenSource);
         }
 
         public IClientConfiguration ClientConfiguration => _clientConfiguration;
@@ -59,7 +62,7 @@ namespace MicroserviceAnalytics.Core.Implementation
             bool succeeded,
             int? sqlErrorCode)
         {
-            if (!_clientConfiguration.IsCaptureSqlEnabled)
+            if (!_clientConfiguration.IsCaptureSqlEnabled || _cancellationTokenSource.IsCancellationRequested)
                 return;
 
             Event ev = new Event
@@ -88,7 +91,7 @@ namespace MicroserviceAnalytics.Core.Implementation
 
         public void Indicator(string indicatorType, double value)
         {
-            if (!_clientConfiguration.IsCaptureCustomMetricEnabled)
+            if (!_clientConfiguration.IsCaptureCustomMetricEnabled || _cancellationTokenSource.IsCancellationRequested)
                 return;
 
             Event ev = new Event
@@ -110,7 +113,7 @@ namespace MicroserviceAnalytics.Core.Implementation
 
         public void Log(string message, int levelRank, string levelText, DateTimeOffset timestamp, Exception ex, object payload)
         {
-            if (!_clientConfiguration.IsCaptureLogsEnabled)
+            if (!_clientConfiguration.IsCaptureLogsEnabled || _cancellationTokenSource.IsCancellationRequested)
                 return;
 
             Event ev = new Event
@@ -142,13 +145,16 @@ namespace MicroserviceAnalytics.Core.Implementation
 
         public void LogWithJson(string message, int levelRank, string levelText, DateTimeOffset timestamp, Exception ex, string jsonPayload)
         {
+            if (!_clientConfiguration.IsCaptureLogsEnabled || _cancellationTokenSource.IsCancellationRequested)
+                return;
+
             object payload = JsonConvert.DeserializeObject(jsonPayload);
             Log(message, levelRank, levelText, timestamp, ex, payload);
         }
 
         public void Error(Exception ex, Dictionary<string, string> additionalData = null, string correlationId = null, string sessionId = null, string userId = null)
         {
-            if (!_clientConfiguration.IsCaptureErrorsEnabled)
+            if (!_clientConfiguration.IsCaptureErrorsEnabled || _cancellationTokenSource.IsCancellationRequested)
                 return;
 
             List<string> correlationIds = GetCorrelationIdList(correlationId);
@@ -185,6 +191,8 @@ namespace MicroserviceAnalytics.Core.Implementation
         {
             if (!_clientConfiguration.IsCaptureHttpEnabled)
                 return;
+            if (_cancellationTokenSource.IsCancellationRequested)
+                return;
             if (_clientConfiguration.ExcludedVerbs.Contains(verb.ToUpper()))
                 return;
 
@@ -213,15 +221,7 @@ namespace MicroserviceAnalytics.Core.Implementation
 
         private List<string> GetCorrelationIdList(string correlationId)
         {
-            List<string> correlationIds;
-            if (correlationId != null)
-            {
-                correlationIds = new List<string> { correlationId };
-            }
-            else
-            {
-                correlationIds = new List<string> { _contextualIdProvider.CorrelationId };
-            }
+            List<string> correlationIds = correlationId != null ? new List<string> { correlationId } : new List<string> { _contextualIdProvider.CorrelationId };
             return correlationIds;
         }
     }

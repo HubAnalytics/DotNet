@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicroserviceAnalytics.Core.Model;
 
@@ -17,17 +19,20 @@ namespace MicroserviceAnalytics.Core.Implementation
         private readonly string _propertyId;
         private readonly string _key;
         private readonly IClientConfiguration _clientConfiguration;
+        private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly Uri _endpoint;
 
         public PeriodicDispatcher(IMicroserviceAnalyticClient microserviceAnalyticClient,
             string propertyId,
             string key,
-            IClientConfiguration clientConfiguration)
+            IClientConfiguration clientConfiguration,
+            CancellationTokenSource cancellationTokenSource)
         {
             _microserviceAnalyticClient = microserviceAnalyticClient;
             _propertyId = propertyId;
             _key = key;
             _clientConfiguration = clientConfiguration;
+            _cancellationTokenSource = cancellationTokenSource;
             string apiRoot = clientConfiguration.ApiRoot;
             _endpoint = new Uri(apiRoot.EndsWith("/") ? $"{apiRoot}{EventRelativePath}" : $"{apiRoot}/{EventRelativePath}");
             
@@ -40,7 +45,8 @@ namespace MicroserviceAnalytics.Core.Implementation
         private async Task BackgroundPush()
         {
             bool shouldDelay = true;
-            while (true)
+            bool shouldContinue = true;
+            while (shouldContinue)
             {
                 if (shouldDelay)
                 {
@@ -76,7 +82,12 @@ namespace MicroserviceAnalytics.Core.Implementation
                         {
                             if (response.IsSuccessStatusCode)
                             {
-                                string result = await response.Content.ReadAsStringAsync();
+                                await response.Content.ReadAsStringAsync();
+                            }
+                            else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                            {
+                                shouldContinue = false;
+                                _cancellationTokenSource.Cancel();
                             }
                         }
 

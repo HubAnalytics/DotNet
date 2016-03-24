@@ -8,6 +8,7 @@
         public const string UserIdKey = "msa-user-id";
         public const string SessionIdKey = "msa-session-id";
         public const int UploadIntervalMs = 3000;
-        public const string TrackingCookieName = "msatracker";
+        public const string TrackingSessionCookieName = "msasessiontracker";
+        public const string TrackingUserCookieName = "msausertracker";
     }
 }

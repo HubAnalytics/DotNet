@@ -26,7 +26,8 @@ namespace MicroserviceAnalytics.Core
         public bool IsSessionTrackingEnabled { get; }
         public bool IsUserIdCreationEnabled { get; }
         public bool IsSessionIdCreationEnabled { get; }
-        public string TrackingCookieName { get; set; }
+        public string TrackingSessionCookieName { get; set; }
+        public string TrackingUserCookieName { get; set; }
         public string SessionIdKey { get; }
         public string UserIdKey { get; }
     }

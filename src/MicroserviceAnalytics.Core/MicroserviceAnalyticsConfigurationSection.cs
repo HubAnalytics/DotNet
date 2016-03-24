@@ -178,12 +178,20 @@ namespace MicroserviceAnalytics.Core
             set { this["isSessionIdCreationEnabled"] = value; }
         }
 
-        [ConfigurationProperty("trackingCookieName", IsRequired = false, DefaultValue = Constants.TrackingCookieName)]
+        [ConfigurationProperty("trackingSessionCookieName", IsRequired = false, DefaultValue = Constants.TrackingSessionCookieName)]
         [StringValidator]
-        public string TrackingCookieName
+        public string TrackingSessionCookieName
         {
-            get { return (string)this["trackingCookieName"]; }
-            set { this["trackingCookieName"] = value; }
+            get { return (string)this["trackingSessionCookieName"]; }
+            set { this["trackingSessionCookieName"] = value; }
+        }
+
+        [ConfigurationProperty("trackingUserCookieName", IsRequired = false, DefaultValue = Constants.TrackingUserCookieName)]
+        [StringValidator]
+        public string TrackingUserCookieName
+        {
+            get { return (string)this["trackingUserCookieName"]; }
+            set { this["trackingUserCookieName"] = value; }
         }
 
         public string[] HttpRequestHeaderWhitelist => HttpCommaSeparatedRequestHeaderWhitelist.Split(',');

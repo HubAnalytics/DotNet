@@ -26,7 +26,9 @@ namespace MicroserviceAnalytics.Core.Implementation
         private readonly string _sessionIdKey;
         private readonly string _userIdKey;
         private readonly string[] _excludedVerbs;
-        
+        private readonly bool _isUserIdCreationEnabled;
+        private readonly bool _isSessionIdCreationEnabled;
+
         private TimeSpan _uploadInterval;
         private bool _isCaptureHttpEnabled;
         private bool _isCaptureErrorsEnabled;
@@ -34,9 +36,7 @@ namespace MicroserviceAnalytics.Core.Implementation
         private bool _isCaptureCustomMetricEnabled;
         private bool _isCaptureLogsEnabled;
         private bool _isUserTrackingEnabled;
-        private bool _isSessionTrackingEnabled;
-        private bool _isUserIdCreationEnabled;
-        private bool _isSessionIdCreationEnabled;
+        private bool _isSessionTrackingEnabled;        
 
         public RemoteClientConfiguration(IClientConfiguration initialConfiguration)
         {
@@ -115,7 +115,8 @@ namespace MicroserviceAnalytics.Core.Implementation
         public bool IsSessionTrackingEnabled => _isSessionTrackingEnabled;
         public bool IsUserIdCreationEnabled => _isUserIdCreationEnabled;
         public bool IsSessionIdCreationEnabled => _isSessionIdCreationEnabled;
-        public string TrackingCookieName => Constants.TrackingCookieName;
+        public string TrackingSessionCookieName => Constants.TrackingSessionCookieName;
+        public string TrackingUserCookieName => Constants.TrackingUserCookieName;
 
 
         private async Task BackgroundUpdate()

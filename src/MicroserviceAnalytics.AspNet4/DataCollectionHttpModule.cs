@@ -148,8 +148,8 @@ namespace MicroserviceAnalytics.AspNet4
             }
             string verb = request.HttpMethod;
             string correlationId = GetCorrelationId(request);
-            string userId = GetUserId(request);
-            string sessionId = GetSessionId(request);
+            string userId = GetUserId(application);
+            string sessionId = GetSessionId(application);
             Dictionary<string, string[]> requestHeaders = _headerParser.CaptureHeaders(CapturedRequestHeaders, request.Headers);
             Dictionary<string, string[]> responseHeaders = _headerParser.CaptureHeaders(CapturedResponseHeaders, HttpContext.Current.Response.Headers);
 
@@ -236,8 +236,7 @@ namespace MicroserviceAnalytics.AspNet4
             string[] responseValues = application.Response.Headers.GetValues(SessionIdKey);
             if (responseValues == null || !responseValues.Any())
             {
-                HttpRequest request = application.Request;
-                var sessionId = GetSessionId(request);
+                var sessionId = GetSessionId(application);
                 if (!string.IsNullOrWhiteSpace(sessionId))
                 {
                     application.Response.Headers.Add(SessionIdKey, sessionId);
@@ -246,8 +245,7 @@ namespace MicroserviceAnalytics.AspNet4
             responseValues = application.Response.Headers.GetValues(UserIdKey);
             if (responseValues == null || !responseValues.Any())
             {
-                HttpRequest request = application.Request;
-                var userId = GetUserId(request);
+                var userId = GetUserId(application);
                 if (!string.IsNullOrWhiteSpace(userId))
                 {
                     application.Response.Headers.Add(UserIdKey, userId);
@@ -270,34 +268,33 @@ namespace MicroserviceAnalytics.AspNet4
             return correlationId;
         }
 
-        private string GetSessionId(HttpRequest request)
+        private string GetSessionId(HttpApplication application)
         {
             string sessionId = null;
-            string[] headerSessionIdValues = request.Headers.GetValues(SessionIdKey);
+            string[] headerSessionIdValues = application.Request.Headers.GetValues(SessionIdKey);
             if (headerSessionIdValues != null && headerSessionIdValues.Any())
             {
                 sessionId = headerSessionIdValues.First();
+            }
+            if (string.IsNullOrWhiteSpace(sessionId) && IsSessionIdCreationEnabled)
+            {
+                sessionId = _sessionIdProvider.SessionId(_microserviceAnalyticClient.ClientConfiguration, application);
             }
             
             return sessionId;
         }
 
-        private string GetUserId(HttpRequest request)
+        private string GetUserId(HttpApplication application)
         {
             string userId = null;
-            string[] headerUserIdValues = request.Headers.GetValues(UserIdKey);
+            string[] headerUserIdValues = application.Request.Headers.GetValues(UserIdKey);
             if (headerUserIdValues != null && headerUserIdValues.Any())
             {
                 userId = headerUserIdValues.First();
             }
-            if (string.IsNullOrWhiteSpace(userId))
+            if (string.IsNullOrWhiteSpace(userId) && IsUserIdCreationEnabled)
             {
-                if (IsUserIdCreationEnabled)
-                {
-                    _userIdProvider.UserId(_microserviceAnalyticClient.ClientConfiguration, request);
-                }
-
-                
+                userId = _userIdProvider.UserId(_microserviceAnalyticClient.ClientConfiguration, application);
             }
 
             return userId;
@@ -312,7 +309,6 @@ namespace MicroserviceAnalytics.AspNet4
         private IReadOnlyCollection<string> CapturedRequestHeaders => _microserviceAnalyticClient.ClientConfiguration.HttpRequestHeaderWhitelist;
         private IReadOnlyCollection<string> CapturedResponseHeaders => _microserviceAnalyticClient.ClientConfiguration.HttpResponseHeaderWhitelist;
         private bool StripQueryParams => _microserviceAnalyticClient.ClientConfiguration.StripHttpQueryParams;
-        private string TrackingCookieName => _microserviceAnalyticClient.ClientConfiguration.TrackingCookieName;
         public bool IsSessionIdCreationEnabled => _microserviceAnalyticClient.ClientConfiguration.IsSessionIdCreationEnabled;
         public bool IsUserIdCreationEnabled => _microserviceAnalyticClient.ClientConfiguration.IsUserIdCreationEnabled;
     }
