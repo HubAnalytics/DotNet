@@ -77,7 +77,7 @@ namespace MicroserviceAnalytics.Core.Implementation
                     {"Succeeded", succeeded.ToString() },
                     {"DurationInMilliseconds", durationInMilliseconds.ToString() }
                 },
-                EventStartDateTime = executedAt.ToString(Event.EventDateFormat, CultureInfo.InvariantCulture),
+                EventStartDateTime = executedAt.ToUniversalTime().ToString(Event.EventDateFormat, CultureInfo.InvariantCulture),
                 EventType = EventTypes.SqlCommand
             };
 
@@ -129,7 +129,7 @@ namespace MicroserviceAnalytics.Core.Implementation
                     {"Payload", payload }
                 },
                 EventEndDateTime = null,
-                EventStartDateTime = timestamp.ToString(Event.EventDateFormat),
+                EventStartDateTime = timestamp.ToUniversalTime().ToString(Event.EventDateFormat),
                 EventType = EventTypes.Log
             };
 
@@ -213,7 +213,7 @@ namespace MicroserviceAnalytics.Core.Implementation
                     {"ResponseHeaders", responseHeaders }
                 },
                 EventEndDateTime = null,
-                EventStartDateTime = requestDateTime.ToString(Event.EventDateFormat),
+                EventStartDateTime = requestDateTime.ToUniversalTime().ToString(Event.EventDateFormat),
                 EventType = EventTypes.HttpTrace
             };
             _eventQueue.Enqueue(ev);
