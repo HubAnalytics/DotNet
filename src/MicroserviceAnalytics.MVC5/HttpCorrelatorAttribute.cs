@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using MicroserviceAnalytics.Core;
 
@@ -27,6 +28,7 @@ namespace MicroserviceAnalytics.MVC5
         private readonly string _correlationIdName;
         private readonly string _userIdName;
         private readonly string _sessionIdName;
+        private readonly string _tailCorrelationCookieName;
 
         /// <summary>
         /// Constructor - defaults to a correlation header name of correlation-id
@@ -41,6 +43,7 @@ namespace MicroserviceAnalytics.MVC5
             _correlationIdName = microserviceAnalyticClientFactory.GetClientConfiguration().CorrelationIdKey;
             _userIdName = microserviceAnalyticClientFactory.GetClientConfiguration().UserIdKey;
             _sessionIdName = microserviceAnalyticClientFactory.GetClientConfiguration().SessionIdKey;
+            _tailCorrelationCookieName = microserviceAnalyticClientFactory.GetClientConfiguration().TailCorrelationCookieName;
         }
 
         /// <summary>
@@ -63,6 +66,18 @@ namespace MicroserviceAnalytics.MVC5
             if (headerValues != null && headerValues.Any())
             {
                 _contextualIdProvider.SessionId = headerValues.First();
+            }
+        }
+
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if (!string.IsNullOrWhiteSpace(_tailCorrelationCookieName))
+            {
+                string correlationId = _contextualIdProvider.CorrelationId;
+                if (!string.IsNullOrWhiteSpace(correlationId))
+                {
+                    filterContext.HttpContext.Response.Cookies.Add(new HttpCookie(_tailCorrelationCookieName, correlationId));
+                }
             }
         }
     }

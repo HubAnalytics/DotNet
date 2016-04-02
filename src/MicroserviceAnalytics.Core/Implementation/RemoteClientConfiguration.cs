@@ -28,6 +28,9 @@ namespace MicroserviceAnalytics.Core.Implementation
         private readonly string[] _excludedVerbs;
         private readonly bool _isUserIdCreationEnabled;
         private readonly bool _isSessionIdCreationEnabled;
+        private readonly string _tailCorrelationCookieName;
+        private readonly string _trackingUserCookieName;
+        private readonly string _trackingSessionCookieName;
 
         private TimeSpan _uploadInterval;
         private bool _isCaptureHttpEnabled;
@@ -56,6 +59,9 @@ namespace MicroserviceAnalytics.Core.Implementation
             _excludedVerbs = initialConfiguration.ExcludedVerbs;
             _isUserIdCreationEnabled = initialConfiguration.IsUserIdCreationEnabled;
             _isSessionIdCreationEnabled = initialConfiguration.IsSessionIdCreationEnabled;
+            _tailCorrelationCookieName = initialConfiguration.TailCorrelationCookieName;
+            _trackingUserCookieName = initialConfiguration.TrackingUserCookieName;
+            _trackingSessionCookieName = initialConfiguration.TrackingSessionCookieName;
 
             _uploadInterval = initialConfiguration.UploadInterval;
             _isCaptureHttpEnabled = initialConfiguration.IsCaptureHttpEnabled;
@@ -115,8 +121,9 @@ namespace MicroserviceAnalytics.Core.Implementation
         public bool IsSessionTrackingEnabled => _isSessionTrackingEnabled;
         public bool IsUserIdCreationEnabled => _isUserIdCreationEnabled;
         public bool IsSessionIdCreationEnabled => _isSessionIdCreationEnabled;
-        public string TrackingSessionCookieName => Constants.TrackingSessionCookieName;
-        public string TrackingUserCookieName => Constants.TrackingUserCookieName;
+        public string TrackingSessionCookieName => _trackingSessionCookieName;
+        public string TrackingUserCookieName => _trackingUserCookieName;
+        public string TailCorrelationCookieName => _tailCorrelationCookieName;
 
 
         private async Task BackgroundUpdate()

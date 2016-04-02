@@ -194,6 +194,14 @@ namespace MicroserviceAnalytics.Core
             set { this["trackingUserCookieName"] = value; }
         }
 
+        [ConfigurationProperty("tailCorrelationCookieName", IsRequired = false, DefaultValue = Constants.TailCorrelationCookieName)]
+        [StringValidator]
+        public string TailCorrelationCookieName
+        {
+            get { return (string)this["tailCorrelationCookieName"]; }
+            set { this["tailCorrelationCookieName"] = value; }
+        }
+
         public string[] HttpRequestHeaderWhitelist => HttpCommaSeparatedRequestHeaderWhitelist.Split(',');
         public string[] HttpResponseHeaderWhitelist => HttpCommaSeparatedResponseHeaderWhitelist.Split(',');
         public string[] ExcludedVerbs => ExcludedVerbsCommaSeparated.Split(',');

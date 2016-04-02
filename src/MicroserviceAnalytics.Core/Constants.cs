@@ -10,5 +10,6 @@
         public const int UploadIntervalMs = 3000;
         public const string TrackingSessionCookieName = "msasessiontracker";
         public const string TrackingUserCookieName = "msausertracker";
+        public const string TailCorrelationCookieName = "msatailcorrelation";
     }
 }

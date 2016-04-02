@@ -29,5 +29,6 @@ namespace MicroserviceAnalytics.Core
         public bool IsSessionIdCreationEnabled => true;
         public string TrackingSessionCookieName => Constants.TrackingSessionCookieName;
         public string TrackingUserCookieName => Constants.TrackingUserCookieName;
+        public string TailCorrelationCookieName => Constants.TailCorrelationCookieName;
     }
 }
