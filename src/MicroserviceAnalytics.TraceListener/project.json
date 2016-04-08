@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.1-beta-*",
+  "description": "MicroserviceAnalytics.TraceListener Class Library",
+  "authors": [ "JamesRandall" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": { "System.Diagnostics.Tracing": "4.0.10.0" },
+      "dependencies": {
+        "MicroserviceAnalytics.Core": "1.0.1-*"
+      }
+    }
+  }
+}

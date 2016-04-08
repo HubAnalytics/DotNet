@@ -6,7 +6,7 @@
   "projectUrl": "http://www.microserviceanalytics.com",
   "licenseUrl": "https://raw.githubusercontent.com/MicroserviceAnalytics/DataCaptureClients/master/LICENSE",
   "frameworks": {
-    "net451": { }
+    "dnx451": { }
   },
   "dependencies": {
     "MicroserviceAnalytics.Core": "1.0.1-*"

@@ -27,7 +27,6 @@ namespace MicroserviceAnalytics.Serilog
             int levelRank = (int)logEvent.Level;
             string levelText = logEvent.Level.ToString();
             string payloadJsonString = null;
-
             if (logEvent.Properties != null && logEvent.Properties.Count > 0)
             {
                 StringBuilder sb = new StringBuilder();

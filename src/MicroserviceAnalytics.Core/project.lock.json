@@ -844,7 +844,7 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.1": {
+    "DNX,Version=v4.5.1": {
       "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
@@ -2992,7 +2992,7 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.1/win7-x86": {
+    "DNX,Version=v4.5.1/win7-x86": {
       "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
@@ -3018,7 +3018,7 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.1/win7-x64": {
+    "DNX,Version=v4.5.1/win7-x64": {
       "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
@@ -5660,7 +5660,7 @@
       "Microsoft.Framework.Runtime >= 1.0.0-beta6",
       "Microsoft.Extensions.PlatformAbstractions >= 1.0.0-rc1-final"
     ],
-    ".NETFramework,Version=v4.5.1": [
+    "DNX,Version=v4.5.1": [
       "Newtonsoft.Json >= 7.0.1",
       "Microsoft.Extensions.PlatformAbstractions >= 1.0.0-rc1-final",
       "fx/System.Net.Http >= 4.0.0",

@@ -1,5 +1,5 @@
 ﻿using System;
-#if NET451
+#if DNX451
 using System.Configuration;
 
 namespace MicroserviceAnalytics.Core

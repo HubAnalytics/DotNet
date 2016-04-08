@@ -2,10 +2,10 @@
   "locked": false,
   "version": 2,
   "targets": {
-    ".NETFramework,Version=v4.5.1": {
+    "DNX,Version=v4.5.1": {
       "MicroserviceAnalytics.AspNet4/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "MicroserviceAnalytics.Core": "1.0.1"
         },
@@ -15,7 +15,7 @@
       },
       "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
@@ -102,10 +102,10 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.1/win7-x86": {
+    "DNX,Version=v4.5.1/win7-x86": {
       "MicroserviceAnalytics.AspNet4/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "MicroserviceAnalytics.Core": "1.0.1"
         },
@@ -115,7 +115,7 @@
       },
       "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
@@ -202,10 +202,10 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.1/win7-x64": {
+    "DNX,Version=v4.5.1/win7-x64": {
       "MicroserviceAnalytics.AspNet4/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "MicroserviceAnalytics.Core": "1.0.1"
         },
@@ -215,7 +215,7 @@
       },
       "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
@@ -414,7 +414,7 @@
       "Microsoft.AspNet.WebPages >= 3.2.3",
       "Microsoft.Web.Infrastructure >= 1.0.0"
     ],
-    ".NETFramework,Version=v4.5.1": [
+    "DNX,Version=v4.5.1": [
       "fx/System.Web >= 4.0.0"
     ]
   }

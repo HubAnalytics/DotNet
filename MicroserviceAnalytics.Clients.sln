@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{96EF3C0F-CFE6-40CB-8073-9D5BC69ADE25}"
 EndProject
@@ -36,6 +36,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C99EEFB7-0416-4DE0-AD31-3BEB4CD88B8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC4.Sample", "samples\MVC4.Sample\MVC4.Sample.csproj", "{16061A4D-0A68-4327-9DCA-6E7987D8A56C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EB8A30D7-FCEE-407F-A6DA-DDD28431103A}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MicroserviceAnalytics.TraceListener.Tests", "tests\MicroserviceAnalytics.TraceListener.Tests\MicroserviceAnalytics.TraceListener.Tests.xproj", "{740C66E0-5449-48F6-B4A5-27B91C737300}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MicroserviceAnalytics.TraceListener", "src\MicroserviceAnalytics.TraceListener\MicroserviceAnalytics.TraceListener.xproj", "{A83DD678-7DF9-4533-834D-DE3885DAE210}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +89,14 @@ Global
 		{16061A4D-0A68-4327-9DCA-6E7987D8A56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16061A4D-0A68-4327-9DCA-6E7987D8A56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16061A4D-0A68-4327-9DCA-6E7987D8A56C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{740C66E0-5449-48F6-B4A5-27B91C737300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{740C66E0-5449-48F6-B4A5-27B91C737300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{740C66E0-5449-48F6-B4A5-27B91C737300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{740C66E0-5449-48F6-B4A5-27B91C737300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A83DD678-7DF9-4533-834D-DE3885DAE210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83DD678-7DF9-4533-834D-DE3885DAE210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83DD678-7DF9-4533-834D-DE3885DAE210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83DD678-7DF9-4533-834D-DE3885DAE210}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,5 +112,7 @@ Global
 		{A0A245CA-7E6C-4492-B774-9F718035AAFC} = {96EF3C0F-CFE6-40CB-8073-9D5BC69ADE25}
 		{00EAB0BD-78C6-45B0-B047-F1EAAF0A101B} = {96EF3C0F-CFE6-40CB-8073-9D5BC69ADE25}
 		{16061A4D-0A68-4327-9DCA-6E7987D8A56C} = {C99EEFB7-0416-4DE0-AD31-3BEB4CD88B8D}
+		{740C66E0-5449-48F6-B4A5-27B91C737300} = {EB8A30D7-FCEE-407F-A6DA-DDD28431103A}
+		{A83DD678-7DF9-4533-834D-DE3885DAE210} = {96EF3C0F-CFE6-40CB-8073-9D5BC69ADE25}
 	EndGlobalSection
 EndGlobal

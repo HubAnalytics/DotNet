@@ -2,10 +2,10 @@
   "locked": false,
   "version": 2,
   "targets": {
-    ".NETFramework,Version=v4.5.1": {
+    "DNX,Version=v4.5.1": {
       "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
@@ -994,10 +994,10 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.1/win7-x86": {
+    "DNX,Version=v4.5.1/win7-x86": {
       "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
@@ -1045,10 +1045,10 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5.1/win7-x64": {
+    "DNX,Version=v4.5.1/win7-x64": {
       "MicroserviceAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
@@ -6495,7 +6495,7 @@
   },
   "projectFileDependencyGroups": {
     "": [],
-    ".NETFramework,Version=v4.5.1": [
+    "DNX,Version=v4.5.1": [
       "Serilog >= 1.5.14",
       "MicroserviceAnalytics.Core >= 1.0.1-*",
       "fx/System.Runtime "
