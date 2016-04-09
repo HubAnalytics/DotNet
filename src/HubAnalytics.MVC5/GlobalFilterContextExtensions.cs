@@ -5,15 +5,15 @@ namespace HubAnalytics.MVC5
 {
     public static class GlobalFilterCollectionExtensions
     {
-        public static GlobalFilterCollection EnableErrorCapture(this GlobalFilterCollection filters, MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null)
+        public static GlobalFilterCollection EnableErrorCapture(this GlobalFilterCollection filters, HubAnalyticsClientFactory hubAnalyticsClientFactory = null)
         {
-            filters.Add(new ExceptionCaptureFilter(microserviceAnalyticClientFactory));
+            filters.Add(new ExceptionCaptureFilter(hubAnalyticsClientFactory));
             return filters;
         }
 
-        public static GlobalFilterCollection EnableCorrelation(this GlobalFilterCollection filters, MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null)
+        public static GlobalFilterCollection EnableCorrelation(this GlobalFilterCollection filters, HubAnalyticsClientFactory hubAnalyticsClientFactory = null)
         {
-            filters.Add(new HttpCorrelatorAttribute(microserviceAnalyticClientFactory));
+            filters.Add(new HttpCorrelatorAttribute(hubAnalyticsClientFactory));
             return filters;
         }
     }

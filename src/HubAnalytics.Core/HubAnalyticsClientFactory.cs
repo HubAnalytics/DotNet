@@ -2,31 +2,31 @@
 
 namespace HubAnalytics.Core
 {
-    public class MicroserviceAnalyticClientFactory : IMicroserviceAnalyticClientFactory
+    public class HubAnalyticsClientFactory : IHubAnalyticsClientFactory
     {
         private readonly IRuntimeProviderDiscoveryService _runtimeProviderDiscoveryService;
         private readonly IClientConfigurationProvider _clientConfigurationProvider;
         private static readonly object ClientLockObject = new object();
         private static readonly object ClientConfigurationLockObject = new object();
-        private static IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private static IHubAnalyticsClient _hubAnalyticsClient;
         private static IClientConfiguration _clientConfiguration;
 
-        public MicroserviceAnalyticClientFactory(IClientConfigurationProvider clientConfigurationProvider = null, IRuntimeProviderDiscoveryService runtimeProviderDiscoveryService=null)
+        public HubAnalyticsClientFactory(IClientConfigurationProvider clientConfigurationProvider = null, IRuntimeProviderDiscoveryService runtimeProviderDiscoveryService=null)
         {
             _runtimeProviderDiscoveryService = runtimeProviderDiscoveryService ?? new DefaultRuntimeProviderDiscoveryService();
             _clientConfigurationProvider = clientConfigurationProvider ?? new PlatformDefaultConfigurationProvider();
         }
 
-        public IMicroserviceAnalyticClient GetClient()
+        public IHubAnalyticsClient GetClient()
         {
-            if (_microserviceAnalyticClient == null)
+            if (_hubAnalyticsClient == null)
             {
                 lock (ClientLockObject)
                 {
-                    if (_microserviceAnalyticClient == null)
+                    if (_hubAnalyticsClient == null)
                     {
                         IClientConfiguration clientConfiguration = GetClientConfiguration();
-                        _microserviceAnalyticClient = new MicroserviceAnalyticClient(
+                        _hubAnalyticsClient = new HubAnalyticsClient(
                             clientConfiguration.PropertyId,
                             clientConfiguration.Key,
                             GetEnvironmentCapture(),
@@ -37,7 +37,7 @@ namespace HubAnalytics.Core
                 }
             }
 
-            return _microserviceAnalyticClient;
+            return _hubAnalyticsClient;
         }
 
         public virtual IClientConfiguration GetClientConfiguration()

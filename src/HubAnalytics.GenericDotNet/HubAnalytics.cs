@@ -3,16 +3,16 @@ using HubAnalytics.Core;
 
 namespace HubAnalytics.GenericDotNet
 {
-    public static class MicroserviceAnalytics
+    public static class HubAnalytics
     {
-        public static void Attach(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null)
+        public static void Attach(IHubAnalyticsClientFactory hubAnalyticsClientFactory = null)
         {
-            if (microserviceAnalyticClientFactory == null)
+            if (hubAnalyticsClientFactory == null)
             {
-                microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
+                hubAnalyticsClientFactory = new HubAnalyticsClientFactory();
             }
 
-            IMicroserviceAnalyticClient recorder = microserviceAnalyticClientFactory.GetClient();
+            IHubAnalyticsClient recorder = hubAnalyticsClientFactory.GetClient();
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
                 Exception ex = args.ExceptionObject as Exception;

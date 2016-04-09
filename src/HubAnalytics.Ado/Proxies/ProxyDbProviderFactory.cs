@@ -10,7 +10,7 @@ namespace HubAnalytics.Ado.Proxies
     // base class allows for easy existing proxy check
     public abstract class ProxyDbProviderFactory : DbProviderFactory
     {
-        public static IMicroserviceAnalyticClient MicroserviceAnalyticClient { get; set; }
+        public static IHubAnalyticsClient HubAnalyticsClient { get; set; }
     }
 
     public class ProxyDbProviderFactory<T> : ProxyDbProviderFactory where T : DbProviderFactory
@@ -35,7 +35,7 @@ namespace HubAnalytics.Ado.Proxies
 
         public override DbCommand CreateCommand()
         {
-            return new ProxyDbCommand(_proxiedFactory.CreateCommand(), MicroserviceAnalyticClient);
+            return new ProxyDbCommand(_proxiedFactory.CreateCommand(), HubAnalyticsClient);
         }
 
         public override DbCommandBuilder CreateCommandBuilder()
@@ -46,7 +46,7 @@ namespace HubAnalytics.Ado.Proxies
         public override DbConnection CreateConnection()
         {
             DbConnection connection = _proxiedFactory.CreateConnection();
-            return new ProxyDbConnection(connection, MicroserviceAnalyticClient);
+            return new ProxyDbConnection(connection, HubAnalyticsClient);
         }
 
         public override DbConnectionStringBuilder CreateConnectionStringBuilder()
@@ -56,7 +56,7 @@ namespace HubAnalytics.Ado.Proxies
 
         public override DbDataAdapter CreateDataAdapter()
         {
-            return new ProxyDbDataAdapter(_proxiedFactory.CreateDataAdapter(), MicroserviceAnalyticClient);
+            return new ProxyDbDataAdapter(_proxiedFactory.CreateDataAdapter(), HubAnalyticsClient);
         }
 
         public override DbDataSourceEnumerator CreateDataSourceEnumerator()

@@ -5,7 +5,7 @@ using Environment = HubAnalytics.Core.Model.Environment;
 
 namespace HubAnalytics.Core
 {
-    public interface IMicroserviceAnalyticClient
+    public interface IHubAnalyticsClient
     {
         IClientConfiguration ClientConfiguration { get; }
 

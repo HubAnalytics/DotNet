@@ -1,8 +1,8 @@
 namespace HubAnalytics.Core
 {
-    public interface IMicroserviceAnalyticClientFactory
+    public interface IHubAnalyticsClientFactory
     {
-        IMicroserviceAnalyticClient GetClient();
+        IHubAnalyticsClient GetClient();
         IClientConfiguration GetClientConfiguration();
         IContextualIdProvider GetCorrelationIdProvider();
         IEnvironmentCapture GetEnvironmentCapture();

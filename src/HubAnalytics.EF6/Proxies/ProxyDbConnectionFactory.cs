@@ -8,12 +8,12 @@ namespace HubAnalytics.EF6.Proxies
     public class ProxyDbConnectionFactory : IDbConnectionFactory
     {
         private readonly IDbConnectionFactory _proxiedFactory;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
 
-        public ProxyDbConnectionFactory(IDbConnectionFactory proxiedFactory, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbConnectionFactory(IDbConnectionFactory proxiedFactory, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedFactory = proxiedFactory;
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
         }
 
         public DbConnection CreateConnection(string nameOrConnectionString)
@@ -24,7 +24,7 @@ namespace HubAnalytics.EF6.Proxies
             {
                 return proxyConnection;
             }
-            return new ProxyDbConnection(connection, _microserviceAnalyticClient);
+            return new ProxyDbConnection(connection, _hubAnalyticsClient);
         }
     }
 }

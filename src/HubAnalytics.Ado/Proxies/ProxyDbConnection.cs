@@ -12,13 +12,13 @@ namespace HubAnalytics.Ado.Proxies
     {
         private DbConnection _proxiedConnection;
         private DbProviderFactory _factory;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
         
-        public ProxyDbConnection(DbConnection connection, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbConnection(DbConnection connection, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedConnection = connection;
             _factory = connection.TryGetProviderFactory();
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
             _proxiedConnection.StateChange += StateChangeHandler;
         }
 
@@ -37,7 +37,7 @@ namespace HubAnalytics.Ado.Proxies
 
         protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
         {
-            return new ProxyDbTransaction(_proxiedConnection.BeginTransaction(isolationLevel), _microserviceAnalyticClient);
+            return new ProxyDbTransaction(_proxiedConnection.BeginTransaction(isolationLevel), _hubAnalyticsClient);
         }
 
         public override void Close()
@@ -69,7 +69,7 @@ namespace HubAnalytics.Ado.Proxies
 
         protected override DbCommand CreateDbCommand()
         {
-            return new ProxyDbCommand(_proxiedConnection.CreateCommand(), this, _microserviceAnalyticClient);
+            return new ProxyDbCommand(_proxiedConnection.CreateCommand(), this, _hubAnalyticsClient);
         }
 
         public override event StateChangeEventHandler StateChange

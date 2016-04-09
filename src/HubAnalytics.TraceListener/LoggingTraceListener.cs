@@ -25,7 +25,7 @@ namespace HubAnalytics.TraceListener
     {
         private readonly Regex _levelMatch = new Regex(@"^(\w+)+[:]");
 
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
 
         private readonly ReadOnlyDictionary<string, LogEventLevelEnum> _mapping;
 
@@ -34,13 +34,13 @@ namespace HubAnalytics.TraceListener
             
         }        
 
-        public LoggingTraceListener(IMicroserviceAnalyticClientFactory microserviceAnalyticClientFactory)
+        public LoggingTraceListener(IHubAnalyticsClientFactory hubAnalyticsClientFactory)
         {
-            if (microserviceAnalyticClientFactory == null)
+            if (hubAnalyticsClientFactory == null)
             {
-                microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
+                hubAnalyticsClientFactory = new HubAnalyticsClientFactory();
             }
-            _microserviceAnalyticClient = microserviceAnalyticClientFactory.GetClient();
+            _hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
 
             _mapping = new ReadOnlyDictionary<string, LogEventLevelEnum>(
                 Enum.GetValues(typeof(LogEventLevelEnum))
@@ -67,11 +67,11 @@ namespace HubAnalytics.TraceListener
                 if (_mapping.TryGetValue(match.Groups[1].Value.ToLower(), out level))
                 {
                     string trimmedMessage = message.Substring(match.Value.Length).TrimStart();
-                    _microserviceAnalyticClient.Log(trimmedMessage, (int) level, level.ToString(), DateTimeOffset.UtcNow, null, null);
+                    _hubAnalyticsClient.Log(trimmedMessage, (int) level, level.ToString(), DateTimeOffset.UtcNow, null, null);
                     return;
                 }
             }
-            _microserviceAnalyticClient.Log(message, (int) LogEventLevelEnum.Information,
+            _hubAnalyticsClient.Log(message, (int) LogEventLevelEnum.Information,
                 LogEventLevelEnum.Information.ToString(), DateTimeOffset.UtcNow, null, null);
         }
     }

@@ -6,9 +6,9 @@ namespace HubAnalytics.Serilog
 {
     public static class LoggerSinkConfigurationExtensions
     {
-        public static LoggerConfiguration MicroserviceAnalytics(this LoggerSinkConfiguration sinkConfiguration, IMicroserviceAnalyticClientFactory factory = null)
+        public static LoggerConfiguration HubAnalytics(this LoggerSinkConfiguration sinkConfiguration, IHubAnalyticsClientFactory factory = null)
         {
-            MicroserviceAnalyticsSink sink = new MicroserviceAnalyticsSink(factory);
+            HubAnalyticsSink sink = new HubAnalyticsSink(factory);
             return sinkConfiguration.Sink(sink);
         }
     }

@@ -29,17 +29,17 @@ namespace HubAnalytics.MVC5
         /// <summary>
         /// Constructor - defaults to a correlation header name of correlation-id
         /// </summary>
-        public HttpCorrelatorAttribute(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null)
+        public HttpCorrelatorAttribute(IHubAnalyticsClientFactory hubAnalyticsClientFactory = null)
         {
-            if (microserviceAnalyticClientFactory == null)
+            if (hubAnalyticsClientFactory == null)
             {
-                microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
+                hubAnalyticsClientFactory = new HubAnalyticsClientFactory();
             }
-            _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
-            _correlationIdName = microserviceAnalyticClientFactory.GetClientConfiguration().CorrelationIdKey;
-            _userIdName = microserviceAnalyticClientFactory.GetClientConfiguration().UserIdKey;
-            _sessionIdName = microserviceAnalyticClientFactory.GetClientConfiguration().SessionIdKey;
-            _tailCorrelationCookieName = microserviceAnalyticClientFactory.GetClientConfiguration().TailCorrelationCookieName;
+            _contextualIdProvider = hubAnalyticsClientFactory.GetCorrelationIdProvider();
+            _correlationIdName = hubAnalyticsClientFactory.GetClientConfiguration().CorrelationIdKey;
+            _userIdName = hubAnalyticsClientFactory.GetClientConfiguration().UserIdKey;
+            _sessionIdName = hubAnalyticsClientFactory.GetClientConfiguration().SessionIdKey;
+            _tailCorrelationCookieName = hubAnalyticsClientFactory.GetClientConfiguration().TailCorrelationCookieName;
         }
 
         /// <summary>

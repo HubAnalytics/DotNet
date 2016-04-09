@@ -14,13 +14,13 @@ namespace HubAnalytics.EF6.Proxies
     public class ProxyDbProviderServices : DbProviderServices
     {
         private readonly DbProviderServices _proxiedProviderServices;
-        private readonly IMicroserviceAnalyticClient _recorder;
+        private readonly IHubAnalyticsClient _recorder;
 
 //#if (EF5 && NET45) || EF6
         private readonly MethodInfo _setParameterValueMethod;
 //#endif
 
-        public ProxyDbProviderServices(DbProviderServices proxiedProviderServices, IMicroserviceAnalyticClient recorder)
+        public ProxyDbProviderServices(DbProviderServices proxiedProviderServices, IHubAnalyticsClient recorder)
         {
             _proxiedProviderServices = proxiedProviderServices;
             _recorder = recorder;

@@ -5,9 +5,9 @@ namespace HubAnalytics.OWIN
 {
     public static class AppBuilderExtensions
     {
-        public static IAppBuilder UseMicroserviceAnalytics(this IAppBuilder appBuilder, MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory=null)
+        public static IAppBuilder UseHubAnalytics(this IAppBuilder appBuilder, IHubAnalyticsClientFactory hubAnalyticsClientFactory=null)
         {
-            appBuilder.Use<CaptureMiddleware>(microserviceAnalyticClientFactory);
+            appBuilder.Use<CaptureMiddleware>(hubAnalyticsClientFactory);
             return appBuilder;
         }
 

@@ -8,17 +8,17 @@ namespace HubAnalytics.EF6.Proxies
     public class ProxyDbCommandDefinition : DbCommandDefinition
     {
         private readonly DbCommandDefinition _proxiedCommandDefinition;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
 
-        public ProxyDbCommandDefinition(DbCommandDefinition proxiedCommandDefinition, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbCommandDefinition(DbCommandDefinition proxiedCommandDefinition, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedCommandDefinition = proxiedCommandDefinition;
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
         }
 
         public override DbCommand CreateCommand()
         {
-            return new ProxyDbCommand(_proxiedCommandDefinition.CreateCommand(), _microserviceAnalyticClient);
+            return new ProxyDbCommand(_proxiedCommandDefinition.CreateCommand(), _hubAnalyticsClient);
         }
     }
 }

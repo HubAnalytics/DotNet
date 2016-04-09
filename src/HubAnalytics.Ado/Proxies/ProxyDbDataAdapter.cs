@@ -8,12 +8,12 @@ namespace HubAnalytics.Ado.Proxies
     public class ProxyDbDataAdapter : DbDataAdapter
     {
         private readonly DbDataAdapter _proxiedAdapter;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
 
-        public ProxyDbDataAdapter(DbDataAdapter adapter, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbDataAdapter(DbDataAdapter adapter, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedAdapter = adapter;
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
         }
 
         protected override void Dispose(bool disposing)

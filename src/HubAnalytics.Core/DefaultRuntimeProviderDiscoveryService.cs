@@ -37,7 +37,7 @@ namespace HubAnalytics.Core
 
                         // Look for providers in this order:
                         //  1. a candidate type implemented by an external party
-                        //  2. a candidate type not in MicroserviceAnalytics.Core
+                        //  2. a candidate type not in HubAnalytics.Core
                         //  3. fallback to guid generation
                         var discoveredType = FindExternalToLibraryType(candidateTypes) ??
                                              (FindExternalToCoreType(candidateTypes) ?? typeof (NewGuidUserIdProvider));
@@ -72,7 +72,7 @@ namespace HubAnalytics.Core
 
                         // Look for providers in this order:
                         //  1. a candidate type implemented by an external party
-                        //  2. a candidate type not in MicroserviceAnalytics.Core
+                        //  2. a candidate type not in HubAnalytics.Core
                         //  3. fallback to guid generation
                         var discoveredType = FindExternalToLibraryType(candidateTypes) ??
                                              (FindExternalToCoreType(candidateTypes) ?? typeof (NewGuidSessionIdProvider));
@@ -86,12 +86,12 @@ namespace HubAnalytics.Core
 
         private static Type FindExternalToLibraryType(IReadOnlyCollection<Type> candidateTypes)
         {
-            return candidateTypes.FirstOrDefault(x => !x.AssemblyQualifiedName.StartsWith("MicroserviceAnalytics."));
+            return candidateTypes.FirstOrDefault(x => !x.AssemblyQualifiedName.StartsWith("HubAnalytics."));
         }
 
         private static Type FindExternalToCoreType(IReadOnlyCollection<Type> candidateTypes)
         {
-            return candidateTypes.FirstOrDefault(x => !x.AssemblyQualifiedName.StartsWith("MicroserviceAnalytics.Core"));
+            return candidateTypes.FirstOrDefault(x => !x.AssemblyQualifiedName.StartsWith("HubAnalytics.Core"));
         }
 
         private static IReadOnlyCollection<Assembly> GetLoadedAssemblies()
@@ -99,7 +99,7 @@ namespace HubAnalytics.Core
             IReadOnlyCollection<Assembly> assemblies;
 #if DNXCORE50
             assemblies = PlatformServices.Default.LibraryManager.GetReferencingLibraries(
-                "MicroserviceAnalytics.Core")
+                "HubAnalytics.Core")
                 .SelectMany(lib => lib.Assemblies)
                 .Select(info => Assembly.Load(new AssemblyName(info.Name))).ToList();
 #else

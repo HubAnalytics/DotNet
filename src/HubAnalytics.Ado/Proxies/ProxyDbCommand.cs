@@ -12,20 +12,20 @@ namespace HubAnalytics.Ado.Proxies
     public class ProxyDbCommand : DbCommand
     {
         private DbCommand _proxiedCommand;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
         private ProxyDbConnection _dbConnection;
 
-        public ProxyDbCommand(DbCommand command, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbCommand(DbCommand command, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedCommand = command;
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
         }
 
-        public ProxyDbCommand(DbCommand command, ProxyDbConnection dbConnection, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbCommand(DbCommand command, ProxyDbConnection dbConnection, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedCommand = command;
             _dbConnection = dbConnection;
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
         }
 
         public override void Prepare()
@@ -67,7 +67,7 @@ namespace HubAnalytics.Ado.Proxies
                 }
                 else
                 {
-                    _dbConnection = new ProxyDbConnection(value, _microserviceAnalyticClient);
+                    _dbConnection = new ProxyDbConnection(value, _hubAnalyticsClient);
                     _proxiedCommand.Connection = _dbConnection.ProxiedConnection;
                 }
             }
@@ -87,7 +87,7 @@ namespace HubAnalytics.Ado.Proxies
                 }
                 else
                 {
-                    proxyDbTransaction = new ProxyDbTransaction(value, _microserviceAnalyticClient);
+                    proxyDbTransaction = new ProxyDbTransaction(value, _hubAnalyticsClient);
                     _proxiedCommand.Transaction = proxyDbTransaction.ProxiedTransaction;
                 }
             }
@@ -135,7 +135,7 @@ namespace HubAnalytics.Ado.Proxies
 
             Log(executedAt, sw, true);
 
-            return new ProxyDbDataReader(result, this, _microserviceAnalyticClient);
+            return new ProxyDbDataReader(result, this, _hubAnalyticsClient);
         }
 
         public override int ExecuteNonQuery()
@@ -217,7 +217,7 @@ namespace HubAnalytics.Ado.Proxies
             }
             Log(executedAt, sw, true);
 
-            return new ProxyDbDataReader(reader, this, _microserviceAnalyticClient);
+            return new ProxyDbDataReader(reader, this, _hubAnalyticsClient);
         }
 
         public override async Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken)
@@ -287,7 +287,7 @@ namespace HubAnalytics.Ado.Proxies
         private void Log(DateTimeOffset executedAt, Stopwatch sw, bool success, SqlException ex = null)
         {
             sw.Stop();
-            _microserviceAnalyticClient.SqlCommand(executedAt, _proxiedCommand.Connection?.ConnectionString, _proxiedCommand.CommandText, (int)sw.ElapsedMilliseconds, success, ex?.Number);
+            _hubAnalyticsClient.SqlCommand(executedAt, _proxiedCommand.Connection?.ConnectionString, _proxiedCommand.CommandText, (int)sw.ElapsedMilliseconds, success, ex?.Number);
         }
     }
 }

@@ -7,7 +7,7 @@
             #if DNXCORE50
                 return new AspNet5Configuration();
             #else
-                return MicroserviceAnalyticsConfigurationSection.Settings;
+                return HubAnalyticsConfigurationSection.Settings;
             #endif
         }
     }

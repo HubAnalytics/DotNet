@@ -8,16 +8,16 @@ namespace HubAnalytics.WebAPI2
 {
     public class ExceptionCaptureFilter : ExceptionFilterAttribute
     {
-        private readonly IMicroserviceAnalyticClient _recorder;
+        private readonly IHubAnalyticsClient _recorder;
 
-        public ExceptionCaptureFilter(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null)
+        public ExceptionCaptureFilter(IHubAnalyticsClientFactory hubAnalyticsClientFactory = null)
         {
-            if (microserviceAnalyticClientFactory == null)
+            if (hubAnalyticsClientFactory == null)
             {
-                microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
+                hubAnalyticsClientFactory = new HubAnalyticsClientFactory();
             }
 
-            _recorder = microserviceAnalyticClientFactory.GetClient();
+            _recorder = hubAnalyticsClientFactory.GetClient();
         }
 
 

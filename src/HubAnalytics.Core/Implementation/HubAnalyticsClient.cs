@@ -10,7 +10,7 @@ using Environment = HubAnalytics.Core.Model.Environment;
 
 namespace HubAnalytics.Core.Implementation
 {
-    internal class MicroserviceAnalyticClient : IMicroserviceAnalyticClient
+    internal class HubAnalyticsClient : IHubAnalyticsClient
     {
         private readonly ConcurrentQueue<Event> _eventQueue = new ConcurrentQueue<Event>();
         private readonly IEnvironmentCapture _environmentCapture;
@@ -20,7 +20,7 @@ namespace HubAnalytics.Core.Implementation
         private readonly PeriodicDispatcher _periodicDispatcher;
         private readonly CancellationTokenSource _cancellationTokenSource;
         
-        public MicroserviceAnalyticClient(string propertyId,
+        public HubAnalyticsClient(string propertyId,
             string key,
             IEnvironmentCapture environmentCapture,
             IContextualIdProvider contextualIdProvider,

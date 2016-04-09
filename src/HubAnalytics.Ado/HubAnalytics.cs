@@ -9,19 +9,19 @@ using HubAnalytics.Core;
 
 namespace HubAnalytics.Ado
 {
-    public static class MicroserviceAnalytics
+    public static class HubAnalytics
     {
         public static readonly Dictionary<string, string> Factories = new Dictionary<string, string>();
 
         public static void Attach()
         {
-            Attach(new MicroserviceAnalyticClientFactory());
+            Attach(new HubAnalyticsClientFactory());
         }
 
-        public static void Attach(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory)
+        public static void Attach(IHubAnalyticsClientFactory hubAnalyticsClientFactory)
         {
-            IMicroserviceAnalyticClient microserviceAnalyticClient = microserviceAnalyticClientFactory.GetClient();
-            ProxyDbProviderFactory.MicroserviceAnalyticClient = microserviceAnalyticClient;
+            IHubAnalyticsClient hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
+            ProxyDbProviderFactory.HubAnalyticsClient = hubAnalyticsClient;
 
             // force initialization
             try

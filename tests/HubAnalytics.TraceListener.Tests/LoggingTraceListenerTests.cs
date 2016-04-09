@@ -11,8 +11,8 @@ namespace HubAnalytics.TraceListener.Tests
         public void GenericMessageLoggedAsInformation()
         {
             // Arrange
-            Mock<IMicroserviceAnalyticClient> client = new Mock<IMicroserviceAnalyticClient>();
-            Mock<IMicroserviceAnalyticClientFactory> factory = new Mock<IMicroserviceAnalyticClientFactory>();
+            Mock<IHubAnalyticsClient> client = new Mock<IHubAnalyticsClient>();
+            Mock<IHubAnalyticsClientFactory> factory = new Mock<IHubAnalyticsClientFactory>();
             factory.Setup(x => x.GetClient()).Returns(client.Object);
             LoggingTraceListener listener = new LoggingTraceListener(factory.Object);
 
@@ -33,8 +33,8 @@ namespace HubAnalytics.TraceListener.Tests
         public void GenericMessageLoggedAsInformation(LogEventLevelEnum level)
         {
             // Arrange
-            Mock<IMicroserviceAnalyticClient> client = new Mock<IMicroserviceAnalyticClient>();
-            Mock<IMicroserviceAnalyticClientFactory> factory = new Mock<IMicroserviceAnalyticClientFactory>();
+            Mock<IHubAnalyticsClient> client = new Mock<IHubAnalyticsClient>();
+            Mock<IHubAnalyticsClientFactory> factory = new Mock<IHubAnalyticsClientFactory>();
             factory.Setup(x => x.GetClient()).Returns(client.Object);
             LoggingTraceListener listener = new LoggingTraceListener(factory.Object);
 

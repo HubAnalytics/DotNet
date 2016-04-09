@@ -6,16 +6,16 @@ namespace HubAnalytics.MVC5
 {
     public class ExceptionCaptureFilter : HandleErrorAttribute
     {
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
         
-        public ExceptionCaptureFilter(MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null)
+        public ExceptionCaptureFilter(IHubAnalyticsClientFactory hubAnalyticsClientFactory = null)
         {
-            if (microserviceAnalyticClientFactory == null)
+            if (hubAnalyticsClientFactory == null)
             {
-                microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
+                hubAnalyticsClientFactory = new HubAnalyticsClientFactory();
             }
 
-            _microserviceAnalyticClient = microserviceAnalyticClientFactory.GetClient();
+            _hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
         }
 
         public override void OnException(ExceptionContext filterContext)
@@ -26,7 +26,7 @@ namespace HubAnalytics.MVC5
                 {"controller", filterContext.RouteData.Values["controller"].ToString() }
             };
 
-            _microserviceAnalyticClient.Error(filterContext.Exception, additionalData);
+            _hubAnalyticsClient.Error(filterContext.Exception, additionalData);
         }
     }
 }

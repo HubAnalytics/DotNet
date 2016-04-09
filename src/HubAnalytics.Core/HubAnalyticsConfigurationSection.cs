@@ -4,9 +4,9 @@ using System.Configuration;
 
 namespace HubAnalytics.Core
 {
-    class MicroserviceAnalyticsConfigurationSection : ConfigurationSection, IClientConfiguration
+    class HubAnalyticsConfigurationSection : ConfigurationSection, IClientConfiguration
     {
-        public static readonly MicroserviceAnalyticsConfigurationSection Settings = ConfigurationManager.GetSection("microserviceAnalyticSettings") as MicroserviceAnalyticsConfigurationSection ?? new MicroserviceAnalyticsConfigurationSection();
+        public static readonly HubAnalyticsConfigurationSection Settings = ConfigurationManager.GetSection("hubAnalyticsSettings") as HubAnalyticsConfigurationSection ?? new HubAnalyticsConfigurationSection();
 
         [ConfigurationProperty("propertyId", IsRequired = true, DefaultValue = "")]
         [StringValidator]

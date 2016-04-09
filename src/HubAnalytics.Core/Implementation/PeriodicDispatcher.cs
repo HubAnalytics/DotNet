@@ -15,20 +15,20 @@ namespace HubAnalytics.Core.Implementation
         private const string EventRelativePath = "v1/event";
         private const int MaxBatchSize = 200;
         
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
         private readonly string _propertyId;
         private readonly string _key;
         private readonly IClientConfiguration _clientConfiguration;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly Uri _endpoint;
 
-        public PeriodicDispatcher(IMicroserviceAnalyticClient microserviceAnalyticClient,
+        public PeriodicDispatcher(IHubAnalyticsClient hubAnalyticsClient,
             string propertyId,
             string key,
             IClientConfiguration clientConfiguration,
             CancellationTokenSource cancellationTokenSource)
         {
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
             _propertyId = propertyId;
             _key = key;
             _clientConfiguration = clientConfiguration;
@@ -55,13 +55,13 @@ namespace HubAnalytics.Core.Implementation
                 
                 try
                 {
-                    IReadOnlyCollection<Event> events = _microserviceAnalyticClient.GetEvents(MaxBatchSize);
+                    IReadOnlyCollection<Event> events = _hubAnalyticsClient.GetEvents(MaxBatchSize);
                     if (events!= null && events.Any())
                     {
                         EventBatch batch = new EventBatch
                         {
                             ApplicationVersion = "1.0.0.0",
-                            Environment = _microserviceAnalyticClient.GetEnvironment(),
+                            Environment = _hubAnalyticsClient.GetEnvironment(),
                             Events = events.ToList(),
                             Source = "net"
                         };

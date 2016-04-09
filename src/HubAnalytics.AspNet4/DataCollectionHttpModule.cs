@@ -11,7 +11,7 @@ namespace HubAnalytics.AspNet4
     public class DataCollectionHttpModule : IHttpModule
     {
         private readonly IHeaderParser _headerParser;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
         private readonly IContextualIdProvider _contextualIdProvider;
         private readonly IUserIdProvider _userIdProvider;
         private readonly ISessionIdProvider _sessionIdProvider;
@@ -21,22 +21,22 @@ namespace HubAnalytics.AspNet4
             
         }
 
-        public DataCollectionHttpModule(IMicroserviceAnalyticClientFactory microserviceAnalyticClientFactory, IHeaderParser headerParser)
+        public DataCollectionHttpModule(IHubAnalyticsClientFactory hubAnalyticsClientFactory, IHeaderParser headerParser)
         {
-            if (microserviceAnalyticClientFactory == null)
+            if (hubAnalyticsClientFactory == null)
             {
-                microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
+                hubAnalyticsClientFactory = new HubAnalyticsClientFactory();
             }
             if (headerParser == null)
             {
                 headerParser = new HeaderParser();
             }
-            IClientConfiguration clientConfiguration = microserviceAnalyticClientFactory.GetClientConfiguration();
+            IClientConfiguration clientConfiguration = hubAnalyticsClientFactory.GetClientConfiguration();
             _headerParser = headerParser;
-            _microserviceAnalyticClient = microserviceAnalyticClientFactory.GetClient();
-            _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
-            _sessionIdProvider = clientConfiguration.IsSessionIdCreationEnabled ? microserviceAnalyticClientFactory.GetRuntimeProviderDiscoveryService().SessionIdProvider : null;
-            _userIdProvider = clientConfiguration.IsSessionIdCreationEnabled ? microserviceAnalyticClientFactory.GetRuntimeProviderDiscoveryService().UserIdProvider : null;
+            _hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
+            _contextualIdProvider = hubAnalyticsClientFactory.GetCorrelationIdProvider();
+            _sessionIdProvider = clientConfiguration.IsSessionIdCreationEnabled ? hubAnalyticsClientFactory.GetRuntimeProviderDiscoveryService().SessionIdProvider : null;
+            _userIdProvider = clientConfiguration.IsSessionIdCreationEnabled ? hubAnalyticsClientFactory.GetRuntimeProviderDiscoveryService().UserIdProvider : null;
         }
 
         public void Init(HttpApplication context)
@@ -56,7 +56,7 @@ namespace HubAnalytics.AspNet4
             }
             catch (Exception ex)
             {
-                _microserviceAnalyticClient.Error(ex);
+                _hubAnalyticsClient.Error(ex);
             }
 
         }
@@ -72,7 +72,7 @@ namespace HubAnalytics.AspNet4
             }
             catch (Exception ex)
             {
-                _microserviceAnalyticClient.Error(ex);
+                _hubAnalyticsClient.Error(ex);
             }
         }
         
@@ -88,7 +88,7 @@ namespace HubAnalytics.AspNet4
             }
             catch (Exception ex)
             {
-                _microserviceAnalyticClient.Error(ex);
+                _hubAnalyticsClient.Error(ex);
             }
             
         }
@@ -101,7 +101,7 @@ namespace HubAnalytics.AspNet4
                 if (application != null)
                 {
                     Exception ex = application.Server.GetLastError();
-                    _microserviceAnalyticClient.Error(ex);
+                    _hubAnalyticsClient.Error(ex);
                 }
             }
             catch (Exception)
@@ -152,7 +152,7 @@ namespace HubAnalytics.AspNet4
             Dictionary<string, string[]> requestHeaders = _headerParser.CaptureHeaders(CapturedRequestHeaders, request.Headers);
             Dictionary<string, string[]> responseHeaders = _headerParser.CaptureHeaders(CapturedResponseHeaders, HttpContext.Current.Response.Headers);
 
-            _microserviceAnalyticClient.HttpRequest(verb,
+            _hubAnalyticsClient.HttpRequest(verb,
                 HttpContext.Current.Response.StatusCode,
                 uri,
                 didStripQueryParams,
@@ -173,7 +173,7 @@ namespace HubAnalytics.AspNet4
             string sessionId = null;
             string[] values;
 
-            if (_microserviceAnalyticClient.ClientConfiguration.EnableCorrelation)
+            if (_hubAnalyticsClient.ClientConfiguration.EnableCorrelation)
             {
                 values = application.Request.Headers.GetValues(CorrelationIdKey);
                 if (values != null && values.Any())
@@ -188,7 +188,7 @@ namespace HubAnalytics.AspNet4
                 _contextualIdProvider.CorrelationId = correlationId;
             }
 
-            if (_microserviceAnalyticClient.ClientConfiguration.IsSessionTrackingEnabled)
+            if (_hubAnalyticsClient.ClientConfiguration.IsSessionTrackingEnabled)
             {
                 values = application.Request.Headers.GetValues(SessionIdKey);
                 if (values != null && values.Any())
@@ -198,7 +198,7 @@ namespace HubAnalytics.AspNet4
                 _contextualIdProvider.SessionId = sessionId;
             }
 
-            if (_microserviceAnalyticClient.ClientConfiguration.IsUserTrackingEnabled)
+            if (_hubAnalyticsClient.ClientConfiguration.IsUserTrackingEnabled)
             {
                 values = application.Request.Headers.GetValues(UserIdKey);
                 if (values != null && values.Any())
@@ -211,7 +211,7 @@ namespace HubAnalytics.AspNet4
 
         private void SetCorrelationIdOnResponse(object sender)
         {
-            if (!_microserviceAnalyticClient.ClientConfiguration.EnableCorrelation) return;
+            if (!_hubAnalyticsClient.ClientConfiguration.EnableCorrelation) return;
 
             HttpApplication application = (HttpApplication)sender;
 
@@ -277,7 +277,7 @@ namespace HubAnalytics.AspNet4
             }
             if (string.IsNullOrWhiteSpace(sessionId) && IsSessionIdCreationEnabled)
             {
-                sessionId = _sessionIdProvider.SessionId(_microserviceAnalyticClient.ClientConfiguration, application);
+                sessionId = _sessionIdProvider.SessionId(_hubAnalyticsClient.ClientConfiguration, application);
             }
             
             return sessionId;
@@ -293,22 +293,22 @@ namespace HubAnalytics.AspNet4
             }
             if (string.IsNullOrWhiteSpace(userId) && IsUserIdCreationEnabled)
             {
-                userId = _userIdProvider.UserId(_microserviceAnalyticClient.ClientConfiguration, application);
+                userId = _userIdProvider.UserId(_hubAnalyticsClient.ClientConfiguration, application);
             }
 
             return userId;
         }
 
         // We do this dynamically as many of these are dynamic with more heading that way
-        private string UserIdKey => _microserviceAnalyticClient.ClientConfiguration.UserIdKey;
-        private string SessionIdKey => _microserviceAnalyticClient.ClientConfiguration.SessionIdKey;
-        private string StopwatchKey => _microserviceAnalyticClient.ClientConfiguration.HttpStopwatchKey;
-        private string CorrelationIdKey => _microserviceAnalyticClient.ClientConfiguration.CorrelationIdKey;
-        private bool IsCaptureHttpEnabled => _microserviceAnalyticClient.ClientConfiguration.IsCaptureHttpEnabled;
-        private IReadOnlyCollection<string> CapturedRequestHeaders => _microserviceAnalyticClient.ClientConfiguration.HttpRequestHeaderWhitelist;
-        private IReadOnlyCollection<string> CapturedResponseHeaders => _microserviceAnalyticClient.ClientConfiguration.HttpResponseHeaderWhitelist;
-        private bool StripQueryParams => _microserviceAnalyticClient.ClientConfiguration.StripHttpQueryParams;
-        public bool IsSessionIdCreationEnabled => _microserviceAnalyticClient.ClientConfiguration.IsSessionIdCreationEnabled;
-        public bool IsUserIdCreationEnabled => _microserviceAnalyticClient.ClientConfiguration.IsUserIdCreationEnabled;
+        private string UserIdKey => _hubAnalyticsClient.ClientConfiguration.UserIdKey;
+        private string SessionIdKey => _hubAnalyticsClient.ClientConfiguration.SessionIdKey;
+        private string StopwatchKey => _hubAnalyticsClient.ClientConfiguration.HttpStopwatchKey;
+        private string CorrelationIdKey => _hubAnalyticsClient.ClientConfiguration.CorrelationIdKey;
+        private bool IsCaptureHttpEnabled => _hubAnalyticsClient.ClientConfiguration.IsCaptureHttpEnabled;
+        private IReadOnlyCollection<string> CapturedRequestHeaders => _hubAnalyticsClient.ClientConfiguration.HttpRequestHeaderWhitelist;
+        private IReadOnlyCollection<string> CapturedResponseHeaders => _hubAnalyticsClient.ClientConfiguration.HttpResponseHeaderWhitelist;
+        private bool StripQueryParams => _hubAnalyticsClient.ClientConfiguration.StripHttpQueryParams;
+        public bool IsSessionIdCreationEnabled => _hubAnalyticsClient.ClientConfiguration.IsSessionIdCreationEnabled;
+        public bool IsUserIdCreationEnabled => _hubAnalyticsClient.ClientConfiguration.IsUserIdCreationEnabled;
     }
 }

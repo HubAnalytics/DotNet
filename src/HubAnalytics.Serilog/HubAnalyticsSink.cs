@@ -6,16 +6,16 @@ using Serilog.Events;
 
 namespace HubAnalytics.Serilog
 {
-    public class MicroserviceAnalyticsSink : ILogEventSink
+    public class HubAnalyticsSink : ILogEventSink
     {
-        private readonly IMicroserviceAnalyticClient _client;
+        private readonly IHubAnalyticsClient _client;
         private readonly JsonPropertyFormatter _formatter = new JsonPropertyFormatter();
 
-        public MicroserviceAnalyticsSink(IMicroserviceAnalyticClientFactory factory = null)
+        public HubAnalyticsSink(IHubAnalyticsClientFactory factory = null)
         {
             if (factory == null)
             {
-                factory = new MicroserviceAnalyticClientFactory();
+                factory = new HubAnalyticsClientFactory();
             }
 
             _client = factory.GetClient();

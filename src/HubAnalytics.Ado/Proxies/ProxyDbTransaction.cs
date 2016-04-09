@@ -7,12 +7,12 @@ namespace HubAnalytics.Ado.Proxies
     public class ProxyDbTransaction : DbTransaction
     {
         private readonly DbTransaction _proxiedTransaction;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
 
-        public ProxyDbTransaction(DbTransaction transaction, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbTransaction(DbTransaction transaction, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedTransaction = transaction;
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
         }
 
         public override void Commit()

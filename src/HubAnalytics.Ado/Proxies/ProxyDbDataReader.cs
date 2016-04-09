@@ -10,12 +10,12 @@ namespace HubAnalytics.Ado.Proxies
     public class ProxyDbDataReader : DbDataReader
     {
         private DbDataReader _proxiedDataReader;
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
 
-        public ProxyDbDataReader(DbDataReader dataReader, DbCommand command, IMicroserviceAnalyticClient microserviceAnalyticClient)
+        public ProxyDbDataReader(DbDataReader dataReader, DbCommand command, IHubAnalyticsClient hubAnalyticsClient)
         {
             _proxiedDataReader = dataReader;
-            _microserviceAnalyticClient = microserviceAnalyticClient;
+            _hubAnalyticsClient = hubAnalyticsClient;
         }
 
         public override void Close()

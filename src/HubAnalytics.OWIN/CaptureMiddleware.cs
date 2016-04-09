@@ -10,19 +10,19 @@ namespace HubAnalytics.OWIN
 {
     public class CaptureMiddleware : OwinMiddleware
     {
-        private readonly IMicroserviceAnalyticClient _microserviceAnalyticClient;
+        private readonly IHubAnalyticsClient _hubAnalyticsClient;
         private readonly IContextualIdProvider _contextualIdProvider;
         private readonly IClientConfiguration _clientConfiguration;
 
-        public CaptureMiddleware(OwinMiddleware next, MicroserviceAnalyticClientFactory microserviceAnalyticClientFactory = null) : base(next)
+        public CaptureMiddleware(OwinMiddleware next, HubAnalyticsClientFactory hubAnalyticsClientFactory = null) : base(next)
         {
-            if (microserviceAnalyticClientFactory == null)
+            if (hubAnalyticsClientFactory == null)
             {
-                microserviceAnalyticClientFactory = new MicroserviceAnalyticClientFactory();
+                hubAnalyticsClientFactory = new HubAnalyticsClientFactory();
             }
-            _microserviceAnalyticClient = microserviceAnalyticClientFactory.GetClient();
-            _contextualIdProvider = microserviceAnalyticClientFactory.GetCorrelationIdProvider();
-            _clientConfiguration = microserviceAnalyticClientFactory.GetClientConfiguration();
+            _hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
+            _contextualIdProvider = hubAnalyticsClientFactory.GetCorrelationIdProvider();
+            _clientConfiguration = hubAnalyticsClientFactory.GetClientConfiguration();
         }
 
         public override async Task Invoke(IOwinContext context)
@@ -44,7 +44,7 @@ namespace HubAnalytics.OWIN
             }
             catch (Exception ex)
             {
-                _microserviceAnalyticClient.Error(ex, null, correlationId);
+                _hubAnalyticsClient.Error(ex, null, correlationId);
             }
 
             string uri = context.Request.Uri.ToString();
@@ -59,7 +59,7 @@ namespace HubAnalytics.OWIN
                 }
             }
 
-            _microserviceAnalyticClient.HttpRequest(
+            _hubAnalyticsClient.HttpRequest(
                 context.Request.Method,
                 context.Response.StatusCode,
                 uri,
