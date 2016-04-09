@@ -2,12 +2,11 @@
   "locked": false,
   "version": 2,
   "targets": {
-    "DNX,Version=v4.5.1": {
+    ".NETFramework,Version=v4.5": {
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
         },
         "frameworkAssemblies": [
@@ -16,21 +15,6 @@
           "System.Net.Http",
           "System.Runtime"
         ]
-      },
-      "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
-        }
       },
       "Newtonsoft.Json/7.0.1": {
         "type": "package",
@@ -994,12 +978,11 @@
         }
       }
     },
-    "DNX,Version=v4.5.1/win7-x86": {
+    ".NETFramework,Version=v4.5/win7-x86": {
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
         },
         "frameworkAssemblies": [
@@ -1008,21 +991,6 @@
           "System.Net.Http",
           "System.Runtime"
         ]
-      },
-      "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
-        }
       },
       "Newtonsoft.Json/7.0.1": {
         "type": "package",
@@ -1045,12 +1013,11 @@
         }
       }
     },
-    "DNX,Version=v4.5.1/win7-x64": {
+    ".NETFramework,Version=v4.5/win7-x64": {
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
         },
         "frameworkAssemblies": [
@@ -1059,21 +1026,6 @@
           "System.Net.Http",
           "System.Runtime"
         ]
-      },
-      "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "Microsoft.CSharp",
-          "mscorlib",
-          "System",
-          "System.Core"
-        ],
-        "compile": {
-          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
-        }
       },
       "Newtonsoft.Json/7.0.1": {
         "type": "package",
@@ -6495,7 +6447,7 @@
   },
   "projectFileDependencyGroups": {
     "": [],
-    "DNX,Version=v4.5.1": [
+    ".NETFramework,Version=v4.5": [
       "Serilog >= 1.5.14",
       "HubAnalytics.Core >= 1.0.1-*",
       "fx/System.Runtime "

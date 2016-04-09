@@ -7,11 +7,11 @@
   "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
 
   "frameworks": {
-    "dnx451": {
-      "frameworkAssemblies": { "System.Diagnostics.Tracing": "4.0.10.0" },
-      "dependencies": {
-        "HubAnalytics.Core": "1.0.1-*"
-      }
+    "net45": {
+      "frameworkAssemblies": { "System.Diagnostics.Tracing":  "4.0.0.0" }
     }
+  },
+  "dependencies": {
+    "HubAnalytics.Core": "1.0.1-*"
   }
 }

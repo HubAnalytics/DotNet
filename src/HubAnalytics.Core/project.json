@@ -24,16 +24,15 @@
         "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
       }
     },
-    "dnx451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Net.Http": "4.0.0.0",
         "Microsoft.VisualBasic": "10.0.0.0",
         "System.configuration": "4.0.0.0",
-        "System.Runtime": "4.0.10.0"
+        "System.Runtime": "4.0.0.0"
       },
       "dependencies": {
-        "Newtonsoft.Json": "7.0.1",
-        "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
+        "Newtonsoft.Json": "7.0.1"        
       }
     }
   }

@@ -6,18 +6,18 @@
   "projectUrl": "http://www.microserviceanalytics.com",
   "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
   "frameworks": {
-    "dnx451": {
+    "net45": {
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0"
-      },
-      "dependencies": {
-        "HubAnalytics.Core": "1.0.1-*",
-        "HubAnalytics.AspNet4": "1.0.1-*",
-        "Microsoft.AspNet.Mvc": "5.2.3",
-        "Microsoft.AspNet.Razor": "3.2.3",
-        "Microsoft.AspNet.WebPages": "3.2.3",
-        "Microsoft.Web.Infrastructure": "1.0.0"
       }
     }
+  },
+  "dependencies": {
+    "HubAnalytics.Core": "1.0.1-*",
+    "HubAnalytics.AspNet4": "1.0.1-*",
+    "Microsoft.AspNet.Mvc": "5.2.3",
+    "Microsoft.AspNet.Razor": "3.2.3",
+    "Microsoft.AspNet.WebPages": "3.2.3",
+    "Microsoft.Web.Infrastructure": "1.0.0"
   }
 }

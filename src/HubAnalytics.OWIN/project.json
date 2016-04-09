@@ -7,7 +7,7 @@
   "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
 
   "frameworks": {
-    "dnx451": { }
+    "net45": { }
   },
   "dependencies": {
     "HubAnalytics.Core": "1.0.1-*",

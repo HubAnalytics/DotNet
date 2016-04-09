@@ -1,5 +1,5 @@
 ﻿using System;
-#if DNX451
+#if !DNXCORE50
 using System.Configuration;
 
 namespace HubAnalytics.Core

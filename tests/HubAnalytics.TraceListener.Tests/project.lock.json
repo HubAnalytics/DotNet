@@ -5,9 +5,8 @@
     "DNX,Version=v4.5.1": {
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
         },
         "frameworkAssemblies": [
@@ -19,7 +18,7 @@
       },
       "HubAnalytics.TraceListener/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
           "HubAnalytics.Core": "1.0.1"
         },
@@ -279,9 +278,8 @@
     "DNX,Version=v4.5.1/win7-x86": {
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
         },
         "frameworkAssemblies": [
@@ -293,7 +291,7 @@
       },
       "HubAnalytics.TraceListener/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
           "HubAnalytics.Core": "1.0.1"
         },
@@ -553,9 +551,8 @@
     "DNX,Version=v4.5.1/win7-x64": {
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
           "Newtonsoft.Json": "7.0.1"
         },
         "frameworkAssemblies": [
@@ -567,7 +564,7 @@
       },
       "HubAnalytics.TraceListener/1.0.1-beta": {
         "type": "project",
-        "framework": "DNX,Version=v4.5.1",
+        "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
           "HubAnalytics.Core": "1.0.1"
         },
