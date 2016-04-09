@@ -1,0 +1,23 @@
+﻿{
+  "version": "1.0.1-beta-*",
+  "description": "MicroserviceAnalytics.MVC5 Class Library",
+  "authors": [ "James Randall" ],
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
+  "licenseUrl": "https://raw.githubusercontent.com/MicroserviceAnalytics/DataCaptureClients/master/LICENSE",
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0"
+      },
+      "dependencies": {
+        "HubAnalytics.Core": "1.0.1-*",
+        "HubAnalytics.AspNet4": "1.0.1-*",
+        "Microsoft.AspNet.Mvc": "5.2.3",
+        "Microsoft.AspNet.Razor": "3.2.3",
+        "Microsoft.AspNet.WebPages": "3.2.3",
+        "Microsoft.Web.Infrastructure": "1.0.0"
+      }
+    }
+  }
+}

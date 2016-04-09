@@ -1,0 +1,18 @@
+﻿{
+  "version": "1.0.1-beta-*",
+  "description": "MicroserviceAnalytics.AspNet4 Class Library",
+  "authors": [ "James Randall" ],
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
+  "licenseUrl": "https://raw.githubusercontent.com/MicroserviceAnalytics/DataCaptureClients/master/LICENSE",
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0"
+      }
+    }
+  },
+  "dependencies": {
+    "HubAnalytics.Core": "1.0.1-*"
+  }
+}

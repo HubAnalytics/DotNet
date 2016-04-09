@@ -1,0 +1,23 @@
+﻿{
+  "version": "1.0.1-beta-*",
+  "description": "HubAnalytics.EF6 Class Library",
+  "authors": [ "James Randall" ],
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
+  "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Xml": "4.0.0.0",
+        "System.Web": "4.0.0.0",
+        "System.Data": "4.0.0.0",
+        "System.Transactions": "4.0.0.0"
+      },
+      "dependencies": {
+        "HubAnalytics.Ado": "1.0.1-*",
+        "HubAnalytics.Core": "1.0.1-*",
+        "EntityFramework": "6.1.3"
+      }
+    }
+  }
+}

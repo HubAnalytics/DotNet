@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.1-beta-*",
+  "description": "HubAnalytics.OWIN Class Library",
+  "authors": [ "James Randall" ],
+  "tags": [ "microservice analytic client" ],
+  "projectUrl": "http://www.microserviceanalytics.com",
+  "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
+
+  "frameworks": {
+    "dnx451": { }
+  },
+  "dependencies": {
+    "HubAnalytics.Core": "1.0.1-*",
+    "Microsoft.Owin": "3.0.1",
+    "Owin": "1.0.0"
+  }
+}
