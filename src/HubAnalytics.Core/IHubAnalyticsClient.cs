@@ -7,6 +7,9 @@ namespace HubAnalytics.Core
 {
     public interface IHubAnalyticsClient
     {
+        void Stop();
+        void RegisterTelemetryProvider(ITelemetryEventProvider telemetryEventProvider);
+
         IClientConfiguration ClientConfiguration { get; }
 
         IReadOnlyCollection<Event> GetEvents(int batchSize);

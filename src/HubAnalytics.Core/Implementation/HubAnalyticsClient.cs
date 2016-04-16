@@ -12,6 +12,7 @@ namespace HubAnalytics.Core.Implementation
 {
     internal class HubAnalyticsClient : IHubAnalyticsClient
     {
+        private readonly ConcurrentBag<ITelemetryEventProvider> _telemetryEventProviders = new ConcurrentBag<ITelemetryEventProvider>();
         private readonly ConcurrentQueue<Event> _eventQueue = new ConcurrentQueue<Event>();
         private readonly IEnvironmentCapture _environmentCapture;
         private readonly IContextualIdProvider _contextualIdProvider;
@@ -36,6 +37,16 @@ namespace HubAnalytics.Core.Implementation
             _periodicDispatcher = new PeriodicDispatcher(this, propertyId, key, clientConfiguration, _cancellationTokenSource);
         }
 
+        public void Stop()
+        {
+            _cancellationTokenSource.Cancel();
+        }
+
+        public void RegisterTelemetryProvider(ITelemetryEventProvider telemetryEventProvider)
+        {
+            _telemetryEventProviders.Add(telemetryEventProvider);
+        }
+
         public IClientConfiguration ClientConfiguration => _clientConfiguration;
 
         public IReadOnlyCollection<Event> GetEvents(int batchSize)
@@ -46,6 +57,13 @@ namespace HubAnalytics.Core.Implementation
             {
                 events.Add(ev);
             }
+
+            var telemetryProviders = _telemetryEventProviders.ToArray();
+            foreach (ITelemetryEventProvider provider in telemetryProviders)
+            {
+                events.AddRange(provider.GetEvents(batchSize));
+            }
+
             return events;
         }
 
