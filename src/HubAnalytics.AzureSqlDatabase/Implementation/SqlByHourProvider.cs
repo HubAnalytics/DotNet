@@ -65,5 +65,7 @@ SELECT dateadd(ms,-datepart(ms,end_time),dateadd(second,-datepart(second,end_tim
             }
             return result;
         }
+
+        public string Granularity => "hour";
     }
 }

@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HubAnalytics.AzureSqlDatabase.Implementation;
 using HubAnalytics.Core.Model;
 
-namespace HubAnalytics.AzureSqlDatabase
+namespace HubAnalytics.AzureSqlDatabase.Implementation
 {
-    internal class SqlDatabaseResourceUsage
+    internal class SqlDatabaseResourceUsage : ISqlDatabaseResourceUsage
     {
         private readonly ConcurrentDictionary<DateTimeOffset, TelemetryItem> _usage = new ConcurrentDictionary<DateTimeOffset, TelemetryItem>();
         private readonly AzureSqlDatabase _azureSqlDatabase;
@@ -24,9 +22,7 @@ namespace HubAnalytics.AzureSqlDatabase
             _mapper = mapper;
         }
 
-        public AzureSqlDatabase AzureSqlDatabase => _azureSqlDatabase;
-
-        public ConcurrentDictionary<DateTimeOffset, TelemetryItem> Usage => _usage;
+        public string Name => _azureSqlDatabase.Name;
 
         public async Task<bool> Update()
         {
@@ -59,7 +55,8 @@ namespace HubAnalytics.AzureSqlDatabase
                 }
             }
 
-            return items.Select(x => _mapper.Map(x)).ToList();
+            string connectionString = _azureSqlDatabase.TransportSecureConnectionString;
+            return items.Select(x => _mapper.Map(x, _azureSqlDatabase.PropertyId, _usageProvider.Granularity, _azureSqlDatabase.Name, connectionString)).ToList();
         }
 
         private void Merge(IReadOnlyCollection<TelemetryItem> mergeItems)

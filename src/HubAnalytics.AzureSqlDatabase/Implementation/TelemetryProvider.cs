@@ -15,7 +15,7 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
         private readonly TimeSpan _interval;
         private const int MaxConcurrentRetries = 10;
         private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly List<SqlDatabaseResourceUsage> _usageSets = new List<SqlDatabaseResourceUsage>();
+        private readonly List<ISqlDatabaseResourceUsage> _usageSets = new List<ISqlDatabaseResourceUsage>();
 
         public TelemetryProvider(IReadOnlyCollection<AzureSqlDatabase> databases,
             IUsageProvider sqlByHourProvider,
@@ -46,7 +46,7 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
         public IReadOnlyCollection<Event> GetEvents(int batchSize)
         {
             List<Event> events = new List<Event>();
-            foreach (SqlDatabaseResourceUsage usageSet in _usageSets)
+            foreach (ISqlDatabaseResourceUsage usageSet in _usageSets)
             {
                 events.AddRange(usageSet.GetEvents());
             }
@@ -59,13 +59,13 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
             bool shouldContinue = !_cancellationTokenSource.IsCancellationRequested;
             while (shouldContinue)
             {
-                foreach (SqlDatabaseResourceUsage usageSet in _usageSets.ToArray())
+                foreach (ISqlDatabaseResourceUsage usageSet in _usageSets.ToArray())
                 {
                     if (!await usageSet.Update())
                     {
                         if (usageSet.ConcurrentFailures == MaxConcurrentRetries)
                         {
-                            System.Diagnostics.Trace.WriteLine($"{MaxConcurrentRetries} of {usageSet.AzureSqlDatabase.Name}. Cancelling telemetry logging.", "Error");
+                            System.Diagnostics.Trace.WriteLine($"{MaxConcurrentRetries} of {usageSet.Name}. Cancelling telemetry logging.", "Error");
                             _usageSets.Remove(usageSet);
                         }
                     }

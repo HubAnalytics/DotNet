@@ -16,7 +16,8 @@ namespace HubAnalytics.AzureSqlDatabase
 
         public static void Attach(IHubAnalyticsClientFactory hubAnalyticsClientFactory)
         {
-            List<AzureSqlDatabase> databases = DatabasesFromConfigurationSection();
+            IHubAnalyticsClient hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
+            List<AzureSqlDatabase> databases = DatabasesFromConfigurationSection(hubAnalyticsClient.ClientConfiguration.PropertyId);
             if (databases.Count == 0)
             {
                 databases.AddRange(from ConnectionStringSettings settings in ConfigurationManager.ConnectionStrings
@@ -25,8 +26,7 @@ namespace HubAnalytics.AzureSqlDatabase
                         ConnectionString = settings.ConnectionString, Name = settings.Name
                     });
             }
-            TimeSpan interval = TimeSpan.FromMilliseconds(HubAnalyticsAzureSqlDatabaseConfigurationSection.Settings.TelemetryIntervalMs);
-            IHubAnalyticsClient hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
+            TimeSpan interval = TimeSpan.FromMilliseconds(HubAnalyticsAzureSqlDatabaseConfigurationSection.Settings.TelemetryIntervalMs);            
             hubAnalyticsClient.RegisterTelemetryProvider(
                 new TelemetryProvider(databases,
                     new SqlByHourProvider(new DataReaderToTelemetryItemMapper()),
@@ -35,7 +35,7 @@ namespace HubAnalytics.AzureSqlDatabase
                     interval));
         }
 
-        private static List<AzureSqlDatabase> DatabasesFromConfigurationSection()
+        private static List<AzureSqlDatabase> DatabasesFromConfigurationSection(string defaultPropertyId)
         {
             List<AzureSqlDatabase> result = new List<AzureSqlDatabase>();
             if (HubAnalyticsAzureSqlDatabaseConfigurationSection.Settings.AzureSqlDatabases.Count > 0)
@@ -43,7 +43,7 @@ namespace HubAnalytics.AzureSqlDatabase
                 result.AddRange(from AzureSqlDatabaseConfigurationElement element in HubAnalyticsAzureSqlDatabaseConfigurationSection.Settings.AzureSqlDatabases
                     select new AzureSqlDatabase
                     {
-                        ConnectionString = element.ConnectionString, Name = element.Name
+                        ConnectionString = element.ConnectionString, Name = element.Name, PropertyId = string.IsNullOrWhiteSpace(element.PropertyId) ? defaultPropertyId : element.PropertyId
                     });
             }
             return result;

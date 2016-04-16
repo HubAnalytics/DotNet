@@ -6,5 +6,6 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
     internal interface IUsageProvider
     {
         Task<IReadOnlyCollection<TelemetryItem>> Get(AzureSqlDatabase azureSqlDatabase);
+        string Granularity { get; }
     }
 }

@@ -6,7 +6,7 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
 {
     internal class TelemetryItemToEventMapper : ITelemetryItemToEventMapper
     {
-        public Event Map(TelemetryItem @from)
+        public Event Map(TelemetryItem @from, string propertyId, string granularity, string connectionName, string connectionString)
         {
             return new Event
             {
@@ -37,11 +37,15 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
                     { "MinMaxSessionPercent", @from.MinMaxSessionPercent },
                     { "AvgDtuLimit", @from.AvgDtuLimit },
                     { "MaxDtuLimit", @from.MaxDtuLimit  },
-                    { "MinDtuLimit", @from.MinDtuLimit }
+                    { "MinDtuLimit", @from.MinDtuLimit },
+                    { "Granularity", granularity },
+                    { "ConnectionName", connectionName },
+                    { "ConnectionString", connectionString },
+                    { "PropertyId", propertyId }
                 },
                 EventEndDateTime = null,
                 EventStartDateTime = @from.PeriodBegin.ToString(Event.EventDateFormat, CultureInfo.InvariantCulture),
-                EventType = "AzureSqlDatabaseTelemetry",
+                EventType = "azuresqldatabasetelemetry",
                 SessionId = null,
                 UserId = null
             };

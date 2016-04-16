@@ -17,5 +17,17 @@ namespace HubAnalytics.AzureSqlDatabase
             get { return (string)this["connectionString"]; }
             set { this["connectionString"] = value; }
         }
+
+        /// <summary>
+        /// This can be used to collect telemetry from multiple SQL databases within a single process using a single gathering client
+        /// but allowing each one to be logged against a different application.
+        /// </summary>
+        [ConfigurationProperty("propertyId", IsRequired = true, DefaultValue = "")]
+        [StringValidator]
+        public string PropertyId
+        {
+            get { return (string)this["propertyId"]; }
+            set { this["propertyId"] = value; }
+        }
     }
 }
