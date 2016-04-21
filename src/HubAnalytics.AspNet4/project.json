@@ -13,6 +13,7 @@
     }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.0.1-*"
+    "HubAnalytics.Core": "1.0.1-*",
+    "Microsoft.Web.Infrastructure": "1.0.0"
   }
 }

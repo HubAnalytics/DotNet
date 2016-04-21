@@ -9,19 +9,13 @@ using HubAnalytics.Core;
 
 namespace HubAnalytics.Ado
 {
-    public static class HubAnalytics
+    public class AdoCapturePlugin : IDataCapturePlugin
     {
         public static readonly Dictionary<string, string> Factories = new Dictionary<string, string>();
 
-        public static void Attach()
+        public void Initialize(IHubAnalyticsClient client)
         {
-            Attach(new HubAnalyticsClientFactory());
-        }
-
-        public static void Attach(IHubAnalyticsClientFactory hubAnalyticsClientFactory)
-        {
-            IHubAnalyticsClient hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
-            ProxyDbProviderFactory.HubAnalyticsClient = hubAnalyticsClient;
+            ProxyDbProviderFactory.HubAnalyticsClient = client;
 
             // force initialization
             try

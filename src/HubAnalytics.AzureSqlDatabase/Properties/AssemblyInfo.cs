@@ -22,6 +22,3 @@ using System.Web;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("5652ec52-4ef0-46a3-ac3d-0b607ef264ca")]
-#if !DNXCORE50 
-[assembly: PreApplicationStartMethod(typeof(HubAnalytics.AzureSqlDatabase.Initialize), "Attach")]
-#endif

@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using HubAnalytics.Core;
 
 namespace HubAnalytics.AzureSqlDatabase
 {

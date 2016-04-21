@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Web;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -21,3 +22,4 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("d0011f3b-51d6-4459-a29b-97aee7193ce3")]
+[assembly: PreApplicationStartMethod(typeof(HubAnalytics.AspNet4.Initialize), "LoadModule")]

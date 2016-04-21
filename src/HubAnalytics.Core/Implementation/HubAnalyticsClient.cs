@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using HubAnalytics.Core.Helpers;
 using HubAnalytics.Core.Model;
 using Newtonsoft.Json;
 using Environment = HubAnalytics.Core.Model.Environment;

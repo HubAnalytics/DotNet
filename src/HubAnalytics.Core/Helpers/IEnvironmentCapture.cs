@@ -1,6 +1,6 @@
 ﻿using HubAnalytics.Core.Model;
 
-namespace HubAnalytics.Core
+namespace HubAnalytics.Core.Helpers
 {
     public interface IEnvironmentCapture
     {

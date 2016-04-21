@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using HubAnalytics.Core.Model;
 
-namespace HubAnalytics.Core.Implementation
+namespace HubAnalytics.Core.Helpers
 {
     internal class StackTraceParser : IStackTraceParser
     {

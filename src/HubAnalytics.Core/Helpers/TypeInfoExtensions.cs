@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿#if DNXCORE50
 using System.Reflection;
+using System.Linq;
+#endif
 
-namespace HubAnalytics.Core.Implementation
+namespace HubAnalytics.Core.Helpers
 {
     public static class TypeInfoExtensions
     {

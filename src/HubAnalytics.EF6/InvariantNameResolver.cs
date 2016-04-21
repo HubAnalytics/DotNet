@@ -21,7 +21,7 @@ namespace HubAnalytics.EF6
                     {
                         if (_registeredFactories == null)
                         {
-                            _registeredFactories = Ado.HubAnalytics.Factories
+                            _registeredFactories = Ado.AdoCapturePlugin.Factories
                                 .ToDictionary(x => x.Value, x => x.Key);
                         }
                     }

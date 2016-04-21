@@ -1,16 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using HubAnalytics.Core.Implementation;
+
 #if DNXCORE50
 using Microsoft.Extensions.PlatformAbstractions;
 #endif
 
-namespace HubAnalytics.Core
+namespace HubAnalytics.Core.Helpers
 {
     public class DefaultRuntimeProviderDiscoveryService :IRuntimeProviderDiscoveryService
     {
+        private readonly IInterfaceImplementationLocator _interfaceImplementationLocator;
+
+        public DefaultRuntimeProviderDiscoveryService(IInterfaceImplementationLocator interfaceImplementationLocator)
+        {
+            _interfaceImplementationLocator = interfaceImplementationLocator;
+        }
+
         private static readonly object UserIdDiscoveryLockObject = new object();
         private static IUserIdProvider _discoveredUserIdProvider;
         private static readonly object SessionIdDiscoveryLockObject = new object();
@@ -28,15 +35,8 @@ namespace HubAnalytics.Core
                         {
                             return _discoveredUserIdProvider;
                         }
-                        IReadOnlyCollection<Assembly> assemblies = GetLoadedAssemblies();
-                        List<Type> candidateTypes = new List<Type>();
-                        foreach (Assembly assembly in assemblies)
-                        {
-                            candidateTypes.AddRange(
-                                assembly.GetTypes()
-                                    .Where(t => typeof (IUserIdProvider).IsAssignableFrom(t) && t.GetTypeInfo().IsClass));
-                        }
-
+                        IReadOnlyCollection<Type> candidateTypes = _interfaceImplementationLocator.Implements<IUserIdProvider>();
+                        
                         // Look for providers in this order:
                         //  1. a candidate type implemented by an external party
                         //  2. a candidate type not in HubAnalytics.Core
@@ -63,14 +63,7 @@ namespace HubAnalytics.Core
                         {
                             return _discoveredSessionIdProvider;
                         }
-                        IReadOnlyCollection<Assembly> assemblies = GetLoadedAssemblies();
-                        List<Type> candidateTypes = new List<Type>();
-                        foreach (Assembly assembly in assemblies)
-                        {
-                            candidateTypes.AddRange(
-                                assembly.GetTypes()
-                                    .Where(t => typeof (ISessionIdProvider).IsAssignableFrom(t) && t.GetTypeInfo().IsClass));
-                        }
+                        IReadOnlyCollection<Type> candidateTypes = _interfaceImplementationLocator.Implements<ISessionIdProvider>();
 
                         // Look for providers in this order:
                         //  1. a candidate type implemented by an external party
@@ -96,19 +89,7 @@ namespace HubAnalytics.Core
             return candidateTypes.FirstOrDefault(x => !x.AssemblyQualifiedName.StartsWith("HubAnalytics.Core"));
         }
 
-        private static IReadOnlyCollection<Assembly> GetLoadedAssemblies()
-        {
-            IReadOnlyCollection<Assembly> assemblies;
-#if DNXCORE50
-            assemblies = PlatformServices.Default.LibraryManager.GetReferencingLibraries(
-                "HubAnalytics.Core")
-                .SelectMany(lib => lib.Assemblies)
-                .Select(info => Assembly.Load(new AssemblyName(info.Name))).ToList();
-#else
-            assemblies = AppDomain.CurrentDomain.GetAssemblies();
-#endif
-            return assemblies;
-        }
+        
 
                
     }

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using HubAnalytics.Core.Helpers;
+
 namespace HubAnalytics.Core
 {
     public interface IHubAnalyticsClientFactory
@@ -8,5 +11,6 @@ namespace HubAnalytics.Core
         IEnvironmentCapture GetEnvironmentCapture();
         IStackTraceParser GetStackTraceParser();
         IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService();
+        IReadOnlyCollection<IDataCapturePlugin> DataCapturePlugins { get; }
     }
 }

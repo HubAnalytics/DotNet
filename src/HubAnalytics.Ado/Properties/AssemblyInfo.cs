@@ -22,6 +22,4 @@ using System.Web;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("bbd1a536-2ce8-4330-8043-990839cad9bf")]
-#if !DNXCORE50 
-[assembly: PreApplicationStartMethod(typeof(HubAnalytics.Ado.HubAnalytics), "Attach")] 
-#endif 
+

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HubAnalytics.Core
+namespace HubAnalytics.Core.Helpers
 {
     public abstract class DefaultClientConfiguration : IClientConfiguration
     {

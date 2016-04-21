@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using HubAnalytics.AspNet4.Implementation;
 using HubAnalytics.Core;
+using HubAnalytics.Core.Helpers;
 
 namespace HubAnalytics.AspNet4
 {

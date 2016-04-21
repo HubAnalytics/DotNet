@@ -1,4 +1,4 @@
-﻿namespace HubAnalytics.Core.Implementation
+﻿namespace HubAnalytics.Core.Helpers
 {
     public class PlatformDefaultConfigurationProvider : IClientConfigurationProvider
     {

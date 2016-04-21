@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using HubAnalytics.Core;
+using HubAnalytics.Core.Helpers;
 using Microsoft.Owin;
 
 namespace HubAnalytics.OWIN

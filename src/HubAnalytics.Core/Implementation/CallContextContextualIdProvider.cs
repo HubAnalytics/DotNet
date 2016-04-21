@@ -4,6 +4,7 @@ using System.Threading;
 #else
 using System.Runtime.Remoting.Messaging;
 #endif
+using HubAnalytics.Core.Helpers;
 
 namespace HubAnalytics.Core.Implementation
 {

@@ -4,7 +4,7 @@
 using Microsoft.VisualBasic.Devices;
 #endif
 
-namespace HubAnalytics.Core.Implementation
+namespace HubAnalytics.Core.Helpers
 {
 #if NET451
     internal class EnvironmentCapture : IEnvironmentCapture

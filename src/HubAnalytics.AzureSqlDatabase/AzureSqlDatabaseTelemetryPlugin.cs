@@ -7,16 +7,10 @@ using HubAnalytics.Core;
 
 namespace HubAnalytics.AzureSqlDatabase
 {
-    public static class Initialize
+    public class AzureSqlDatabaseTelemetryPlugin : IDataCapturePlugin
     {
-        public static void Attach()
+        public void Initialize(IHubAnalyticsClient hubAnalyticsClient)
         {
-            Attach(new HubAnalyticsClientFactory());
-        }
-
-        public static void Attach(IHubAnalyticsClientFactory hubAnalyticsClientFactory)
-        {
-            IHubAnalyticsClient hubAnalyticsClient = hubAnalyticsClientFactory.GetClient();
             List<AzureSqlDatabase> databases = DatabasesFromConfigurationSection(hubAnalyticsClient.ClientConfiguration.PropertyId);
             if (databases.Count == 0)
             {

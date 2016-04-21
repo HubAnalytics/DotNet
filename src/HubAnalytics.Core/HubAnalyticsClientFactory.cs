@@ -1,4 +1,8 @@
-﻿using HubAnalytics.Core.Implementation;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using HubAnalytics.Core.Helpers;
+using HubAnalytics.Core.Implementation;
 
 namespace HubAnalytics.Core
 {
@@ -6,14 +10,17 @@ namespace HubAnalytics.Core
     {
         private readonly IRuntimeProviderDiscoveryService _runtimeProviderDiscoveryService;
         private readonly IClientConfigurationProvider _clientConfigurationProvider;
+        private readonly IInterfaceImplementationLocator _interfaceImplementationLocator;
         private static readonly object ClientLockObject = new object();
         private static readonly object ClientConfigurationLockObject = new object();
         private static IHubAnalyticsClient _hubAnalyticsClient;
-        private static IClientConfiguration _clientConfiguration;
+        private static IReadOnlyCollection<IDataCapturePlugin> _dataCapturePlugins;
+        private static IClientConfiguration _clientConfiguration;        
 
-        public HubAnalyticsClientFactory(IClientConfigurationProvider clientConfigurationProvider = null, IRuntimeProviderDiscoveryService runtimeProviderDiscoveryService=null)
+        public HubAnalyticsClientFactory(IClientConfigurationProvider clientConfigurationProvider = null, IRuntimeProviderDiscoveryService runtimeProviderDiscoveryService=null, IInterfaceImplementationLocator interfaceImplementationLocator = null)
         {
-            _runtimeProviderDiscoveryService = runtimeProviderDiscoveryService ?? new DefaultRuntimeProviderDiscoveryService();
+            _interfaceImplementationLocator = interfaceImplementationLocator ?? new InterfaceImplementationLocator();
+            _runtimeProviderDiscoveryService = runtimeProviderDiscoveryService ?? new DefaultRuntimeProviderDiscoveryService(_interfaceImplementationLocator);
             _clientConfigurationProvider = clientConfigurationProvider ?? new PlatformDefaultConfigurationProvider();
         }
 
@@ -33,8 +40,18 @@ namespace HubAnalytics.Core
                             GetCorrelationIdProvider(),
                             GetStackTraceParser(),
                             clientConfiguration);
+                        IReadOnlyCollection<Type> loadedPluginTypes = _interfaceImplementationLocator.Implements<IDataCapturePlugin>();
+                        List<IDataCapturePlugin> plugins = new List<IDataCapturePlugin>(loadedPluginTypes.Count);
+                        foreach (Type pluginType in loadedPluginTypes)
+                        {
+                            IDataCapturePlugin plugin = (IDataCapturePlugin)Activator.CreateInstance(pluginType);
+                            plugin.Initialize(_hubAnalyticsClient);
+                            plugins.Add(plugin);
+                        }
+                        _dataCapturePlugins = new ReadOnlyCollection<IDataCapturePlugin>(plugins);
                     }
                 }
+
             }
 
             return _hubAnalyticsClient;
@@ -81,6 +98,8 @@ namespace HubAnalytics.Core
         public virtual IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService()
         {
             return _runtimeProviderDiscoveryService;
-        }        
+        }
+
+        public virtual IReadOnlyCollection<IDataCapturePlugin> DataCapturePlugins => _dataCapturePlugins;
     }
 }

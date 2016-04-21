@@ -1,4 +1,4 @@
-﻿namespace HubAnalytics.Core
+﻿namespace HubAnalytics.Core.Helpers
 {
     public interface IClientConfigurationProvider
     {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using HubAnalytics.Core;
+using HubAnalytics.Core.Helpers;
 
 namespace HubAnalytics.WebAPI2
 {

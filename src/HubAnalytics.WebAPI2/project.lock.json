@@ -7,7 +7,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.0.1"
+          "HubAnalytics.Core": "1.0.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
@@ -51,6 +52,15 @@
         },
         "runtime": {
           "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
       "Newtonsoft.Json/7.0.1": {
@@ -68,7 +78,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.0.1"
+          "HubAnalytics.Core": "1.0.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
@@ -112,6 +123,15 @@
         },
         "runtime": {
           "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
       "Newtonsoft.Json/7.0.1": {
@@ -129,7 +149,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.0.1"
+          "HubAnalytics.Core": "1.0.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
@@ -173,6 +194,15 @@
         },
         "runtime": {
           "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
       "Newtonsoft.Json/7.0.1": {
@@ -220,6 +250,16 @@
         "Microsoft.AspNet.WebApi.Core.5.2.3.nupkg",
         "Microsoft.AspNet.WebApi.Core.5.2.3.nupkg.sha512",
         "Microsoft.AspNet.WebApi.Core.nuspec"
+      ]
+    },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "type": "package",
+      "sha512": "FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "files": [
+        "lib/net40/Microsoft.Web.Infrastructure.dll",
+        "Microsoft.Web.Infrastructure.1.0.0.nupkg",
+        "Microsoft.Web.Infrastructure.1.0.0.nupkg.sha512",
+        "Microsoft.Web.Infrastructure.nuspec"
       ]
     },
     "Newtonsoft.Json/7.0.1": {

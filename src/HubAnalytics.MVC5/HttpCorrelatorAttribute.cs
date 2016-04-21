@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HubAnalytics.Core;
+using HubAnalytics.Core.Helpers;
 
 namespace HubAnalytics.MVC5
 {
