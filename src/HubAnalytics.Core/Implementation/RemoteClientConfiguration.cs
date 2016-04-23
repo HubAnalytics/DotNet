@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using HubAnalytics.Core.Helpers;
 using HubAnalytics.Core.Model;
-using Newtonsoft.Json;
 
 // ReSharper disable ConvertToAutoProperty
 
@@ -10,6 +10,7 @@ namespace HubAnalytics.Core.Implementation
 {
     class RemoteClientConfiguration : IClientConfiguration
     {
+        private readonly IJsonSerialization _jsonSerialization;
         private const string SettingsRelativePath = "v1/settings";
 
         private readonly string _propertyId;
@@ -41,8 +42,10 @@ namespace HubAnalytics.Core.Implementation
         private bool _isUserTrackingEnabled;
         private bool _isSessionTrackingEnabled;        
 
-        public RemoteClientConfiguration(IClientConfiguration initialConfiguration)
+        public RemoteClientConfiguration(IClientConfiguration initialConfiguration,
+            IJsonSerialization jsonSerialization)
         {
+            _jsonSerialization = jsonSerialization;
             _propertyId = initialConfiguration.PropertyId;
             _key = initialConfiguration.Key;
             
@@ -147,7 +150,7 @@ namespace HubAnalytics.Core.Implementation
                         if (response.IsSuccessStatusCode)
                         {
                             string result = await response.Content.ReadAsStringAsync();
-                            ApplicationCaptureSettings settings = JsonConvert.DeserializeObject<ApplicationCaptureSettings>(result);
+                            ApplicationCaptureSettings settings = _jsonSerialization.Deserialize<ApplicationCaptureSettings>(result);
                             _uploadInterval = TimeSpan.FromMilliseconds(settings.UploadIntervalMs);
                             _isCaptureHttpEnabled = settings.IsCaptureHttpEnabled;
                             _isCaptureErrorsEnabled = settings.IsCaptureErrorsEnabled;

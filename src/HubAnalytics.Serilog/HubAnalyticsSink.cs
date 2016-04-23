@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using HubAnalytics.Core;
 using Serilog.Core;
@@ -10,6 +11,13 @@ namespace HubAnalytics.Serilog
     {
         private readonly IHubAnalyticsClient _client;
         private readonly JsonPropertyFormatter _formatter = new JsonPropertyFormatter();
+
+        public HubAnalyticsSink(IHubAnalyticsClient client)
+        {
+            if (client == null) throw new ArgumentNullException(nameof(client));
+
+            _client = client;
+        }
 
         public HubAnalyticsSink(IHubAnalyticsClientFactory factory = null)
         {

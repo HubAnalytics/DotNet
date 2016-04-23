@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HubAnalytics.Core.Helpers;
 using HubAnalytics.Core.Model;
 
 namespace HubAnalytics.Core.Implementation
@@ -19,6 +22,7 @@ namespace HubAnalytics.Core.Implementation
         private readonly string _propertyId;
         private readonly string _key;
         private readonly IClientConfiguration _clientConfiguration;
+        private readonly IJsonSerialization _jsonSerialization;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly Uri _endpoint;
 
@@ -26,12 +30,14 @@ namespace HubAnalytics.Core.Implementation
             string propertyId,
             string key,
             IClientConfiguration clientConfiguration,
+            IJsonSerialization jsonSerialization,
             CancellationTokenSource cancellationTokenSource)
         {
             _hubAnalyticsClient = hubAnalyticsClient;
             _propertyId = propertyId;
             _key = key;
             _clientConfiguration = clientConfiguration;
+            _jsonSerialization = jsonSerialization;
             _cancellationTokenSource = cancellationTokenSource;
             string apiRoot = clientConfiguration.ApiRoot;
             _endpoint = new Uri(apiRoot.EndsWith("/") ? $"{apiRoot}{EventRelativePath}" : $"{apiRoot}/{EventRelativePath}");
@@ -40,6 +46,11 @@ namespace HubAnalytics.Core.Implementation
             {
                 await BackgroundPush();
             });
+        }
+
+        private string SerializeObject(object value)
+        {
+            return _jsonSerialization.Serialize(value);
         }
 
         private async Task BackgroundPush()
@@ -66,7 +77,9 @@ namespace HubAnalytics.Core.Implementation
                             Source = "net"
                         };
 
-                        string serializedContent = Newtonsoft.Json.JsonConvert.SerializeObject(batch);
+                        //string serializedContent = Newtonsoft.Json.JsonConvert.SerializeObject(batch);
+
+                        string serializedContent = SerializeObject(batch);
                         HttpClient client = new HttpClient();
                         HttpContent content = new StringContent(serializedContent, Encoding.UTF8, "application/json");
                         HttpRequestMessage message = new HttpRequestMessage

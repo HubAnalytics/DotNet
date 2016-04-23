@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using HubAnalytics.Core.Helpers;
 using HubAnalytics.Core.Model;
-using Newtonsoft.Json;
 using Environment = HubAnalytics.Core.Model.Environment;
 
 namespace HubAnalytics.Core.Implementation
@@ -18,6 +17,7 @@ namespace HubAnalytics.Core.Implementation
         private readonly IEnvironmentCapture _environmentCapture;
         private readonly IContextualIdProvider _contextualIdProvider;
         private readonly IStackTraceParser _stackTraceParser;
+        private readonly IJsonSerialization _jsonSerialization;
         private readonly IClientConfiguration _clientConfiguration;
         private readonly PeriodicDispatcher _periodicDispatcher;
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -27,15 +27,17 @@ namespace HubAnalytics.Core.Implementation
             IEnvironmentCapture environmentCapture,
             IContextualIdProvider contextualIdProvider,
             IStackTraceParser stackTraceParser,
+            IJsonSerialization jsonSerialization,
             IClientConfiguration clientConfiguration)
         {
             _environmentCapture = environmentCapture;
             _contextualIdProvider = contextualIdProvider;
             _stackTraceParser = stackTraceParser;
+            _jsonSerialization = jsonSerialization;
             _clientConfiguration = clientConfiguration;
             _cancellationTokenSource = new CancellationTokenSource();
 
-            _periodicDispatcher = new PeriodicDispatcher(this, propertyId, key, clientConfiguration, _cancellationTokenSource);
+            _periodicDispatcher = new PeriodicDispatcher(this, propertyId, key, clientConfiguration, jsonSerialization, _cancellationTokenSource);
         }
 
         public void Stop()
@@ -167,7 +169,7 @@ namespace HubAnalytics.Core.Implementation
             if (!_clientConfiguration.IsCaptureLogsEnabled || _cancellationTokenSource.IsCancellationRequested)
                 return;
 
-            object payload = JsonConvert.DeserializeObject(jsonPayload);
+            object payload = _jsonSerialization.Deserialize(jsonPayload);
             Log(message, levelRank, levelText, timestamp, ex, payload);
         }
 

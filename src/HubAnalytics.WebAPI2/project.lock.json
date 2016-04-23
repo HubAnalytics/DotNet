@@ -17,9 +17,6 @@
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
-        "dependencies": {
-          "Newtonsoft.Json": "7.0.1"
-        },
         "frameworkAssemblies": [
           "Microsoft.VisualBasic",
           "System.configuration",
@@ -88,9 +85,6 @@
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
-        "dependencies": {
-          "Newtonsoft.Json": "7.0.1"
-        },
         "frameworkAssemblies": [
           "Microsoft.VisualBasic",
           "System.configuration",
@@ -159,9 +153,6 @@
       "HubAnalytics.Core/1.0.1-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
-        "dependencies": {
-          "Newtonsoft.Json": "7.0.1"
-        },
         "frameworkAssemblies": [
           "Microsoft.VisualBasic",
           "System.configuration",

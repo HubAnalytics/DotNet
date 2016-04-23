@@ -8,21 +8,12 @@ namespace HubAnalytics.Core
 {
     public class HubAnalyticsClientFactory : IHubAnalyticsClientFactory
     {
-        private readonly IRuntimeProviderDiscoveryService _runtimeProviderDiscoveryService;
-        private readonly IClientConfigurationProvider _clientConfigurationProvider;
-        private readonly IInterfaceImplementationLocator _interfaceImplementationLocator;
         private static readonly object ClientLockObject = new object();
         private static readonly object ClientConfigurationLockObject = new object();
+
         private static IHubAnalyticsClient _hubAnalyticsClient;
         private static IReadOnlyCollection<IDataCapturePlugin> _dataCapturePlugins;
         private static IClientConfiguration _clientConfiguration;        
-
-        public HubAnalyticsClientFactory(IClientConfigurationProvider clientConfigurationProvider = null, IRuntimeProviderDiscoveryService runtimeProviderDiscoveryService=null, IInterfaceImplementationLocator interfaceImplementationLocator = null)
-        {
-            _interfaceImplementationLocator = interfaceImplementationLocator ?? new InterfaceImplementationLocator();
-            _runtimeProviderDiscoveryService = runtimeProviderDiscoveryService ?? new DefaultRuntimeProviderDiscoveryService(_interfaceImplementationLocator);
-            _clientConfigurationProvider = clientConfigurationProvider ?? new PlatformDefaultConfigurationProvider();
-        }
 
         public IHubAnalyticsClient GetClient()
         {
@@ -39,8 +30,9 @@ namespace HubAnalytics.Core
                             GetEnvironmentCapture(),
                             GetCorrelationIdProvider(),
                             GetStackTraceParser(),
+                            GetJsonSerialization(),
                             clientConfiguration);
-                        IReadOnlyCollection<Type> loadedPluginTypes = _interfaceImplementationLocator.Implements<IDataCapturePlugin>();
+                        IReadOnlyCollection<Type> loadedPluginTypes = GetInterfaceImplementationLocator().Implements<IDataCapturePlugin>();
                         List<IDataCapturePlugin> plugins = new List<IDataCapturePlugin>(loadedPluginTypes.Count);
                         foreach (Type pluginType in loadedPluginTypes)
                         {
@@ -65,15 +57,25 @@ namespace HubAnalytics.Core
                 {
                     if (_clientConfiguration == null)
                     {
-                        _clientConfiguration = _clientConfigurationProvider.Get();
+                        _clientConfiguration = GetClientConfigurationProvider().Get();
                         if (_clientConfiguration.IsRemoteUpdateEnabled)
                         {
-                            _clientConfiguration = new RemoteClientConfiguration(_clientConfiguration);
+                            _clientConfiguration = new RemoteClientConfiguration(_clientConfiguration, GetJsonSerialization());
                         }
                     }
                 }
             }
             return _clientConfiguration;
+        }
+
+        public virtual IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService()
+        {
+            return new DefaultRuntimeProviderDiscoveryService(GetInterfaceImplementationLocator());
+        }
+
+        public virtual IInterfaceImplementationLocator GetInterfaceImplementationLocator()
+        {
+            return new InterfaceImplementationLocator();
         }
 
         public virtual IContextualIdProvider GetCorrelationIdProvider()
@@ -83,6 +85,11 @@ namespace HubAnalytics.Core
 #else
             return new CallContextContextualIdProvider(GetClientConfiguration().CorrelationIdKey);
 #endif
+        }
+
+        public virtual IClientConfigurationProvider GetClientConfigurationProvider()
+        {
+            return new PlatformDefaultConfigurationProvider();
         }
 
         public virtual IEnvironmentCapture GetEnvironmentCapture()
@@ -95,9 +102,9 @@ namespace HubAnalytics.Core
             return new StackTraceParser();
         }
 
-        public virtual IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService()
+        public virtual IJsonSerialization GetJsonSerialization()
         {
-            return _runtimeProviderDiscoveryService;
+            return new DefaultJsonSerialization();
         }
 
         public virtual IReadOnlyCollection<IDataCapturePlugin> DataCapturePlugins => _dataCapturePlugins;
