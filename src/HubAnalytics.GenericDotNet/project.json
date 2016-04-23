@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.1-beta-*",
+  "version": "1.1.0",
   "description": "HubAnalytics.GenericDotNet Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
@@ -9,6 +9,6 @@
     "net45": { }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.0.1-*"
+    "HubAnalytics.Core": "1.1.0"
   }
 }

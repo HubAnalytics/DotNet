@@ -1,4 +1,4 @@
-.\setBuildVersion.ps1
+# .\setBuildVersion.ps1
 
 dnu pack .\src\HubAnalytics.Ado\project.json --configuration Debug 
 dnu pack .\src\HubAnalytics.AspNet4\project.json --configuration Debug

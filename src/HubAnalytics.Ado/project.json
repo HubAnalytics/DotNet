@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.1-beta-*",
+  "version": "1.1.0",
   "description": "HubAnalytics.Ado Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
@@ -15,6 +15,6 @@
     }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.0.1-*"
+    "HubAnalytics.Core": "1.1.0"
   }
 }

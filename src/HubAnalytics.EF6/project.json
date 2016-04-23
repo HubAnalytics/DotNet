@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.1-beta-*",
+  "version": "1.1.0",
   "description": "HubAnalytics.EF6 Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
@@ -13,8 +13,8 @@
         "System.Transactions": "4.0.0.0"
       },
       "dependencies": {
-        "HubAnalytics.Ado": "1.0.1-*",
-        "HubAnalytics.Core": "1.0.1-*",
+        "HubAnalytics.Ado": "1.1.0",
+        "HubAnalytics.Core": "1.1.0",
         "EntityFramework": "6.1.3"
       }
     }

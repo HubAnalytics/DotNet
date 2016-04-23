@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "HubAnalytics.Core/1.0.1-beta": {
+      "HubAnalytics.Core/1.1.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -36,7 +36,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x86": {
-      "HubAnalytics.Core/1.0.1-beta": {
+      "HubAnalytics.Core/1.1.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -69,7 +69,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x64": {
-      "HubAnalytics.Core/1.0.1-beta": {
+      "HubAnalytics.Core/1.1.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -103,7 +103,7 @@
     }
   },
   "libraries": {
-    "HubAnalytics.Core/1.0.1-beta": {
+    "HubAnalytics.Core/1.1.0": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -132,7 +132,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "HubAnalytics.Core >= 1.0.1-*",
+      "HubAnalytics.Core >= 1.1.0",
       "Microsoft.Owin >= 3.0.1",
       "Owin >= 1.0.0"
     ],

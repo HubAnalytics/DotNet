@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.1-beta-*",
+  "version": "1.1.0",
   "description": "HubAnalytics.TraceListener Class Library",
   "authors": [ "JamesRandall" ],
   "tags": [ "" ],
@@ -12,6 +12,6 @@
     }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.0.1-*"
+    "HubAnalytics.Core": "1.1.0"
   }
 }
