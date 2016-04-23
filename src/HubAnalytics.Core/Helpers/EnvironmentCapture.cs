@@ -1,12 +1,12 @@
 ﻿using HubAnalytics.Core.Model;
 
-#if NET451
+#if! DNXCORE50
 using Microsoft.VisualBasic.Devices;
 #endif
 
 namespace HubAnalytics.Core.Helpers
 {
-#if NET451
+#if !DNXCORE50
     internal class EnvironmentCapture : IEnvironmentCapture
     {
         public Environment Get()

@@ -31,6 +31,7 @@ namespace HubAnalytics.Core
         public string TailCorrelationCookieName { get; set; }
         public string SessionIdKey { get; }
         public string UserIdKey { get; }
+        public string ApplicationVersion { get; }
     }
 #endif
 }

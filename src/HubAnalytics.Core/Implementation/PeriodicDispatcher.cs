@@ -69,9 +69,14 @@ namespace HubAnalytics.Core.Implementation
                     IReadOnlyCollection<Event> events = _hubAnalyticsClient.GetEvents(MaxBatchSize);
                     if (events!= null && events.Any())
                     {
+                        string applicationVersion = _clientConfiguration.ApplicationVersion;
+                        if (string.IsNullOrWhiteSpace(applicationVersion))
+                        {
+                            applicationVersion = "0.0.0";
+                        }
                         EventBatch batch = new EventBatch
                         {
-                            ApplicationVersion = "1.0.0.0",
+                            ApplicationVersion = applicationVersion,
                             Environment = _hubAnalyticsClient.GetEnvironment(),
                             Events = events.ToList(),
                             Source = "net"

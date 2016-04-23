@@ -202,6 +202,14 @@ namespace HubAnalytics.Core
             set { this["tailCorrelationCookieName"] = value; }
         }
 
+        [ConfigurationProperty("applicationVersion", IsRequired = false)]
+        [StringValidator]
+        public string ApplicationVersion
+        {
+            get { return (string) this["applicationVersion"]; }
+            set { this["applicationVersion"] = value; }
+        }
+
         public string[] HttpRequestHeaderWhitelist => HttpCommaSeparatedRequestHeaderWhitelist.Split(',');
         public string[] HttpResponseHeaderWhitelist => HttpCommaSeparatedResponseHeaderWhitelist.Split(',');
         public string[] ExcludedVerbs => ExcludedVerbsCommaSeparated.Split(',');

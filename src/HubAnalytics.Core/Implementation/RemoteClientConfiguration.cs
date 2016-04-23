@@ -32,6 +32,7 @@ namespace HubAnalytics.Core.Implementation
         private readonly string _tailCorrelationCookieName;
         private readonly string _trackingUserCookieName;
         private readonly string _trackingSessionCookieName;
+        private readonly string _applicationVersion;
 
         private TimeSpan _uploadInterval;
         private bool _isCaptureHttpEnabled;
@@ -65,6 +66,7 @@ namespace HubAnalytics.Core.Implementation
             _tailCorrelationCookieName = initialConfiguration.TailCorrelationCookieName;
             _trackingUserCookieName = initialConfiguration.TrackingUserCookieName;
             _trackingSessionCookieName = initialConfiguration.TrackingSessionCookieName;
+            _applicationVersion = initialConfiguration.ApplicationVersion;
 
             _uploadInterval = initialConfiguration.UploadInterval;
             _isCaptureHttpEnabled = initialConfiguration.IsCaptureHttpEnabled;
@@ -127,7 +129,7 @@ namespace HubAnalytics.Core.Implementation
         public string TrackingSessionCookieName => _trackingSessionCookieName;
         public string TrackingUserCookieName => _trackingUserCookieName;
         public string TailCorrelationCookieName => _tailCorrelationCookieName;
-
+        public string ApplicationVersion => _applicationVersion;
 
         private async Task BackgroundUpdate()
         {
