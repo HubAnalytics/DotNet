@@ -8,5 +8,6 @@
         public const string HttpTrace = "httptrace";
         public const string CustomMetric = "custommetric";
         public const string Log = "log";
+        public const string ExternalHttpRequest = "externalhttprequest";
     }
 }

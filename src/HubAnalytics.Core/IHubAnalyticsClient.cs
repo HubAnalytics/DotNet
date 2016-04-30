@@ -52,5 +52,15 @@ namespace HubAnalytics.Core
             string levelText,
             DateTimeOffset timestamp,
             Exception exception, string payloadJsonString);
+
+        void ExternalHttpRequest(string url,
+            DateTimeOffset requestedAt,
+            long durationInMilliseconds,
+            string correlationId,
+            string userId,
+            string sessionId,
+            bool? success,
+            bool? synchronous,
+            int? statusCode);
     }
 }

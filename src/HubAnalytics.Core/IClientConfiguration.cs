@@ -40,6 +40,9 @@ namespace HubAnalytics.Core
 
         bool IsCaptureCustomMetricEnabled { get; }
         bool IsCaptureLogsEnabled { get; }
+        bool IsCaptureExternalHttpRequestsEnabled { get; }
+        bool IsCapturePageViewsEnabled { get; }
+
         bool IsUserTrackingEnabled { get; }
         bool IsSessionTrackingEnabled { get; }
         bool IsUserIdCreationEnabled { get; }

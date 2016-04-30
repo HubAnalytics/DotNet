@@ -23,6 +23,8 @@ namespace HubAnalytics.Core.Helpers
         public bool IsCaptureCustomMetricEnabled => true;
         public bool IsCaptureErrorsEnabled => true;
         public bool IsCaptureLogsEnabled => true;
+        public bool IsCaptureExternalHttpRequestsEnabled => true;
+        public bool IsCapturePageViewsEnabled => true;
         public bool IsUserTrackingEnabled => true;
         public bool IsSessionTrackingEnabled => true;
         public bool IsUserIdCreationEnabled => true;

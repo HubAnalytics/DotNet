@@ -41,6 +41,8 @@ namespace HubAnalytics.Core.Implementation
         private bool _isCaptureCustomMetricEnabled;
         private bool _isCaptureLogsEnabled;
         private bool _isUserTrackingEnabled;
+        private bool _isCaptureExternalHttpRequestsEnabled;
+        private bool _isCapturePageViewsEnabled;
         private bool _isSessionTrackingEnabled;        
 
         public RemoteClientConfiguration(IClientConfiguration initialConfiguration,
@@ -74,6 +76,8 @@ namespace HubAnalytics.Core.Implementation
             _isCaptureSqlEnabled = initialConfiguration.IsCaptureSqlEnabled;
             _isCaptureCustomMetricEnabled = initialConfiguration.IsCaptureCustomMetricEnabled;
             _isCaptureLogsEnabled = initialConfiguration.IsCaptureLogsEnabled;
+            _isCapturePageViewsEnabled = initialConfiguration.IsCapturePageViewsEnabled;
+            _isCaptureExternalHttpRequestsEnabled = initialConfiguration.IsCaptureExternalHttpRequestsEnabled;
             _isUserTrackingEnabled = initialConfiguration.IsUserTrackingEnabled;
             _isSessionTrackingEnabled = initialConfiguration.IsSessionTrackingEnabled;
             
@@ -122,6 +126,8 @@ namespace HubAnalytics.Core.Implementation
         public bool IsCaptureCustomMetricEnabled => _isCaptureCustomMetricEnabled;
 
         public bool IsCaptureLogsEnabled => _isCaptureLogsEnabled;
+        public bool IsCaptureExternalHttpRequestsEnabled => _isCaptureExternalHttpRequestsEnabled;
+        public bool IsCapturePageViewsEnabled => _isCapturePageViewsEnabled;
         public bool IsUserTrackingEnabled => _isUserTrackingEnabled;
         public bool IsSessionTrackingEnabled => _isSessionTrackingEnabled;
         public bool IsUserIdCreationEnabled => _isUserIdCreationEnabled;
@@ -161,6 +167,9 @@ namespace HubAnalytics.Core.Implementation
                             _isCaptureLogsEnabled = settings.IsCaptureLogsEnabled;
                             _isUserTrackingEnabled = settings.IsUserTrackingEnabled;
                             _isSessionTrackingEnabled = settings.IsSessionTrackingEnabled;
+                            // TODO:
+                            //_isCapturePageViewsEnabled = settings.IsCapturePageViewsEnabled;
+                            //_isCaptureExternalHttpRequestsEnabled = settings.IsCaptureExternalHttpRequestsEnabled;
                         }
                     }
                 }

@@ -19,6 +19,7 @@ namespace HubAnalytics.Core.Implementation
         private readonly IStackTraceParser _stackTraceParser;
         private readonly IJsonSerialization _jsonSerialization;
         private readonly IClientConfiguration _clientConfiguration;
+        // ReSharper disable once NotAccessedField.Local
         private readonly PeriodicDispatcher _periodicDispatcher;
         private readonly CancellationTokenSource _cancellationTokenSource;
         
@@ -171,6 +172,46 @@ namespace HubAnalytics.Core.Implementation
 
             object payload = _jsonSerialization.Deserialize(jsonPayload);
             Log(message, levelRank, levelText, timestamp, ex, payload);
+        }
+
+        public void ExternalHttpRequest(string uri,
+            DateTimeOffset requestedAt,
+            long durationInMilliseconds,
+            string correlationId,
+            string userId,
+            string sessionId,
+            bool? success,
+            bool? synchronous,
+            int? statusCode)
+        {
+            if (!_clientConfiguration.IsCaptureExternalHttpRequestsEnabled || _cancellationTokenSource.IsCancellationRequested)
+                return;
+            List<string> correlationIds = GetCorrelationIdList(correlationId);
+            Event ev = new Event
+            {
+                CorrelationIds = correlationIds,
+                SessionId = sessionId,
+                UserId = userId,
+                Data = new Dictionary<string, object>
+                {
+                    {"Uri", uri},
+                    {"DurationInMilliseconds", durationInMilliseconds}
+                },
+                EventStartDateTime = DateTimeOffset.UtcNow.ToString(Event.EventDateFormat),
+                EventType = EventTypes.ExternalHttpRequest
+            };
+            if (success.HasValue)
+            {
+                ev.Data["Success"] = success.Value;
+            }
+            if (synchronous.HasValue)
+            {
+                ev.Data["synchronous"] = synchronous.Value;
+            }
+            if (statusCode.HasValue)
+            {
+                ev.Data["statusCode"] = statusCode.Value;
+            }
         }
 
         public void Error(Exception ex, Dictionary<string, string> additionalData = null, string correlationId = null, string sessionId = null, string userId = null)

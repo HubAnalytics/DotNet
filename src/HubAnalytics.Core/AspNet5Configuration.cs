@@ -22,6 +22,8 @@ namespace HubAnalytics.Core
         public bool IsCaptureHttpEnabled { get; }
         public bool IsCaptureCustomMetricEnabled { get; }
         public bool IsCaptureLogsEnabled { get; }
+        public bool IsCapturePageViewsEnabled { get; }
+        public bool IsCaptureExternalHttpRequestsEnabled { get; }
         public bool IsUserTrackingEnabled { get; }
         public bool IsSessionTrackingEnabled { get; }
         public bool IsUserIdCreationEnabled { get; }

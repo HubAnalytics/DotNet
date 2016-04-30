@@ -88,6 +88,20 @@ namespace HubAnalytics.Core
             set { this["captureLogs"] = value; }
         }
 
+        [ConfigurationProperty("capturePageViews", IsRequired = false, DefaultValue = true)]
+        public bool IsCapturePageViewsEnabled
+        {
+            get { return (bool) this["capturePageViews"]; }
+            set { this["capturePageViews"] = value; }
+        }
+
+        [ConfigurationProperty("captureExternalHttpRequests", IsRequired = false, DefaultValue = true)]
+        public bool IsCaptureExternalHttpRequestsEnabled
+        {
+            get { return (bool) this["captureExternalHttpRequests"]; }
+            set { this["captureExternalHttpRequests"] = value; }
+        }
+
         [ConfigurationProperty("stripHttpQueryParams", IsRequired = false, DefaultValue = true)]
         public bool StripHttpQueryParams
         {

@@ -818,6 +818,7 @@
       }
     },
     ".NETFramework,Version=v4.5": {},
+    ".NETFramework,Version=v4.6": {},
     "DNXCore,Version=v5.0/win7-x86": {
       "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
         "type": "package",
@@ -2699,7 +2700,9 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x86": {},
-    ".NETFramework,Version=v4.5/win7-x64": {}
+    ".NETFramework,Version=v4.5/win7-x64": {},
+    ".NETFramework,Version=v4.6/win7-x86": {},
+    ".NETFramework,Version=v4.6/win7-x64": {}
   },
   "libraries": {
     "Microsoft.Extensions.PlatformAbstractions/1.0.0-rc1-final": {
@@ -4781,6 +4784,12 @@
       "Microsoft.Extensions.PlatformAbstractions >= 1.0.0-rc1-final"
     ],
     ".NETFramework,Version=v4.5": [
+      "fx/System.Net.Http >= 4.0.0",
+      "fx/Microsoft.VisualBasic >= 10.0.0",
+      "fx/System.configuration >= 4.0.0",
+      "fx/System.Runtime >= 4.0.0"
+    ],
+    ".NETFramework,Version=v4.6": [
       "fx/System.Net.Http >= 4.0.0",
       "fx/Microsoft.VisualBasic >= 10.0.0",
       "fx/System.configuration >= 4.0.0",
