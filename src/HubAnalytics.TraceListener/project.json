@@ -1,9 +1,9 @@
 ﻿{
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "HubAnalytics.TraceListener Class Library",
   "authors": [ "JamesRandall" ],
   "tags": [ "" ],
-  "projectUrl": "https://www.microserviceanalytics.com",
+  "projectUrl": "https://www.hubanalytics.io",
   "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
 
   "frameworks": {
@@ -12,6 +12,6 @@
     }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.1.0"
+    "HubAnalytics.Core": "1.1.2"
   }
 }

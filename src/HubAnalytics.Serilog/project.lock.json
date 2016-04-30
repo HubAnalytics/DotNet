@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -26,7 +26,7 @@
       }
     },
     "DNXCore,Version=v5.0": {
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -937,7 +937,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x86": {
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -960,7 +960,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x64": {
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -983,7 +983,7 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x86": {
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -2129,7 +2129,7 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x64": {
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -3276,7 +3276,7 @@
     }
   },
   "libraries": {
-    "HubAnalytics.Core/1.1.0": {
+    "HubAnalytics.Core/1.1.2": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -5858,12 +5858,12 @@
     "": [],
     ".NETFramework,Version=v4.5": [
       "Serilog >= 1.5.14",
-      "HubAnalytics.Core >= 1.1.0",
+      "HubAnalytics.Core >= 1.1.2",
       "fx/System.Runtime "
     ],
     "DNXCore,Version=v5.0": [
       "Serilog >= 2.0.0-beta-423",
-      "HubAnalytics.Core >= 1.1.0"
+      "HubAnalytics.Core >= 1.1.2"
     ]
   }
 }

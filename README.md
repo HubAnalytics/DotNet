@@ -2,4 +2,4 @@
 
 # Microservice Analytics - Data Capture Clients
 
-Data capture libraries for the [Microservice Analytics](http://www.microserviceanalytics.com) service.
+Data capture libraries for the [Hub Analytics](https://www.hubanalytics.io) service. See [documentation](https://www.hubanalytics.io/Documentation) for details.

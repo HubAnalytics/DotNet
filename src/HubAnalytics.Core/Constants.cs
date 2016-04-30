@@ -2,7 +2,7 @@
 {
     public static class Constants
     {
-        public const string ApiRoot = "https://collection.microserviceanalytics.com/";
+        public const string ApiRoot = "https://collection.hubanalytics.io/";
         public const string CorrelationIdKey = "correlation-id";
         public const string HttpStopwatchKey = "httpStopwatch";
         public const string UserIdKey = "msa-user-id";

@@ -1,9 +1,9 @@
 ﻿{
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "HubAnalytics.Core Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
-  "projectUrl": "http://www.microserviceanalytics.com",
+  "projectUrl": "http://www.hubanalytics.io",
   "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
 
   "frameworks": {

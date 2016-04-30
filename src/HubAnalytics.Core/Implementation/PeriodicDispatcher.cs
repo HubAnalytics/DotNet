@@ -15,6 +15,7 @@ namespace HubAnalytics.Core.Implementation
 {
     internal class PeriodicDispatcher
     {
+        private const int TooManyRequests = 429;
         private const string EventRelativePath = "v1/event";
         private const int MaxBatchSize = 200;
         
@@ -57,11 +58,19 @@ namespace HubAnalytics.Core.Implementation
         {
             bool shouldDelay = true;
             bool shouldContinue = true;
+            bool shouldDispatch = true;
+            DateTimeOffset? attemptReconnectAt = null;
+
             while (shouldContinue)
             {
                 if (shouldDelay)
                 {
                     await Task.Delay(_clientConfiguration.UploadInterval);
+                }
+
+                if (attemptReconnectAt.HasValue && attemptReconnectAt.Value < DateTimeOffset.UtcNow)
+                {
+                    shouldDispatch = true;
                 }
                 
                 try
@@ -69,46 +78,60 @@ namespace HubAnalytics.Core.Implementation
                     IReadOnlyCollection<Event> events = _hubAnalyticsClient.GetEvents(MaxBatchSize);
                     if (events!= null && events.Any())
                     {
-                        string applicationVersion = _clientConfiguration.ApplicationVersion;
-                        if (string.IsNullOrWhiteSpace(applicationVersion))
+                        if (shouldDispatch)
                         {
-                            applicationVersion = "0.0.0";
-                        }
-                        EventBatch batch = new EventBatch
-                        {
-                            ApplicationVersion = applicationVersion,
-                            Environment = _hubAnalyticsClient.GetEnvironment(),
-                            Events = events.ToList(),
-                            Source = "net"
-                        };
-
-                        //string serializedContent = Newtonsoft.Json.JsonConvert.SerializeObject(batch);
-
-                        string serializedContent = SerializeObject(batch);
-                        HttpClient client = new HttpClient();
-                        HttpContent content = new StringContent(serializedContent, Encoding.UTF8, "application/json");
-                        HttpRequestMessage message = new HttpRequestMessage
-                        {
-                            Content = content,
-                            Method = HttpMethod.Post,
-                            RequestUri = _endpoint
-                        };
-                        message.Headers.Add("af-property-id", _propertyId);
-                        message.Headers.Add("af-collection-key", _key);
-
-                        using (HttpResponseMessage response = await client.SendAsync(message))
-                        {
-                            if (response.IsSuccessStatusCode)
+                            string applicationVersion = _clientConfiguration.ApplicationVersion;
+                            if (string.IsNullOrWhiteSpace(applicationVersion))
                             {
-                                await response.Content.ReadAsStringAsync();
+                                applicationVersion = "0.0.0";
                             }
-                            else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                            EventBatch batch = new EventBatch
                             {
-                                shouldContinue = false;
-                                _cancellationTokenSource.Cancel();
+                                ApplicationVersion = applicationVersion,
+                                Environment = _hubAnalyticsClient.GetEnvironment(),
+                                Events = events.ToList(),
+                                Source = "net"
+                            };
+
+                            //string serializedContent = Newtonsoft.Json.JsonConvert.SerializeObject(batch);
+
+                            string serializedContent = SerializeObject(batch);
+                            HttpClient client = new HttpClient();
+                            HttpContent content = new StringContent(serializedContent, Encoding.UTF8, "application/json");
+                            HttpRequestMessage message = new HttpRequestMessage
+                            {
+                                Content = content,
+                                Method = HttpMethod.Post,
+                                RequestUri = _endpoint
+                            };
+                            message.Headers.Add("af-property-id", _propertyId);
+                            message.Headers.Add("af-collection-key", _key);
+
+                            using (HttpResponseMessage response = await client.SendAsync(message))
+                            {
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    await response.Content.ReadAsStringAsync();
+                                }
+                                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                                {
+                                    // on an unauthorized request we stop dispatching to the server but we continue to flush
+                                    // the event queue preventing memory from being gradually consumed
+                                    shouldDispatch = false;
+                                    _cancellationTokenSource.Cancel();
+                                }
+                                else if ((int) response.StatusCode == TooManyRequests)
+                                {
+                                    // if we've hit the subscription limit then we stop dispatching to the server but leave a marker
+                                    // to try and reestablish contact in 15 minutes to pick up again if the rate limit is removed on the
+                                    // server (normally due to falling back under the subscription limits or an increase in the subscription
+                                    // plan)
+                                    shouldDispatch = false;
+                                    attemptReconnectAt = DateTimeOffset.UtcNow.AddMinutes(15);
+                                }
                             }
                         }
-
+                        
                         shouldDelay = events.Count >= MaxBatchSize;
                     }
                     else

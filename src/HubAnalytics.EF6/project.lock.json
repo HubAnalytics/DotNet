@@ -17,11 +17,11 @@
           "lib/net45/EntityFramework.SqlServer.dll": {}
         }
       },
-      "HubAnalytics.Ado/1.1.0": {
+      "HubAnalytics.Ado/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.0"
+          "HubAnalytics.Core": "1.1.2"
         },
         "frameworkAssemblies": [
           "System.Data",
@@ -29,7 +29,7 @@
           "System.Xml"
         ]
       },
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -55,11 +55,11 @@
           "lib/net45/EntityFramework.SqlServer.dll": {}
         }
       },
-      "HubAnalytics.Ado/1.1.0": {
+      "HubAnalytics.Ado/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.0"
+          "HubAnalytics.Core": "1.1.2"
         },
         "frameworkAssemblies": [
           "System.Data",
@@ -67,7 +67,7 @@
           "System.Xml"
         ]
       },
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -93,11 +93,11 @@
           "lib/net45/EntityFramework.SqlServer.dll": {}
         }
       },
-      "HubAnalytics.Ado/1.1.0": {
+      "HubAnalytics.Ado/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.0"
+          "HubAnalytics.Core": "1.1.2"
         },
         "frameworkAssemblies": [
           "System.Data",
@@ -105,7 +105,7 @@
           "System.Xml"
         ]
       },
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -118,11 +118,11 @@
     }
   },
   "libraries": {
-    "HubAnalytics.Ado/1.1.0": {
+    "HubAnalytics.Ado/1.1.2": {
       "type": "project",
       "path": "../HubAnalytics.Ado/project.json"
     },
-    "HubAnalytics.Core/1.1.0": {
+    "HubAnalytics.Core/1.1.2": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -158,8 +158,8 @@
   "projectFileDependencyGroups": {
     "": [],
     ".NETFramework,Version=v4.5": [
-      "HubAnalytics.Ado >= 1.1.0",
-      "HubAnalytics.Core >= 1.1.0",
+      "HubAnalytics.Ado >= 1.1.2",
+      "HubAnalytics.Core >= 1.1.2",
       "EntityFramework >= 6.1.3",
       "fx/System.Xml >= 4.0.0",
       "fx/System.Data >= 4.0.0",

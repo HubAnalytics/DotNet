@@ -3,18 +3,18 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "HubAnalytics.AspNet4/1.1.0": {
+      "HubAnalytics.AspNet4/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.0",
+          "HubAnalytics.Core": "1.1.2",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -71,18 +71,18 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x86": {
-      "HubAnalytics.AspNet4/1.1.0": {
+      "HubAnalytics.AspNet4/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.0",
+          "HubAnalytics.Core": "1.1.2",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -139,18 +139,18 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x64": {
-      "HubAnalytics.AspNet4/1.1.0": {
+      "HubAnalytics.AspNet4/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.0",
+          "HubAnalytics.Core": "1.1.2",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.0": {
+      "HubAnalytics.Core/1.1.2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -208,11 +208,11 @@
     }
   },
   "libraries": {
-    "HubAnalytics.AspNet4/1.1.0": {
+    "HubAnalytics.AspNet4/1.1.2": {
       "type": "project",
       "path": "../HubAnalytics.AspNet4/project.json"
     },
-    "HubAnalytics.Core/1.1.0": {
+    "HubAnalytics.Core/1.1.2": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -278,8 +278,8 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "HubAnalytics.Core >= 1.1.0",
-      "HubAnalytics.AspNet4 >= 1.1.0",
+      "HubAnalytics.Core >= 1.1.2",
+      "HubAnalytics.AspNet4 >= 1.1.2",
       "Microsoft.AspNet.WebApi.Client >= 5.2.3",
       "Microsoft.AspNet.WebApi.Core >= 5.2.3",
       "Newtonsoft.Json >= 7.0.1"
