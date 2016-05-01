@@ -206,12 +206,13 @@ namespace HubAnalytics.Core.Implementation
             }
             if (synchronous.HasValue)
             {
-                ev.Data["synchronous"] = synchronous.Value;
+                ev.Data["Synchronous"] = synchronous.Value;
             }
             if (statusCode.HasValue)
             {
-                ev.Data["statusCode"] = statusCode.Value;
+                ev.Data["StatusCode"] = statusCode.Value;
             }
+            _eventQueue.Enqueue(ev);
         }
 
         public void Error(Exception ex, Dictionary<string, string> additionalData = null, string correlationId = null, string sessionId = null, string userId = null)

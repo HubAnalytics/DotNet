@@ -12,8 +12,12 @@ namespace HubAnalytics.Core
         private static readonly object ClientConfigurationLockObject = new object();
 
         private static IHubAnalyticsClient _hubAnalyticsClient;
+#if !DNXCORE50
+        // ReSharper disable once NotAccessedField.Local
+        private static HttpEventListener _eventListener;
+#endif
         private static IReadOnlyCollection<IDataCapturePlugin> _dataCapturePlugins;
-        private static IClientConfiguration _clientConfiguration;        
+        private static IClientConfiguration _clientConfiguration;
 
         public IHubAnalyticsClient GetClient()
         {
@@ -23,12 +27,13 @@ namespace HubAnalytics.Core
                 {
                     if (_hubAnalyticsClient == null)
                     {
+                        IContextualIdProvider contextualIdProvider = GetCorrelationIdProvider();
                         IClientConfiguration clientConfiguration = GetClientConfiguration();
                         _hubAnalyticsClient = new HubAnalyticsClient(
                             clientConfiguration.PropertyId,
                             clientConfiguration.Key,
                             GetEnvironmentCapture(),
-                            GetCorrelationIdProvider(),
+                            contextualIdProvider,
                             GetStackTraceParser(),
                             GetJsonSerialization(),
                             clientConfiguration);
@@ -41,6 +46,9 @@ namespace HubAnalytics.Core
                             plugins.Add(plugin);
                         }
                         _dataCapturePlugins = new ReadOnlyCollection<IDataCapturePlugin>(plugins);
+#if !DNXCORE50
+                        _eventListener = new HttpEventListener(_hubAnalyticsClient, contextualIdProvider);
+#endif
                     }
                 }
 

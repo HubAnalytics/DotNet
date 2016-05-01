@@ -145,7 +145,15 @@ namespace HubAnalytics.Core.Implementation
                 bool? synchronous = indexOfSynchronous > -1 ? new bool?(Convert.ToBoolean(httpEventData.Payload[indexOfSynchronous])) : null;
                 int? statusCode = indexOfStatusCode > -1 ? new int?(Convert.ToInt32(httpEventData.Payload[indexOfStatusCode])) : null;
 
-                Trace.WriteLine($"Url: {trackedEvent.Url}\r\nElapsed Time: {trackedEvent.Stopwatch.ElapsedMilliseconds}ms\r\nSuccess: {success}\r\nStatus Code: {statusCode}\r\nSynchronus: {synchronous}");
+                _client.ExternalHttpRequest(trackedEvent.Url,
+                    trackedEvent.RequestedAt,
+                    trackedEvent.Stopwatch.ElapsedMilliseconds,
+                    trackedEvent.CorrelationId,
+                    trackedEvent.UserId,
+                    trackedEvent.SessionId,
+                    success,
+                    synchronous,
+                    statusCode);                
             }
         }
     }
