@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using HubAnalytics.Core.Helpers;
+using HubAnalytics.Core.HttpEventUrlParsers;
 using HubAnalytics.Core.Implementation;
 
 namespace HubAnalytics.Core
@@ -27,6 +29,13 @@ namespace HubAnalytics.Core
                 {
                     if (_hubAnalyticsClient == null)
                     {
+                        IUrlProcessor urlProcessor = null;
+                        Type urlProcessorType = GetInterfaceImplementationLocator(false).Implements<IUrlProcessor>().FirstOrDefault();
+                        if (urlProcessorType != null)
+                        {
+                            urlProcessor = (IUrlProcessor)Activator.CreateInstance(urlProcessorType);
+                        }
+
                         IContextualIdProvider contextualIdProvider = GetCorrelationIdProvider();
                         IClientConfiguration clientConfiguration = GetClientConfiguration();
                         _hubAnalyticsClient = new HubAnalyticsClient(
@@ -36,8 +45,9 @@ namespace HubAnalytics.Core
                             contextualIdProvider,
                             GetStackTraceParser(),
                             GetJsonSerialization(),
-                            clientConfiguration);
-                        IReadOnlyCollection<Type> loadedPluginTypes = GetInterfaceImplementationLocator().Implements<IDataCapturePlugin>();
+                            clientConfiguration,
+                            urlProcessor);
+                        IReadOnlyCollection<Type> loadedPluginTypes = GetInterfaceImplementationLocator(true).Implements<IDataCapturePlugin>();
                         List<IDataCapturePlugin> plugins = new List<IDataCapturePlugin>(loadedPluginTypes.Count);
                         foreach (Type pluginType in loadedPluginTypes)
                         {
@@ -46,8 +56,20 @@ namespace HubAnalytics.Core
                             plugins.Add(plugin);
                         }
                         _dataCapturePlugins = new ReadOnlyCollection<IDataCapturePlugin>(plugins);
+
 #if !DNXCORE50
-                        _eventListener = new HttpEventListener(_hubAnalyticsClient, contextualIdProvider);
+                        IReadOnlyCollection<Type> httpEventUrlParserTypes = GetInterfaceImplementationLocator(false).Implements<IHttpEventUrlParser>();
+                        IReadOnlyCollection<Type> userParsers = httpEventUrlParserTypes.Where(x => 
+                            x != typeof(AzureQueueStorageParser) &&
+                            x != typeof(AzureTableStorageParser) &&
+                            x != typeof(AzureBlobStorageParser) &&
+                            x != typeof(GenericParser)).ToList();
+                        List<IHttpEventUrlParser> parsers = userParsers.Select(x => (IHttpEventUrlParser)Activator.CreateInstance(x)).ToList();
+                        parsers.Add(new AzureQueueStorageParser());
+                        parsers.Add(new AzureTableStorageParser());
+                        parsers.Add(new AzureBlobStorageParser());
+                        parsers.Add(new GenericParser());
+                        _eventListener = new HttpEventListener(_hubAnalyticsClient, parsers, urlProcessor);
 #endif
                     }
                 }
@@ -78,12 +100,12 @@ namespace HubAnalytics.Core
 
         public virtual IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService()
         {
-            return new DefaultRuntimeProviderDiscoveryService(GetInterfaceImplementationLocator());
+            return new DefaultRuntimeProviderDiscoveryService(GetInterfaceImplementationLocator(false));
         }
 
-        public virtual IInterfaceImplementationLocator GetInterfaceImplementationLocator()
+        public virtual IInterfaceImplementationLocator GetInterfaceImplementationLocator(bool hubAnalyticsOnly)
         {
-            return new InterfaceImplementationLocator();
+            return new InterfaceImplementationLocator(hubAnalyticsOnly);
         }
 
         public virtual IContextualIdProvider GetCorrelationIdProvider()

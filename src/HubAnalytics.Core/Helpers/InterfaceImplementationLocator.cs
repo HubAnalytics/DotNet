@@ -12,8 +12,14 @@ namespace HubAnalytics.Core.Helpers
 {
     public class InterfaceImplementationLocator : IInterfaceImplementationLocator
     {
+        private readonly bool _hubAnalyticsOnly;
         private static readonly object AssembliesLock = new object();
         private static IReadOnlyCollection<Assembly> _assemblies = null;
+
+        public InterfaceImplementationLocator(bool hubAnalyticsOnly)
+        {
+            _hubAnalyticsOnly = hubAnalyticsOnly;
+        }
 
         public IReadOnlyCollection<Type> Implements<T>()
         {
@@ -45,7 +51,11 @@ namespace HubAnalytics.Core.Helpers
                     }
                 }
             }
-            return _assemblies;
+            if (!_hubAnalyticsOnly)
+            {
+                return _assemblies;
+            }
+            return _assemblies.Where(x => x.FullName.StartsWith("HubAnalytics.")).ToList();
         }
 
         private static IReadOnlyCollection<Assembly> LoadAndGetAssemblies()
@@ -63,8 +73,7 @@ namespace HubAnalytics.Core.Helpers
             var referencedPaths = Directory.GetFiles(baseDirectory, "HubAnalytics.*.dll");
             var toLoad = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase)).ToList();
             toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
-
-            return AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("HubAnalytics.")).ToList();
+            return AppDomain.CurrentDomain.GetAssemblies();
 #endif
 
         }

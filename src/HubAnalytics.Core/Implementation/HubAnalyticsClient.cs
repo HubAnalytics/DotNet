@@ -19,6 +19,7 @@ namespace HubAnalytics.Core.Implementation
         private readonly IStackTraceParser _stackTraceParser;
         private readonly IJsonSerialization _jsonSerialization;
         private readonly IClientConfiguration _clientConfiguration;
+        private readonly IUrlProcessor _urlProcessor;
         // ReSharper disable once NotAccessedField.Local
         private readonly PeriodicDispatcher _periodicDispatcher;
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -29,13 +30,15 @@ namespace HubAnalytics.Core.Implementation
             IContextualIdProvider contextualIdProvider,
             IStackTraceParser stackTraceParser,
             IJsonSerialization jsonSerialization,
-            IClientConfiguration clientConfiguration)
+            IClientConfiguration clientConfiguration,
+            IUrlProcessor urlProcessor)
         {
             _environmentCapture = environmentCapture;
             _contextualIdProvider = contextualIdProvider;
             _stackTraceParser = stackTraceParser;
             _jsonSerialization = jsonSerialization;
             _clientConfiguration = clientConfiguration;
+            _urlProcessor = urlProcessor;
             _cancellationTokenSource = new CancellationTokenSource();
 
             _periodicDispatcher = new PeriodicDispatcher(this, propertyId, key, clientConfiguration, jsonSerialization, _cancellationTokenSource);
@@ -174,44 +177,33 @@ namespace HubAnalytics.Core.Implementation
             Log(message, levelRank, levelText, timestamp, ex, payload);
         }
 
-        public void ExternalHttpRequest(string uri,
+        public void ExternalHttpRequest(
             DateTimeOffset requestedAt,
             long durationInMilliseconds,
-            string correlationId,
-            string userId,
-            string sessionId,
             bool? success,
-            bool? synchronous,
-            int? statusCode)
+            string name,
+            string domain,
+            string type)
         {
             if (!_clientConfiguration.IsCaptureExternalHttpRequestsEnabled || _cancellationTokenSource.IsCancellationRequested)
                 return;
-            List<string> correlationIds = GetCorrelationIdList(correlationId);
             Event ev = new Event
             {
-                CorrelationIds = correlationIds,
-                SessionId = sessionId,
-                UserId = userId,
+                CorrelationIds = new List<string>(),
                 Data = new Dictionary<string, object>
                 {
-                    {"Uri", uri},
-                    {"DurationInMilliseconds", durationInMilliseconds}
+                    {"Domain", domain},
+                    {"DurationInMilliseconds", durationInMilliseconds},
+                    {"Name", name},
+                    {"Type", type }
                 },
                 EventStartDateTime = DateTimeOffset.UtcNow.ToString(Event.EventDateFormat),
-                EventType = EventTypes.ExternalHttpRequest
+                EventType = EventTypes.SimpleExternalHttpRequest
             };
             if (success.HasValue)
             {
                 ev.Data["Success"] = success.Value;
-            }
-            if (synchronous.HasValue)
-            {
-                ev.Data["Synchronous"] = synchronous.Value;
-            }
-            if (statusCode.HasValue)
-            {
-                ev.Data["StatusCode"] = statusCode.Value;
-            }
+            }            
             _eventQueue.Enqueue(ev);
         }
 
@@ -258,6 +250,13 @@ namespace HubAnalytics.Core.Implementation
                 return;
             if (_clientConfiguration.ExcludedVerbs.Contains(verb.ToUpper()))
                 return;
+
+            if (_urlProcessor != null)
+            {
+                uri = _urlProcessor.Process(uri);
+                if (String.IsNullOrWhiteSpace(uri))
+                    return;
+            }
 
             List<string> correlationIds = GetCorrelationIdList(correlationId);
             Event ev = new Event

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HubAnalytics.Core")]
+[assembly: AssemblyTitle("HubAnalytics.Core.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HubAnalytics.Core")]
+[assembly: AssemblyProduct("HubAnalytics.Core.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,5 +20,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3b978a6d-ab31-4ef0-8e0c-36a92e21c191")]
-[assembly: InternalsVisibleTo("HubAnalytics.Core.Tests")]
+[assembly: Guid("dec31a67-8079-468c-b455-8ca540bb0f63")]

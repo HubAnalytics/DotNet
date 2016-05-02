@@ -1,17 +1,20 @@
 ﻿#if !DNXCORE50
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using HubAnalytics.Core.Helpers;
+using HubAnalytics.Core.Model;
 
 namespace HubAnalytics.Core.Implementation
 {
     public class HttpEventListener : EventListener
     {
         private readonly IHubAnalyticsClient _client;
-        private readonly IContextualIdProvider _contextualIdProvider;
+        private readonly IReadOnlyCollection<IHttpEventUrlParser> _urlParsers;
+        private readonly IUrlProcessor _urlProcessor;
 
         class HttpEvent
         {
@@ -19,13 +22,7 @@ namespace HubAnalytics.Core.Implementation
 
             public string Url { get; set; }
 
-            public DateTimeOffset RequestedAt { get; set; }
-
-            public string CorrelationId { get; set; }
-
-            public string SessionId { get; set; }
-
-            public string UserId { get; set; }
+            public DateTimeOffset RequestedAt { get; set; }            
         }
 
         private const int HttpBeginResponse = 140;
@@ -35,10 +32,11 @@ namespace HubAnalytics.Core.Implementation
 
         private readonly ConcurrentDictionary<long, HttpEvent> _trackedEvents = new ConcurrentDictionary<long, HttpEvent>();
 
-        public HttpEventListener(IHubAnalyticsClient client, IContextualIdProvider contextualIdProvider)
+        public HttpEventListener(IHubAnalyticsClient client, IReadOnlyCollection<IHttpEventUrlParser> urlParsers, IUrlProcessor urlProcessor)
         {
             _client = client;
-            _contextualIdProvider = contextualIdProvider;
+            _urlParsers = urlParsers;
+            _urlProcessor = urlProcessor;
         }
 
         protected override void OnEventSourceCreated(EventSource eventSource)
@@ -60,16 +58,11 @@ namespace HubAnalytics.Core.Implementation
                 switch (eventData.EventId)
                 {
                     case HttpBeginResponse:
-                        OnBeginHttpResponse(eventData);
+                    case HttpBeginGetRequestStream:
+                        OnBeginHttpEvent(eventData);
                         break;
                     case HttpEndResponse:
-                        OnEndHttpResponse(eventData);
-                        break;
-                    case HttpBeginGetRequestStream:
-                        OnBeginHttpResponse(eventData);
-                        break;
-                    case HttpEndGetRequestStream:
-                        OnEndHttpResponse(eventData);
+                        OnEndHttpEvent(eventData);
                         break;
                 }
             }
@@ -79,7 +72,7 @@ namespace HubAnalytics.Core.Implementation
             }
         }
 
-        private void OnBeginHttpResponse(EventWrittenEventArgs httpEventData)
+        private void OnBeginHttpEvent(EventWrittenEventArgs httpEventData)
         {
             if (httpEventData.Payload.Count < 2)
             {
@@ -99,19 +92,35 @@ namespace HubAnalytics.Core.Implementation
             }
             long id = Convert.ToInt64(httpEventData.Payload[indexOfId], CultureInfo.InvariantCulture);
             string url = Convert.ToString(httpEventData.Payload[indexOfUrl], CultureInfo.InvariantCulture);
-            _trackedEvents[id] = new HttpEvent
+
+            // don't log external requests to the analytic end point
+            if (url.StartsWith(_client.ClientConfiguration.ApiRoot))
+            {
+                return;
+            }
+
+            if (_urlProcessor != null)
+            {
+                url = _urlProcessor.Process(url);
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    return;
+                }
+            }
+
+            HttpEvent httpEvent = new HttpEvent
             {
                 Url = url,
                 Stopwatch = new Stopwatch(),
-                RequestedAt = DateTimeOffset.UtcNow,
-                CorrelationId = _contextualIdProvider.CorrelationId,
-                UserId = _contextualIdProvider.UserId,
-                SessionId = _contextualIdProvider.SessionId
+                RequestedAt = DateTimeOffset.UtcNow                
             };
-            _trackedEvents[id].Stopwatch.Start();
+            if (_trackedEvents.TryAdd(id, httpEvent))
+            {
+                httpEvent.Stopwatch.Start();
+            }            
         }
 
-        private void OnEndHttpResponse(EventWrittenEventArgs httpEventData)
+        private void OnEndHttpEvent(EventWrittenEventArgs httpEventData)
         {
             if (httpEventData.Payload.Count < 1)
             {
@@ -144,17 +153,34 @@ namespace HubAnalytics.Core.Implementation
                 bool? success = indexOfSuccess > -1 ? new bool?(Convert.ToBoolean(httpEventData.Payload[indexOfSuccess])) : null;
                 bool? synchronous = indexOfSynchronous > -1 ? new bool?(Convert.ToBoolean(httpEventData.Payload[indexOfSynchronous])) : null;
                 int? statusCode = indexOfStatusCode > -1 ? new int?(Convert.ToInt32(httpEventData.Payload[indexOfStatusCode])) : null;
-
-                _client.ExternalHttpRequest(trackedEvent.Url,
-                    trackedEvent.RequestedAt,
-                    trackedEvent.Stopwatch.ElapsedMilliseconds,
-                    trackedEvent.CorrelationId,
-                    trackedEvent.UserId,
-                    trackedEvent.SessionId,
-                    success,
-                    synchronous,
-                    statusCode);                
+                
+                foreach (IHttpEventUrlParser urlParser in _urlParsers)
+                {
+                    string type;
+                    string domain;
+                    string name;
+                    if (urlParser.Parse(trackedEvent.Url, out domain, out name, out type))
+                    {
+                        _client.ExternalHttpRequest(trackedEvent.RequestedAt,
+                            trackedEvent.Stopwatch.ElapsedMilliseconds,
+                            success,
+                            name,
+                            domain,
+                            type);
+                        break;
+                    }
+                }                
             }
+        }
+
+        public void Cancel()
+        {
+            
+        }
+
+        public IReadOnlyCollection<Event> GetEvents(int batchSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

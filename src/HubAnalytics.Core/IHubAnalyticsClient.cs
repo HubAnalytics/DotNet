@@ -53,14 +53,12 @@ namespace HubAnalytics.Core
             DateTimeOffset timestamp,
             Exception exception, string payloadJsonString);
 
-        void ExternalHttpRequest(string url,
+        void ExternalHttpRequest(
             DateTimeOffset requestedAt,
             long durationInMilliseconds,
-            string correlationId,
-            string userId,
-            string sessionId,
             bool? success,
-            bool? synchronous,
-            int? statusCode);
+            string name,
+            string domain,
+            string type);
     }
 }

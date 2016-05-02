@@ -9,5 +9,6 @@
         public const string CustomMetric = "custommetric";
         public const string Log = "log";
         public const string ExternalHttpRequest = "externalhttprequest";
+        public const string SimpleExternalHttpRequest = "simpleexternalhttprequest";
     }
 }
