@@ -18,6 +18,10 @@
 
         public bool IsUserTrackingEnabled { get; set; }
 
+        public bool IsCapturePageViewEnabled { get; set; }
+
+        public bool IsCaptureExternalHttpRequestsEnabled { get; set; }
+
         public bool IsSessionTrackingEnabled { get; set; }
     }
 }

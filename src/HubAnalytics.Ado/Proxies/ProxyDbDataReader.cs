@@ -173,7 +173,7 @@ namespace HubAnalytics.Ado.Proxies
             return await _proxiedDataReader.ReadAsync(cancellationToken);
         }
 
-#if NET45
+#if NET45 || NET46
         public override DataTable GetSchemaTable()
         {
             return _proxiedDataReader.GetSchemaTable();

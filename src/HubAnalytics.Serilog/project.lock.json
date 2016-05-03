@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -25,8 +25,31 @@
         }
       }
     },
+    ".NETFramework,Version=v4.6": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Serilog/1.5.14": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        }
+      }
+    },
     "DNXCore,Version=v5.0": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -184,7 +207,7 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Serilog/2.0.0-beta-423": {
+      "Serilog/2.0.0-beta-537": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.1-beta-23516",
@@ -198,6 +221,7 @@
           "System.Linq": "4.0.1-beta-23516",
           "System.Reflection.Extensions": "4.0.1-beta-23516",
           "System.Runtime.Extensions": "4.0.11-beta-23516",
+          "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
           "System.Text.RegularExpressions": "4.0.11-beta-23516",
           "System.Threading": "4.0.11-beta-23516",
           "System.Threading.Thread": "4.0.0-beta-23516"
@@ -774,6 +798,19 @@
           "lib/DNXCore50/System.Runtime.Loader.dll": {}
         }
       },
+      "System.Runtime.Serialization.Primitives/4.1.0-beta-23516": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20"
+        },
+        "compile": {
+          "ref/dotnet5.4/System.Runtime.Serialization.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/System.Runtime.Serialization.Primitives.dll": {}
+        }
+      },
       "System.Text.Encoding/4.0.10-beta-23109": {
         "type": "package",
         "dependencies": {
@@ -937,7 +974,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x86": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -960,7 +997,7 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x64": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -982,8 +1019,54 @@
         }
       }
     },
+    ".NETFramework,Version=v4.6/win7-x86": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Serilog/1.5.14": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win7-x64": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Serilog/1.5.14": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        }
+      }
+    },
     "DNXCore,Version=v5.0/win7-x86": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -1305,7 +1388,7 @@
           "runtimes/win7/lib/DNXCore50/System.Threading.dll": {}
         }
       },
-      "Serilog/2.0.0-beta-423": {
+      "Serilog/2.0.0-beta-537": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.1-beta-23516",
@@ -1319,6 +1402,7 @@
           "System.Linq": "4.0.1-beta-23516",
           "System.Reflection.Extensions": "4.0.1-beta-23516",
           "System.Runtime.Extensions": "4.0.11-beta-23516",
+          "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
           "System.Text.RegularExpressions": "4.0.11-beta-23516",
           "System.Threading": "4.0.11-beta-23516",
           "System.Threading.Thread": "4.0.0-beta-23516"
@@ -1916,6 +2000,19 @@
           "lib/DNXCore50/System.Runtime.Loader.dll": {}
         }
       },
+      "System.Runtime.Serialization.Primitives/4.1.0-beta-23516": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20"
+        },
+        "compile": {
+          "ref/dotnet5.4/System.Runtime.Serialization.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/System.Runtime.Serialization.Primitives.dll": {}
+        }
+      },
       "System.Security.Cryptography.Algorithms/4.0.0-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -2129,7 +2226,7 @@
       }
     },
     "DNXCore,Version=v5.0/win7-x64": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -2451,7 +2548,7 @@
           "runtimes/win7/lib/DNXCore50/System.Threading.dll": {}
         }
       },
-      "Serilog/2.0.0-beta-423": {
+      "Serilog/2.0.0-beta-537": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.0.1-beta-23516",
@@ -2465,6 +2562,7 @@
           "System.Linq": "4.0.1-beta-23516",
           "System.Reflection.Extensions": "4.0.1-beta-23516",
           "System.Runtime.Extensions": "4.0.11-beta-23516",
+          "System.Runtime.Serialization.Primitives": "4.1.0-beta-23516",
           "System.Text.RegularExpressions": "4.0.11-beta-23516",
           "System.Threading": "4.0.11-beta-23516",
           "System.Threading.Thread": "4.0.0-beta-23516"
@@ -3062,6 +3160,19 @@
           "lib/DNXCore50/System.Runtime.Loader.dll": {}
         }
       },
+      "System.Runtime.Serialization.Primitives/4.1.0-beta-23516": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20"
+        },
+        "compile": {
+          "ref/dotnet5.4/System.Runtime.Serialization.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/System.Runtime.Serialization.Primitives.dll": {}
+        }
+      },
       "System.Security.Cryptography.Algorithms/4.0.0-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -3276,7 +3387,7 @@
     }
   },
   "libraries": {
-    "HubAnalytics.Core/1.1.2": {
+    "HubAnalytics.Core/1.2.1": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -3622,20 +3733,18 @@
         "Serilog.nuspec"
       ]
     },
-    "Serilog/2.0.0-beta-423": {
+    "Serilog/2.0.0-beta-537": {
       "type": "package",
-      "sha512": "qR92J+eD+Z5Z9EJG0il8WMnqjJ/KPNDvazC0+ucy6EJKo4JzqQuDHpKubec5iG+GUVCHU2OWTxLSVg0nDvufXw==",
+      "sha512": "CWW9aQTpQh6LCh+AKZuwN8vRMcrWEze+ep+ixwxS7EZ+C9TcR1Ze1RLlNqh2S3dsnENHl8ZeIAPTTUylE/zV4A==",
       "files": [
         "lib/dotnet5.1/Serilog.dll",
         "lib/dotnet5.1/Serilog.xml",
         "lib/dotnet5.4/Serilog.dll",
         "lib/dotnet5.4/Serilog.xml",
-        "lib/net40/Serilog.dll",
-        "lib/net40/Serilog.xml",
         "lib/net45/Serilog.dll",
         "lib/net45/Serilog.xml",
-        "Serilog.2.0.0-beta-423.nupkg",
-        "Serilog.2.0.0-beta-423.nupkg.sha512",
+        "Serilog.2.0.0-beta-537.nupkg",
+        "Serilog.2.0.0-beta-537.nupkg.sha512",
         "Serilog.nuspec"
       ]
     },
@@ -5230,6 +5339,67 @@
         "System.Runtime.Loader.nuspec"
       ]
     },
+    "System.Runtime.Serialization.Primitives/4.1.0-beta-23516": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "Dsl95PE2vyGIy9voclfTVKSqYD8O4PjsMS+TV0bM3N1xNraS2BBaChGk1stGmf04cn2/xA3cZyh80bkZL+v1/Q==",
+      "files": [
+        "lib/dotnet5.4/System.Runtime.Serialization.Primitives.dll",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/System.Runtime.Serialization.Primitives.dll",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet5.1/de/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/es/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/fr/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/it/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/ja/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/ko/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/ru/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/System.Runtime.Serialization.Primitives.dll",
+        "ref/dotnet5.1/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/zh-hans/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.1/zh-hant/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/de/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/es/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/fr/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/it/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/ja/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/ko/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/ru/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/System.Runtime.Serialization.Primitives.dll",
+        "ref/dotnet5.4/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/zh-hans/System.Runtime.Serialization.Primitives.xml",
+        "ref/dotnet5.4/zh-hant/System.Runtime.Serialization.Primitives.xml",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/netcore50/de/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/es/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/fr/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/it/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/ja/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/ko/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/ru/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/System.Runtime.Serialization.Primitives.dll",
+        "ref/netcore50/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/zh-hans/System.Runtime.Serialization.Primitives.xml",
+        "ref/netcore50/zh-hant/System.Runtime.Serialization.Primitives.xml",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "System.Runtime.Serialization.Primitives.4.1.0-beta-23516.nupkg",
+        "System.Runtime.Serialization.Primitives.4.1.0-beta-23516.nupkg.sha512",
+        "System.Runtime.Serialization.Primitives.nuspec"
+      ]
+    },
     "System.Security.Cryptography.Algorithms/4.0.0-beta-23516": {
       "type": "package",
       "serviceable": true,
@@ -5858,12 +6028,15 @@
     "": [],
     ".NETFramework,Version=v4.5": [
       "Serilog >= 1.5.14",
-      "HubAnalytics.Core >= 1.1.2",
-      "fx/System.Runtime "
+      "HubAnalytics.Core >= 1.2.1"
+    ],
+    ".NETFramework,Version=v4.6": [
+      "Serilog >= 1.5.14",
+      "HubAnalytics.Core >= 1.2.1"
     ],
     "DNXCore,Version=v5.0": [
-      "Serilog >= 2.0.0-beta-423",
-      "HubAnalytics.Core >= 1.1.2"
+      "Serilog >= 2.0.0-beta-537",
+      "HubAnalytics.Core >= 1.2.1"
     ]
   }
 }

@@ -1,14 +1,15 @@
 ﻿{
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "HubAnalytics.GenericDotNet Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
   "projectUrl": "https://www.hubanalytics.io",
   "licenseUrl": "https://raw.githubusercontent.com/HubAnalytics/DotNet/master/LICENSE",
   "frameworks": {
-    "net45": { }
+    "net45": { },
+    "net46": { }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.1.2"
+    "HubAnalytics.Core": "1.2.1"
   }
 }

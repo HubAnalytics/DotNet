@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -23,8 +23,29 @@
         }
       }
     },
+    ".NETFramework,Version=v4.6": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      }
+    },
     ".NETFramework,Version=v4.5/win7-x86": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -45,9 +66,51 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x64": {
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win7-x86": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win7-x64": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "frameworkAssemblies": [
           "Microsoft.VisualBasic",
           "System.configuration",
@@ -67,7 +130,7 @@
     }
   },
   "libraries": {
-    "HubAnalytics.Core/1.1.2": {
+    "HubAnalytics.Core/1.2.1": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -84,10 +147,13 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "HubAnalytics.Core >= 1.1.2",
+      "HubAnalytics.Core >= 1.2.1",
       "Microsoft.Web.Infrastructure >= 1.0.0"
     ],
     ".NETFramework,Version=v4.5": [
+      "fx/System.Web >= 4.0.0"
+    ],
+    ".NETFramework,Version=v4.6": [
       "fx/System.Web >= 4.0.0"
     ]
   }

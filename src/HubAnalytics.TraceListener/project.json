@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "HubAnalytics.TraceListener Class Library",
   "authors": [ "JamesRandall" ],
   "tags": [ "" ],
@@ -8,10 +8,15 @@
 
   "frameworks": {
     "net45": {
+      "frameworkAssemblies": {
+        "System.Diagnostics.Tracing": "4.0.0.0"
+      }
+    },
+    "net46": {
       "frameworkAssemblies": { "System.Diagnostics.Tracing": "4.0.0.0" }
     }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.1.2"
+    "HubAnalytics.Core": "1.2.1"
   }
 }

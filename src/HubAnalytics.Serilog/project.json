@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "HubAnalytics.Serilog Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
@@ -9,16 +9,19 @@
     "net45": {
       "dependencies": {
         "Serilog": "1.5.14",
-        "HubAnalytics.Core": "1.1.2"
-      },
-      "frameworkAssemblies": {
-        "System.Runtime": ""
+        "HubAnalytics.Core": "1.2.1"
+      }
+    },
+    "net46": {
+      "dependencies": {
+        "Serilog": "1.5.14",
+        "HubAnalytics.Core": "1.2.1"
       }
     },
     "dnxcore50": {
       "dependencies": {
-        "Serilog": "2.0.0-beta-423",
-        "HubAnalytics.Core": "1.1.2"
+        "Serilog": "2.0.0-beta-537",
+        "HubAnalytics.Core": "1.2.1"
       }
     }
   }

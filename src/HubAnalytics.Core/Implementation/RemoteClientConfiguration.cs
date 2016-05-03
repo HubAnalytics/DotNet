@@ -168,8 +168,8 @@ namespace HubAnalytics.Core.Implementation
                             _isUserTrackingEnabled = settings.IsUserTrackingEnabled;
                             _isSessionTrackingEnabled = settings.IsSessionTrackingEnabled;
                             // TODO:
-                            //_isCapturePageViewsEnabled = settings.IsCapturePageViewsEnabled;
-                            //_isCaptureExternalHttpRequestsEnabled = settings.IsCaptureExternalHttpRequestsEnabled;
+                            _isCapturePageViewsEnabled = settings.IsCapturePageViewEnabled;
+                            _isCaptureExternalHttpRequestsEnabled = settings.IsCaptureExternalHttpRequestsEnabled;
                         }
                     }
                 }

@@ -3,18 +3,18 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "HubAnalytics.AspNet4/1.1.2": {
+      "HubAnalytics.AspNet4/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.2",
+          "HubAnalytics.Core": "1.2.1",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -75,19 +75,92 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5/win7-x86": {
-      "HubAnalytics.AspNet4/1.1.2": {
+    ".NETFramework,Version=v4.6": {
+      "HubAnalytics.AspNet4/1.2.1": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.2",
+          "HubAnalytics.Core": "1.2.1",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.AspNet.Mvc/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.3, 3.3.0)",
+          "Microsoft.AspNet.WebPages": "[3.2.3, 3.3.0)"
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.3, 3.3.0)",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5/win7-x86": {
+      "HubAnalytics.AspNet4/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5",
+        "dependencies": {
+          "HubAnalytics.Core": "1.2.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ]
+      },
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -149,20 +222,166 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x64": {
-      "HubAnalytics.AspNet4/1.1.2": {
+      "HubAnalytics.AspNet4/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.2",
+          "HubAnalytics.Core": "1.2.1",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.AspNet.Mvc/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.3, 3.3.0)",
+          "Microsoft.AspNet.WebPages": "[3.2.3, 3.3.0)"
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.3, 3.3.0)",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win7-x86": {
+      "HubAnalytics.AspNet4/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "HubAnalytics.Core": "1.2.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ]
+      },
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.AspNet.Mvc/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.3, 3.3.0)",
+          "Microsoft.AspNet.WebPages": "[3.2.3, 3.3.0)"
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.3, 3.3.0)",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win7-x64": {
+      "HubAnalytics.AspNet4/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "HubAnalytics.Core": "1.2.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ]
+      },
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "frameworkAssemblies": [
           "Microsoft.VisualBasic",
           "System.configuration",
@@ -223,11 +442,11 @@
     }
   },
   "libraries": {
-    "HubAnalytics.AspNet4/1.1.2": {
+    "HubAnalytics.AspNet4/1.2.1": {
       "type": "project",
       "path": "../HubAnalytics.AspNet4/project.json"
     },
-    "HubAnalytics.Core/1.1.2": {
+    "HubAnalytics.Core/1.2.1": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -290,14 +509,17 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "HubAnalytics.Core >= 1.1.2",
-      "HubAnalytics.AspNet4 >= 1.1.2",
+      "HubAnalytics.Core >= 1.2.1",
+      "HubAnalytics.AspNet4 >= 1.2.1",
       "Microsoft.AspNet.Mvc >= 5.2.3",
       "Microsoft.AspNet.Razor >= 3.2.3",
       "Microsoft.AspNet.WebPages >= 3.2.3",
       "Microsoft.Web.Infrastructure >= 1.0.0"
     ],
     ".NETFramework,Version=v4.5": [
+      "fx/System.Web >= 4.0.0"
+    ],
+    ".NETFramework,Version=v4.6": [
       "fx/System.Web >= 4.0.0"
     ]
   }

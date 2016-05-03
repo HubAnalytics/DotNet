@@ -79,6 +79,19 @@ namespace SimpleJSON
             };
         }
 
+        private IDictionary ToDictionary(StackTraceEntry entry)
+        {
+            return new Dictionary<string, object>
+            {
+                {"Assembly", entry.Assembly},
+                {"Class", entry.Class},
+                {"Column", entry.Column},
+                {"Filename", entry.Filename},
+                {"Line", entry.Line},
+                {"Method", entry.Method}
+            };
+        }
+
         private void EncodeObject(object obj)
         {
             if (obj == null)
@@ -160,6 +173,10 @@ namespace SimpleJSON
             else if (obj is Environment)
             {
                 EncodeDictionary(ToDictionary((Environment)obj));
+            }
+            else if (obj is StackTraceEntry)
+            {
+                EncodeDictionary(ToDictionary((StackTraceEntry)obj));
             }
             else if (obj is JObject)
             {

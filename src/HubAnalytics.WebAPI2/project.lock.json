@@ -3,18 +3,18 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5": {
-      "HubAnalytics.AspNet4/1.1.2": {
+      "HubAnalytics.AspNet4/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.2",
+          "HubAnalytics.Core": "1.2.1",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -70,19 +70,87 @@
         }
       }
     },
-    ".NETFramework,Version=v4.5/win7-x86": {
-      "HubAnalytics.AspNet4/1.1.2": {
+    ".NETFramework,Version=v4.6": {
+      "HubAnalytics.AspNet4/1.2.1": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5",
+        "framework": ".NETFramework,Version=v4.6",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.2",
+          "HubAnalytics.Core": "1.2.1",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Core/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.3"
+        },
+        "compile": {
+          "lib/net45/System.Web.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Newtonsoft.Json/7.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5/win7-x86": {
+      "HubAnalytics.AspNet4/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5",
+        "dependencies": {
+          "HubAnalytics.Core": "1.2.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ]
+      },
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "frameworkAssemblies": [
@@ -139,20 +207,156 @@
       }
     },
     ".NETFramework,Version=v4.5/win7-x64": {
-      "HubAnalytics.AspNet4/1.1.2": {
+      "HubAnalytics.AspNet4/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
         "dependencies": {
-          "HubAnalytics.Core": "1.1.2",
+          "HubAnalytics.Core": "1.2.1",
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "frameworkAssemblies": [
           "System.Web"
         ]
       },
-      "HubAnalytics.Core/1.1.2": {
+      "HubAnalytics.Core/1.2.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Core/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.3"
+        },
+        "compile": {
+          "lib/net45/System.Web.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Newtonsoft.Json/7.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win7-x86": {
+      "HubAnalytics.AspNet4/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "HubAnalytics.Core": "1.2.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ]
+      },
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "frameworkAssemblies": [
+          "Microsoft.VisualBasic",
+          "System.configuration",
+          "System.Net.Http",
+          "System.Runtime"
+        ]
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Core/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.3"
+        },
+        "compile": {
+          "lib/net45/System.Web.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Newtonsoft.Json/7.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6/win7-x64": {
+      "HubAnalytics.AspNet4/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
+        "dependencies": {
+          "HubAnalytics.Core": "1.2.1",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Web"
+        ]
+      },
+      "HubAnalytics.Core/1.2.1": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6",
         "frameworkAssemblies": [
           "Microsoft.VisualBasic",
           "System.configuration",
@@ -208,11 +412,11 @@
     }
   },
   "libraries": {
-    "HubAnalytics.AspNet4/1.1.2": {
+    "HubAnalytics.AspNet4/1.2.1": {
       "type": "project",
       "path": "../HubAnalytics.AspNet4/project.json"
     },
-    "HubAnalytics.Core/1.1.2": {
+    "HubAnalytics.Core/1.2.1": {
       "type": "project",
       "path": "../HubAnalytics.Core/project.json"
     },
@@ -278,13 +482,16 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "HubAnalytics.Core >= 1.1.2",
-      "HubAnalytics.AspNet4 >= 1.1.2",
+      "HubAnalytics.Core >= 1.2.1",
+      "HubAnalytics.AspNet4 >= 1.2.1",
       "Microsoft.AspNet.WebApi.Client >= 5.2.3",
       "Microsoft.AspNet.WebApi.Core >= 5.2.3",
       "Newtonsoft.Json >= 7.0.1"
     ],
     ".NETFramework,Version=v4.5": [
+      "fx/System.Web >= 4.0.0"
+    ],
+    ".NETFramework,Version=v4.6": [
       "fx/System.Web >= 4.0.0"
     ]
   }

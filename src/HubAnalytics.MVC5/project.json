@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "HubAnalytics.MVC5 Class Library",
   "authors": [ "James Randall" ],
   "tags": [ "microservice analytic client" ],
@@ -10,11 +10,16 @@
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0"
       }
+    },
+    "net46": {
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0"
+      }
     }
   },
   "dependencies": {
-    "HubAnalytics.Core": "1.1.2",
-    "HubAnalytics.AspNet4": "1.1.2",
+    "HubAnalytics.Core": "1.2.1",
+    "HubAnalytics.AspNet4": "1.2.1",
     "Microsoft.AspNet.Mvc": "5.2.3",
     "Microsoft.AspNet.Razor": "3.2.3",
     "Microsoft.AspNet.WebPages": "3.2.3",

@@ -25,6 +25,8 @@ namespace HubAnalytics.Core.Implementation
                 IsCaptureSqlEnabled = (bool)jObject["IsCaptureSqlEnabled"],
                 IsSessionTrackingEnabled = (bool)jObject["IsSessionTrackingEnabled"],
                 IsUserTrackingEnabled = (bool)jObject["IsUserTrackingEnabled"],
+                IsCapturePageViewEnabled = (bool)jObject["IsCapturePageViewEnabled"],
+                IsCaptureExternalHttpRequestsEnabled = (bool)jObject["IsCaptureExternalHttpRequestsEnabled"],
                 UploadIntervalMs = (int)jObject["UploadIntervalMs"]
             };
             return (T) applicationCaptureSettings;
