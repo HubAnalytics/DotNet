@@ -46,21 +46,19 @@ namespace HubAnalytics.WebAPI2
         /// </summary>
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            IEnumerable<string> headerValues = actionContext.Request.Headers.GetValues(_correlationIdName);
-            if (headerValues != null && headerValues.Any())
+            IEnumerable<string> headerValues;
+            if (actionContext.Request.Headers.TryGetValues(_correlationIdName, out headerValues))
             {
-                _contextualIdProvider.CorrelationId = headerValues.First();
+                _contextualIdProvider.CorrelationId = headerValues?.First();
             }
-            headerValues = actionContext.Request.Headers.GetValues(_userIdName);
-            if (headerValues != null && headerValues.Any())
+            if (actionContext.Request.Headers.TryGetValues(_userIdName, out headerValues))
             {
-                _contextualIdProvider.UserId = headerValues.First();
+                _contextualIdProvider.UserId = headerValues?.First();
             }
-            headerValues = actionContext.Request.Headers.GetValues(_sessionIdName);
-            if (headerValues != null && headerValues.Any())
+            if (actionContext.Request.Headers.TryGetValues(_sessionIdName, out headerValues))
             {
-                _contextualIdProvider.SessionId = headerValues.First();
-            }
+                _contextualIdProvider.SessionId = headerValues?.First();
+            }            
         }
     }
 }

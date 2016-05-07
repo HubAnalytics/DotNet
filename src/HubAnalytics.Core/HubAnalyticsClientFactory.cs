@@ -14,12 +14,13 @@ namespace HubAnalytics.Core
         private static readonly object ClientConfigurationLockObject = new object();
 
         private static IHubAnalyticsClient _hubAnalyticsClient;
+        private static IClientConfiguration _clientConfiguration;
 #if !DNXCORE50
         // ReSharper disable once NotAccessedField.Local
         private static HttpEventListener _eventListener;
 #endif
         private static IReadOnlyCollection<IDataCapturePlugin> _dataCapturePlugins;
-        private static IClientConfiguration _clientConfiguration;
+        
 
         public IHubAnalyticsClient GetClient()
         {
@@ -30,7 +31,7 @@ namespace HubAnalytics.Core
                     if (_hubAnalyticsClient == null)
                     {
                         IUrlProcessor urlProcessor = null;
-                        Type urlProcessorType = GetInterfaceImplementationLocator(false).Implements<IUrlProcessor>().FirstOrDefault();
+                        Type urlProcessorType = GetInterfaceImplementationLocator().Implements<IUrlProcessor>().FirstOrDefault();
                         if (urlProcessorType != null)
                         {
                             urlProcessor = (IUrlProcessor)Activator.CreateInstance(urlProcessorType);
@@ -47,7 +48,7 @@ namespace HubAnalytics.Core
                             GetJsonSerialization(),
                             clientConfiguration,
                             urlProcessor);
-                        IReadOnlyCollection<Type> loadedPluginTypes = GetInterfaceImplementationLocator(true).Implements<IDataCapturePlugin>();
+                        IReadOnlyCollection<Type> loadedPluginTypes = GetInterfaceImplementationLocator().Implements<IDataCapturePlugin>();
                         List<IDataCapturePlugin> plugins = new List<IDataCapturePlugin>(loadedPluginTypes.Count);
                         foreach (Type pluginType in loadedPluginTypes)
                         {
@@ -58,7 +59,7 @@ namespace HubAnalytics.Core
                         _dataCapturePlugins = new ReadOnlyCollection<IDataCapturePlugin>(plugins);
 
 #if !DNXCORE50
-                        IReadOnlyCollection<Type> httpEventUrlParserTypes = GetInterfaceImplementationLocator(false).Implements<IHttpEventUrlParser>();
+                        IReadOnlyCollection<Type> httpEventUrlParserTypes = GetInterfaceImplementationLocator().Implements<IHttpEventUrlParser>();
                         IReadOnlyCollection<Type> userParsers = httpEventUrlParserTypes.Where(x => 
                             x != typeof(AzureQueueStorageParser) &&
                             x != typeof(AzureTableStorageParser) &&
@@ -100,12 +101,12 @@ namespace HubAnalytics.Core
 
         public virtual IRuntimeProviderDiscoveryService GetRuntimeProviderDiscoveryService()
         {
-            return new DefaultRuntimeProviderDiscoveryService(GetInterfaceImplementationLocator(false));
+            return new DefaultRuntimeProviderDiscoveryService(GetInterfaceImplementationLocator());
         }
 
-        public virtual IInterfaceImplementationLocator GetInterfaceImplementationLocator(bool hubAnalyticsOnly)
+        public virtual IInterfaceImplementationLocator GetInterfaceImplementationLocator()
         {
-            return new InterfaceImplementationLocator(hubAnalyticsOnly);
+            return new InterfaceImplementationLocator(GetClientConfiguration().ExtensionAssembly);
         }
 
         public virtual IContextualIdProvider GetCorrelationIdProvider()

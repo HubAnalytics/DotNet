@@ -2,7 +2,7 @@ Remove-Item .\packageoutput\ -Recurse -ErrorAction Ignore
 
 #.\setBuildVersion.ps1
 #$nugetCmd = ".\nuget.exe push .\packageoutput\Release\*-" + $env:DNX_BUILD_VERSION + ".nupkg"
-$packageVersion = "1.1.2"
+$packageVersion = "1.3.0"
 
 dnu pack .\src\HubAnalytics.Ado\project.json --configuration Release
 dnu pack .\src\HubAnalytics.AspNet4\project.json --configuration Release

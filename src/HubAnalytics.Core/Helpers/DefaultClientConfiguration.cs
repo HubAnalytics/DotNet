@@ -33,5 +33,6 @@ namespace HubAnalytics.Core.Helpers
         public string TrackingUserCookieName => Constants.TrackingUserCookieName;
         public string TailCorrelationCookieName => Constants.TailCorrelationCookieName;
         public string ApplicationVersion => "";
+        public string ExtensionAssembly => null;
     }
 }

@@ -12,13 +12,13 @@ namespace HubAnalytics.Core.Helpers
 {
     public class InterfaceImplementationLocator : IInterfaceImplementationLocator
     {
-        private readonly bool _hubAnalyticsOnly;
+        private readonly string _extensionAssembly;
         private static readonly object AssembliesLock = new object();
         private static IReadOnlyCollection<Assembly> _assemblies = null;
 
-        public InterfaceImplementationLocator(bool hubAnalyticsOnly)
+        public InterfaceImplementationLocator(string extensionAssembly)
         {
-            _hubAnalyticsOnly = hubAnalyticsOnly;
+            _extensionAssembly = extensionAssembly;
         }
 
         public IReadOnlyCollection<Type> Implements<T>()
@@ -51,14 +51,11 @@ namespace HubAnalytics.Core.Helpers
                     }
                 }
             }
-            if (!_hubAnalyticsOnly)
-            {
-                return _assemblies;
-            }
-            return _assemblies.Where(x => x.FullName.StartsWith("HubAnalytics.")).ToList();
+            
+            return _assemblies;
         }
 
-        private static IReadOnlyCollection<Assembly> LoadAndGetAssemblies()
+        private IReadOnlyCollection<Assembly> LoadAndGetAssemblies()
         {
 #if DNXCORE50
             IReadOnlyCollection<Assembly> assemblies = PlatformServices.Default.LibraryManager.GetReferencingLibraries(
@@ -68,12 +65,12 @@ namespace HubAnalytics.Core.Helpers
             return assemblies;
 #else
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-            var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
+            var loadedPaths = loadedAssemblies.Where(a => !string.IsNullOrWhiteSpace(a.Location)).Select(a => a.Location).ToArray();
             var baseDirectory = Path.GetDirectoryName(typeof (InterfaceImplementationLocator).Assembly.Location) ?? AppDomain.CurrentDomain.BaseDirectory;
             var referencedPaths = Directory.GetFiles(baseDirectory, "HubAnalytics.*.dll");
             var toLoad = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase)).ToList();
             toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
-            return AppDomain.CurrentDomain.GetAssemblies();
+            return AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("HubAnalytics.") || (!string.IsNullOrWhiteSpace(_extensionAssembly) && x.FullName.StartsWith(_extensionAssembly))).ToList();
 #endif
 
         }

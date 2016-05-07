@@ -224,6 +224,14 @@ namespace HubAnalytics.Core
             set { this["applicationVersion"] = value; }
         }
 
+        [ConfigurationProperty("extensionAssembly", IsRequired = false, DefaultValue = null)]
+        [StringValidator]
+        public string ExtensionAssembly
+        {
+            get { return (string) this["extensionAssembly"]; }
+            set { this["extensionAssembly"] = value; }
+        }
+
         public string[] HttpRequestHeaderWhitelist => HttpCommaSeparatedRequestHeaderWhitelist.Split(',');
         public string[] HttpResponseHeaderWhitelist => HttpCommaSeparatedResponseHeaderWhitelist.Split(',');
         public string[] ExcludedVerbs => ExcludedVerbsCommaSeparated.Split(',');

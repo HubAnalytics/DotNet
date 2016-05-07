@@ -51,5 +51,6 @@ namespace HubAnalytics.Core
         string TrackingUserCookieName { get; }
         string TailCorrelationCookieName { get; }
         string ApplicationVersion { get; }
+        string ExtensionAssembly { get; }
     }
 }

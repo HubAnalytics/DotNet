@@ -34,6 +34,7 @@ namespace HubAnalytics.Core
         public string SessionIdKey { get; }
         public string UserIdKey { get; }
         public string ApplicationVersion { get; }
+        public string ExtensionAssembly { get; }
     }
 #endif
 }
