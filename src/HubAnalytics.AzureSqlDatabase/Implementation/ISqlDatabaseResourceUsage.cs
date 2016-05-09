@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HubAnalytics.Core.Model;
 
@@ -10,5 +11,6 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
         int ConcurrentFailures { get; }
         Task<bool> Update();
         IReadOnlyCollection<Event> GetEvents();
+        void CancelUntil(DateTimeOffset dateTimeOffset);
     }
 }

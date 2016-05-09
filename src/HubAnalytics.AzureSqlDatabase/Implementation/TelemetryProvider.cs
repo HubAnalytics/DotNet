@@ -30,7 +30,7 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
             _cancellationTokenSource = new CancellationTokenSource();
             Task.Run(async () =>
             {
-                await BackgroundPush();
+                await BackgroundCollect();
             });
         }
 
@@ -54,7 +54,7 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
             return events;
         }
 
-        private async Task BackgroundPush()
+        private async Task BackgroundCollect()
         {
             bool shouldContinue = !_cancellationTokenSource.IsCancellationRequested;
             while (shouldContinue)
@@ -65,8 +65,8 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
                     {
                         if (usageSet.ConcurrentFailures == MaxConcurrentRetries)
                         {
-                            System.Diagnostics.Trace.WriteLine($"{MaxConcurrentRetries} of {usageSet.Name}. Cancelling telemetry logging.", "Error");
-                            _usageSets.Remove(usageSet);
+                            System.Diagnostics.Trace.WriteLine($"{MaxConcurrentRetries} of {usageSet.Name}. Cancelling telemetry logging for 15 minutes.", "Error");
+                            usageSet.CancelUntil(DateTimeOffset.UtcNow.AddMinutes(15));
                         }
                     }
                 }

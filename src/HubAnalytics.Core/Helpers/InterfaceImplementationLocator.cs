@@ -65,7 +65,7 @@ namespace HubAnalytics.Core.Helpers
             return assemblies;
 #else
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-            var loadedPaths = loadedAssemblies.Where(a => !string.IsNullOrWhiteSpace(a.Location)).Select(a => a.Location).ToArray();
+            var loadedPaths = loadedAssemblies.Where(HasValidLocation).Select(a => a.Location).ToArray();
             var baseDirectory = Path.GetDirectoryName(typeof (InterfaceImplementationLocator).Assembly.Location) ?? AppDomain.CurrentDomain.BaseDirectory;
             var referencedPaths = Directory.GetFiles(baseDirectory, "HubAnalytics.*.dll");
             var toLoad = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase)).ToList();
@@ -73,6 +73,19 @@ namespace HubAnalytics.Core.Helpers
             return AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("HubAnalytics.") || (!string.IsNullOrWhiteSpace(_extensionAssembly) && x.FullName.StartsWith(_extensionAssembly))).ToList();
 #endif
 
+        }
+
+        private static bool HasValidLocation(Assembly a)
+        {
+            try
+            {
+                return !string.IsNullOrWhiteSpace(a.Location);
+            }
+            catch (Exception)
+            {
+                // emitted code exists in an assembly that doesn't support access of the location property.
+                return false;
+            }
         }
     }
 }

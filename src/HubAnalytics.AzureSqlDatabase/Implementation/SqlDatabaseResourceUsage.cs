@@ -14,6 +14,7 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
         private readonly IUsageProvider _usageProvider;
         private readonly ITelemetryItemToEventMapper _mapper;
         private int _concurrentFailures;
+        private DateTimeOffset? _cancelledUntil = null;
 
         public SqlDatabaseResourceUsage(AzureSqlDatabase azureSqlDatabase, IUsageProvider usageProvider, ITelemetryItemToEventMapper mapper)
         {
@@ -28,9 +29,22 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
         {
             try
             {
-                IReadOnlyCollection<TelemetryItem> updates = await _usageProvider.Get(_azureSqlDatabase);
-                Merge(updates);
-                _concurrentFailures = 0;
+                if (_cancelledUntil.HasValue)
+                {
+                    if (DateTimeOffset.UtcNow >= _cancelledUntil.Value)
+                    {
+                        _cancelledUntil = null;
+                        _concurrentFailures = 0;
+                    }
+                }
+
+                if (!_cancelledUntil.HasValue)
+                {
+                    IReadOnlyCollection<TelemetryItem> updates = await _usageProvider.Get(_azureSqlDatabase);
+                    Merge(updates);
+                    _concurrentFailures = 0;
+                }
+                
                 return true;
             }
             catch (Exception)
@@ -57,6 +71,11 @@ namespace HubAnalytics.AzureSqlDatabase.Implementation
 
             string connectionString = _azureSqlDatabase.TransportSecureConnectionString;
             return items.Select(x => _mapper.Map(x, _azureSqlDatabase.PropertyId, _usageProvider.Granularity, _azureSqlDatabase.Name, connectionString)).ToList();
+        }
+
+        public void CancelUntil(DateTimeOffset dateTimeOffset)
+        {
+            _cancelledUntil = dateTimeOffset;
         }
 
         private void Merge(IReadOnlyCollection<TelemetryItem> mergeItems)
